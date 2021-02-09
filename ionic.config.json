@@ -1,0 +1,7 @@
+{
+  "name": "ParkAtClient",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
