@@ -34,8 +34,8 @@ const SignIn: React.FC = () => {
           <IonContent fullscreen>
             <div  id="signIn-page">
               <h1>הרשמה</h1>
-              <div id="#firebaseui-auth-container">
-
+              <div id="firebaseui-auth-container">
+                  
               </div>
             </div>
           </IonContent>

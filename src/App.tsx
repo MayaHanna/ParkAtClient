@@ -31,18 +31,6 @@ import './theme/variables.css';
 const App: React.FC = () =>{
  
   
-  useIonViewWillEnter(() => {
-
-    var firebaseConfig = {
-      apiKey: "AIzaSyB66qJEzFreQiFxnwEp8DFwxozrGle8gEQ",
-      authDomain: "parkat-cccbb.firebaseapp.com",
-      projectId: "parkat-cccbb"
-    };
-    
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-  })
-
  return (
   <IonApp>
     <IonReactRouter>

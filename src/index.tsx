@@ -4,6 +4,17 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import firebase from "firebase/app";
+
+var firebaseConfig = {
+  apiKey: "AIzaSyB66qJEzFreQiFxnwEp8DFwxozrGle8gEQ",
+  authDomain: "parkat-cccbb.firebaseapp.com",
+  projectId: "parkat-cccbb",
+  appId: "parkat-cccbb"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
   <React.StrictMode>
