@@ -1,13 +1,15 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
+@import url(//fonts.googleapis.com/css?family=Assistant);
 
 /** Ionic CSS Variables **/
 :root {
-  --ion-background-color: #303237;
-  --ion-text-color: #009688;
+  --ion-background-color: hsl(223, 7%, 20%);
+  --ion-font-family: "Assistant";
 
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: white;
+  --ion-text-color-primary: white;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -15,7 +17,8 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-primary-tint: #4c8dff;
 
   /** secondary **/
-  --ion-color-secondary: #3dc2ff;
+  --ion-color-secondary: #009688;
+  --ion-text-color-primary: #009688;
   --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;

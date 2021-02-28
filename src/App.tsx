@@ -4,7 +4,6 @@ import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import ViewMessage from './pages/ViewMessage';
 import Login from './pages/Login';
-import SignIn from './pages/SignIn';
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -46,9 +45,6 @@ const App: React.FC = () =>{
         </Route>
         <Route path="/login" exact={true}>
           <Login/>
-        </Route>
-        <Route path="/signin" exact={true}>
-          <SignIn/>
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
