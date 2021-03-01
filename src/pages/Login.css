@@ -10,3 +10,33 @@
     font-size: 5em;
     font-weight: bold;
 }
+
+.startDriving {
+    font-size: 2em;
+}
+
+/** I had to do some modifications to firebase ui **/
+.firebaseui-idp-icon-wrapper img {
+    max-height: 4em;
+}
+
+.firebaseui-idp-list {
+    list-style-type: none;
+}
+
+.firebaseui-idp-text-short {
+    display: none;
+}
+
+.firebaseui-idp-text-long {
+    font-size: 1.5em;
+    margin-left: 0.5em;
+}
+
+.firebaseui-idp-button {
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 0.5em;
+}
