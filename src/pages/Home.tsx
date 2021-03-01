@@ -1,5 +1,5 @@
 import MessageListItem from '../components/MessageListItem';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Message, getMessages } from '../data/messages';
 import {
   IonContent,
@@ -10,13 +10,21 @@ import {
   IonRefresherContent,
   IonTitle,
   IonToolbar,
-  useIonViewWillEnter
+  useIonViewWillEnter,
+  IonText
 } from '@ionic/react';
 import './Home.css';
+import firebase from 'firebase';
+
 
 const Home: React.FC = () => {
 
   const [messages, setMessages] = useState<Message[]>([]);
+  const [displayName, setDisplayName] = useState<string>();
+
+  firebase.auth().onAuthStateChanged(()=>{
+    setDisplayName(firebase.auth().currentUser?.displayName?.toString());
+  });
 
   useIonViewWillEnter(() => {
     const msgs = getMessages();
@@ -32,8 +40,11 @@ const Home: React.FC = () => {
   return (
     <IonPage id="home-page">
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar className={"toolbar"}>
           <IonTitle>Inbox</IonTitle>
+          <IonText className={"userName"} color="primary">
+          {displayName}  שלום 
+          </IonText>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
