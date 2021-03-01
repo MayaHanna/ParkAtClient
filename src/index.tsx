@@ -4,6 +4,8 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import configureStore from "./data/configureStore";
+import { Provider } from "react-redux";
 import firebase from "firebase/app";
 
 var firebaseConfig = {
@@ -17,9 +19,9 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={configureStore}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
