@@ -1,4 +1,4 @@
-import MessageListItem from '../components/MessageListItem';
+import ParkingListItem from '../components/ParkingListItem';
 import { useState, useEffect } from 'react';
 import { Message, getMessages } from '../data/messages';
 import {
@@ -15,21 +15,21 @@ import {
 } from '@ionic/react';
 import './Home.css';
 import firebase from 'firebase';
+import {useDispatch, useSelector} from "react-redux";
+import {getParkings} from "../data/parkings-module/actions";
+import {parkingsSelector} from "../data/parkings-module/selectors";
+import {Parking} from "../data/parkings-module/types";
 
 
 const Home: React.FC = () => {
 
-  const [messages, setMessages] = useState<Message[]>([]);
   const [displayName, setDisplayName] = useState<string>();
 
   firebase.auth().onAuthStateChanged(()=>{
     setDisplayName(firebase.auth().currentUser?.displayName?.toString());
   });
 
-  useIonViewWillEnter(() => {
-    const msgs = getMessages();
-    setMessages(msgs);
-  });
+  const parkings = useSelector(parkingsSelector);
 
   const refresh = (e: CustomEvent) => {
     setTimeout(() => {
@@ -37,14 +37,16 @@ const Home: React.FC = () => {
     }, 3000);
   };
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getParkings());
+  }, []);
+
   return (
     <IonPage id="home-page">
       <IonHeader>
         <IonToolbar className={"toolbar"}>
-          <IonTitle>Inbox</IonTitle>
-          <IonText className={"userName"} color="primary">
-          {displayName}  שלום 
-          </IonText>
+          <IonTitle>{displayName}שלום </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -55,13 +57,13 @@ const Home: React.FC = () => {
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">
-              Inbox
+              חניות
             </IonTitle>
           </IonToolbar>
         </IonHeader>
 
         <IonList>
-          {messages.map(m => <MessageListItem key={m.id} message={m} />)}
+          {parkings.map(p => <ParkingListItem key={p.id} parking={p} />)}
         </IonList>
       </IonContent>
     </IonPage>
