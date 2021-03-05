@@ -14,3 +14,10 @@ export const parkingsWithFilterSelector = createSelector(
         })
     }
 );
+
+export const parkingsWitIdSelector = createSelector(
+    [parkingsSelector, getProps], (parkings, props) => {
+        debugger;
+        return parkings.find(_=>_.id.toString() == props.id);
+    }
+);

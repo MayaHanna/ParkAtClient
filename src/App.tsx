@@ -5,6 +5,7 @@ import {useHistory} from "react-router";
 import Home from './pages/Home';
 import ViewMessage from './pages/ViewMessage';
 import Login from './pages/Login';
+import ParkingOffer from './pages/ParkingOffer';
 import firebase from "firebase/app";
 import "firebase/auth";
 import "./App.css"
@@ -71,6 +72,9 @@ const App: React.FC = () =>{
         </Route>
         <Route path="/login" exact={true}>
           <Login/>
+        </Route>
+        <Route path="/parkingOffer/:id">
+          <ParkingOffer/>
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
