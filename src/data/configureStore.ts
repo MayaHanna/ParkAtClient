@@ -11,10 +11,12 @@ import parkingsSaga from "./parkings-module/saga";
 import parkingsOffersSaga from "./parkings-offers-module/saga";
 import {ParkingsState} from "./parkings-module/types";
 import {ParkingsOffersState} from "./parkings-offers-module/types";
+import { UserState } from "./user-module/types";
+import User from "./user-module/reducer";
 
 const sagaMiddleware = createSagaMiddleware();
 export const history = createBrowserHistory();
-export const rootReducer = { Example, Parkings, ParkingsOffers };
+export const rootReducer = { Example, Parkings, ParkingsOffers, User };
 export const rootMiddleware = [sagaMiddleware];
 
 export const rootSaga = [exampleSaga, parkingsSaga, parkingsOffersSaga];
@@ -29,5 +31,6 @@ rootSaga.forEach((saga) => sagaMiddleware.run(saga));
 export type RootState = {
   Example: ExampleState;
   Parkings: ParkingsState;
+  User: UserState
   ParkingsOffers: ParkingsOffersState;
 };
