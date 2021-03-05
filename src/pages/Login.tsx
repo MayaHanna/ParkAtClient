@@ -3,32 +3,48 @@ import {
     IonPage,
     useIonViewWillEnter,
     IonText,
+    useIonViewDidLeave,
+    useIonViewWillLeave,
     
   } from '@ionic/react';
   import './Login.css';
   import firebase from "firebase"; 
   import * as firebaseui from "firebaseui";
+  import {useDispatch, useSelector,} from "react-redux";
+  import { setUser} from "../data/user-module/actions";
+  import { useHistory } from "react-router";
+import {useState, useEffect, useRef} from 'react';
+import {userSelector} from "../data/user-module/selectors";
+import auth from "firebaseui";
 
 
 const Login: React.FC = () => {
 
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+  const ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth());
+  const uiConfig = ({
+    callbacks: {
+      signInSuccessWithAuthResult: function(authResult: any, redirectUrl: string) {
+        var displayName = authResult.user.displayName;
+        dispatch(setUser({userDisplayName: displayName}));
+        dispatch(history.push("/home"));
+
+        return true;
+      },
+    },
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    ],
+  });
 
   useIonViewWillEnter(() => {
-    const ui = new firebaseui.auth.AuthUI(firebase.auth());
-    const uiConfig = ({
-      callbacks: {
-        signInSuccessWithAuthResult: function(authResult: any, redirectUrl: string) {
-          const displayName = authResult.user.displayName;
+    ui.start('#firebaseui-auth-container', uiConfig);
+  });
 
-          return true;
-        },
-      },
-      signInSuccessUrl: '/home',
-      signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID
-      ],
-    });
-    ui.start('#firebaseui-auth-container', uiConfig)
+  useIonViewWillLeave(()=>{
+    ui.delete();
   });
 
     return (

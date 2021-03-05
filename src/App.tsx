@@ -1,12 +1,15 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, useIonViewWillEnter } from '@ionic/react';
+import { IonApp, IonRouterOutlet, IonLoading } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import {useHistory} from "react-router";
 import Home from './pages/Home';
 import ViewMessage from './pages/ViewMessage';
 import Login from './pages/Login';
 import firebase from "firebase/app";
 import "firebase/auth";
 import "./App.css"
+import { userSelector } from './data/user-module/selectors';
+import {useDispatch, useSelector} from "react-redux";
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -27,10 +30,30 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import {useEffect, useRef, useState} from "react";
+import {setUser} from "./data/user-module/actions";
 
 const App: React.FC = () =>{
- 
-  
+  const user = useSelector(userSelector);
+  const [currentScreen, setCurrentScreen] = useState("Loading");
+
+    const userRef = useRef<any>();
+    const dispatch = useDispatch();
+    const currentUser = firebase.auth().currentUser;
+
+    if (!currentUser) {
+        setTimeout(() => {
+            if (!userRef.current) {
+                setCurrentScreen("Login");
+            }
+        }, 3000)
+    }
+
+    if (!userRef.current && currentUser) {
+        setCurrentScreen("Home");
+        dispatch(setUser({userDisplayName: currentUser.displayName || undefined}))
+    }
+    userRef.current = currentUser;
  return (
   <IonApp>
     <IonReactRouter>
@@ -39,7 +62,9 @@ const App: React.FC = () =>{
           <Redirect to="/home" />
         </Route>
         <Route path="/home" exact={true}>
-          <Home />
+          {
+              currentScreen === "Loading" ? <IonLoading isOpen={true}/> : currentScreen === "Home" ? <Home/> : <Redirect to="/login" />
+          }
         </Route>
         <Route path="/message/:id">
            <ViewMessage />
