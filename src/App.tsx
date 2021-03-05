@@ -6,6 +6,7 @@ import ViewMessage from './pages/ViewMessage';
 import Login from './pages/Login';
 import firebase from "firebase/app";
 import "firebase/auth";
+import "./App.css"
 
 
 /* Core CSS required for Ionic components to work properly */

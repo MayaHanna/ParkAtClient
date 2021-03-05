@@ -14,11 +14,11 @@ const Login: React.FC = () => {
 
 
   useIonViewWillEnter(() => {
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    const ui = new firebaseui.auth.AuthUI(firebase.auth());
     const uiConfig = ({
       callbacks: {
         signInSuccessWithAuthResult: function(authResult: any, redirectUrl: string) {
-          var displayName = authResult.user.displayName;
+          const displayName = authResult.user.displayName;
 
           return true;
         },
