@@ -8,10 +8,12 @@ import { ExampleState } from "./example-module/types";
 import exampleSaga from "./example-module/saga";
 import parkingsSaga from "./parkings-module/saga";
 import {ParkingsState} from "./parkings-module/types";
+import { UserState } from "./user-module/types";
+import User from "./user-module/reducer";
 
 const sagaMiddleware = createSagaMiddleware();
 export const history = createBrowserHistory();
-export const rootReducer = { Example, Parkings };
+export const rootReducer = { Example, Parkings, User };
 export const rootMiddleware = [sagaMiddleware];
 
 export const rootSaga = [exampleSaga, parkingsSaga];
@@ -26,4 +28,5 @@ rootSaga.forEach((saga) => sagaMiddleware.run(saga));
 export type RootState = {
   Example: ExampleState;
   Parkings: ParkingsState;
+  User: UserState
 };

@@ -13,23 +13,18 @@ import {
   IonText, IonSearchbar
 } from '@ionic/react';
 import './Home.css';
-import firebase from 'firebase';
+import { userSelector } from '../data/user-module/selectors';
 import {useDispatch, useSelector} from "react-redux";
 import {getParkings} from "../data/parkings-module/actions";
-import {parkingsSelector, parkingsWithFilterSelector} from "../data/parkings-module/selectors";
+import { parkingsWithFilterSelector} from "../data/parkings-module/selectors";
 import {RootState} from "../data/configureStore";
-import {Parking} from "../data/parkings-module/types";
 
 
 const Home: React.FC = () => {
 
-  const [displayName, setDisplayName] = useState<string>();
   const [searchText, setSearchText] = useState<string>("");
 
-  firebase.auth().onAuthStateChanged(()=>{
-    setDisplayName(firebase.auth().currentUser?.displayName?.toString());
-  });
-
+  const user = useSelector(userSelector);
   const parkings = useSelector((state: RootState) => parkingsWithFilterSelector(state, {searchText}));
 
   const refresh = (e: CustomEvent) => {
@@ -47,7 +42,10 @@ const Home: React.FC = () => {
     <IonPage id="home-page">
       <IonHeader>
         <IonToolbar className={"toolbar"}>
-          <IonTitle>{displayName}שלום </IonTitle>
+          <IonTitle>Inbox</IonTitle>
+          <IonText className={"userName"} color="primary">
+          {user}  שלום 
+          </IonText>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
