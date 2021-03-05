@@ -35,22 +35,22 @@ ion-item ion-note.md {
 }
 
 .icon-wrapper {
+  height: 10vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .parking-size {
-  height: 5vh;
-  width: 3vw;
+  height: 3vh;
+  width: 6vw;
 }
 
 .dot {
-  display: block;
   height: 12px;
   width: 12px;
   border-radius: 50%;
-  align-self: start;
-  margin: 16px 10px 16px 16px;
 }
 
 .dot-Free {

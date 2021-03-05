@@ -12,9 +12,6 @@ export interface Parking {
   size: Size;
   status: Parking_Status;
   owner: number;
-  price: number;
-  start: Date;
-  end: Date;
 }
 export interface ParkingsState {
   parkings: Parking[];

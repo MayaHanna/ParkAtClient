@@ -4,17 +4,20 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { createBrowserHistory } from "history";
 import Example from "./example-module/reducer";
 import Parkings from "./parkings-module/reducer";
+import ParkingsOffers from "./parkings-offers-module/reducer";
 import { ExampleState } from "./example-module/types";
 import exampleSaga from "./example-module/saga";
 import parkingsSaga from "./parkings-module/saga";
+import parkingsOffersSaga from "./parkings-offers-module/saga";
 import {ParkingsState} from "./parkings-module/types";
+import {ParkingsOffersState} from "./parkings-offers-module/types";
 
 const sagaMiddleware = createSagaMiddleware();
 export const history = createBrowserHistory();
-export const rootReducer = { Example, Parkings };
+export const rootReducer = { Example, Parkings, ParkingsOffers };
 export const rootMiddleware = [sagaMiddleware];
 
-export const rootSaga = [exampleSaga, parkingsSaga];
+export const rootSaga = [exampleSaga, parkingsSaga, parkingsOffersSaga];
 
 export default createStore(
   combineReducers(rootReducer),
@@ -26,4 +29,5 @@ rootSaga.forEach((saga) => sagaMiddleware.run(saga));
 export type RootState = {
   Example: ExampleState;
   Parkings: ParkingsState;
+  ParkingsOffers: ParkingsOffersState;
 };

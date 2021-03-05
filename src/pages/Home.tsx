@@ -1,4 +1,4 @@
-import ParkingListItem from '../components/ParkingListItem';
+import ParkingOfferListItem from '../components/ParkingOfferListItem';
 import { useState, useEffect } from 'react';
 import {
   IonContent,
@@ -19,6 +19,9 @@ import {getParkings} from "../data/parkings-module/actions";
 import {parkingsSelector, parkingsWithFilterSelector} from "../data/parkings-module/selectors";
 import {RootState} from "../data/configureStore";
 import {Parking} from "../data/parkings-module/types";
+import {fullParkingsOffersWithFilterSelector} from "../data/parkings-offers-module/selectors";
+import {FullParkingOffer} from "../data/parkings-offers-module/types";
+import {getParkingsOffers} from "../data/parkings-offers-module/actions";
 
 
 const Home: React.FC = () => {
@@ -30,7 +33,7 @@ const Home: React.FC = () => {
     setDisplayName(firebase.auth().currentUser?.displayName?.toString());
   });
 
-  const parkings = useSelector((state: RootState) => parkingsWithFilterSelector(state, {searchText}));
+  const parkingsOffers: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithFilterSelector(state, {searchText}));
 
   const refresh = (e: CustomEvent) => {
     setTimeout(() => {
@@ -41,6 +44,7 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getParkings());
+    dispatch(getParkingsOffers());
   }, []);
 
   return (
@@ -65,7 +69,7 @@ const Home: React.FC = () => {
 
         <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} animated placeholder={"חפש חניה"}/>
         <IonList>
-          {parkings.map(p => <ParkingListItem key={p.id} parking={p} />)}
+          {parkingsOffers.map(po => <ParkingOfferListItem key={po.id} parkingOffer={po} />)}
         </IonList>
       </IonContent>
     </IonPage>
