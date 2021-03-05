@@ -16,8 +16,12 @@ export const parkingsWithFilterSelector = createSelector(
 );
 
 export const parkingsWitIdSelector = createSelector(
-    [parkingsSelector, getProps], (parkings, props) => {
-        debugger;
-        return parkings.find(_=>_.id.toString() == props.id);
+    [parkingsSelector, getProps], (parkings, id) => {
+        var parking =  parkings.find(_=>_.id.toString() == id);
+        
+        if(!parking)
+            throw console.error("no id found");
+        
+        return parking;
     }
 );

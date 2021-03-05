@@ -21,5 +21,10 @@
 
 .parking-offer-details {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+}
+
+.parking-grid {
+    width: 100%;
+    padding: 1em;
 }
