@@ -28,3 +28,14 @@ export const fullParkingsOffersWithFilterSelector = createSelector(
         })
     }
 );
+
+export const fullParkingsOffersWithIdSelector = createSelector(
+    [fullParkingsOffersSelector, getProps], (parkingsOffers: FullParkingOffer[], id) => {
+        var parking =  parkingsOffers.find(_=>_.id.toString() == id);
+        
+        if(!parking)
+            throw console.error("no id found");
+        
+        return parking;
+    }
+);

@@ -18,7 +18,7 @@ const ParkingOfferListItem: React.FC<MessageListItemProps> = ({ parkingOffer }) 
   const startDate = new Date(parkingOffer.start);
   const endDate = new Date(parkingOffer.end);
     return (
-    <IonItem routerLink={`/parking/${parkingOffer.id}`} detail={false}>
+    <IonItem routerLink={`/parkingOffer/${parkingOffer.id}`} detail={false}>
       <div slot="start" className={"icon-wrapper"}>
         <div className={dotClassName} />
         {parkingOffer.parking.size === "Big" && <BigParking className={"parking-size"}/>}

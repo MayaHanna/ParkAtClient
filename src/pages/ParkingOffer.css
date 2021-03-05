@@ -24,6 +24,11 @@
     flex-direction: column;
 }
 
+.parking-description {
+    font-size: 1.5em;
+    padding: 0.5em;
+}
+
 .parking-grid {
     width: 100%;
     padding: 1em;
