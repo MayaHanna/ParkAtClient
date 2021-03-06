@@ -1,1 +1,0 @@
-export const SET_EXAMPLE_STRING = "SET_EXAMPLE_STRING";
