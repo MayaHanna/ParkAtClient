@@ -1,0 +1,19 @@
+ion-radio-group {
+    display:flex
+}
+
+ion-buttons {
+    display:flex;
+    justify-content: center;
+}
+
+.formWrapper {
+    padding-top: 3%;
+    padding-right: 5%;
+    padding-left: 5%;
+}
+
+.itemButtonWrapper {
+    justify-content: space-evenly;
+    width: 50%;
+}

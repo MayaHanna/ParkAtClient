@@ -1,5 +1,5 @@
-import {ParkingOfferAction, ParkingsOffersState} from "./types";
-import { SET_PARKINGS_OFFERS } from "./actions.types";
+import { ParkingOfferAction, ParkingsOffersState } from "./types";
+import { SET_PARKINGS_OFFERS, ADD_PARKING_OFFER } from "./actions.types";
 
 export const initialState: ParkingsOffersState = {
   parkingsOffers: [],
@@ -19,6 +19,14 @@ const reducer: ExampleReducer = (
       return {
         ...state,
         parkingsOffers: action.payload,
+      };
+    case ADD_PARKING_OFFER:
+      return {
+        ...state,
+        parkingsOffers: [
+          ...state.parkingsOffers,
+          { ...action.payload }
+        ]
       };
     default:
       return state;

@@ -1,0 +1,33 @@
+.parkingTitle {
+    background-color: #009688;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 20%;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5em;
+}
+
+.title-icon {
+    font-size: 4em;
+    margin-left: 0.5em;
+    color: black;
+}
+
+.headerWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.detailsWrapper{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 4%;
+    padding-right: 4%;
+    padding-left: 4%;
+}

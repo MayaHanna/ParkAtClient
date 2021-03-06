@@ -1,10 +1,11 @@
 import { RootState } from "../configureStore";
-import {createSelector} from "reselect";
+import { createSelector } from "reselect";
+import { Parking } from "./types";
 
 export const getProps = (state: RootState, props: any) => props;
 
 export const parkingsSelector = (state: RootState) =>
-  state.Parkings.parkings;
+    state.Parkings.parkings;
 
 
 export const parkingsWithFilterSelector = createSelector(
@@ -15,3 +16,14 @@ export const parkingsWithFilterSelector = createSelector(
     }
 );
 
+export const parkingsWithIdSelector = createSelector(
+    [parkingsSelector, getProps], (parkings, id) => {
+        return parkings.find(p => p.id.toString() == id);
+    }
+);
+
+export const parkingsWithOwnerSelector = createSelector(
+    [parkingsSelector, getProps], (parkings: Parking[], ownerId) => {
+        return parkings.filter(p => p.owner.toString() == ownerId);
+    }
+);
