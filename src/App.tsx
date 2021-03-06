@@ -33,6 +33,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import {useEffect, useRef, useState} from "react";
 import {setUser} from "./data/user-module/actions";
+import {Paypal} from "./pages/Paypal";
 
 const App: React.FC = () =>{
   const user = useSelector(userSelector);
@@ -76,6 +77,9 @@ const App: React.FC = () =>{
         <Route path="/parkingOffer/:id">
           <ParkingOffer/>
         </Route>
+          <Route path="/pay" exact={true}>
+              <Paypal/>
+          </Route>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
