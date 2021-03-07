@@ -40,7 +40,7 @@ const initializedFields: ParkingOffer = {
     isPermanent: false,
     price: 0,
     parking: 1,
-    merchantId: "sb",
+    merchantId: "",
     status: "Open"
 };
 
@@ -178,6 +178,10 @@ function AddPrivateOffer() {
                             className={!parkingOffer.isPermanent ? "choosenButton" : ""}
                             onClick={() => handleFieldChange("isPermanent", false)}>לא </IonItem>
                     </IonButtons>
+                </IonItem>
+                <IonItem>
+                    <IonLabel>חשבון paypal לזיכוי</IonLabel>
+                    <IonInput name="merchantId" value={parkingOffer.merchantId} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
                 </IonItem>
                 <IonButtons>
                     <IonButton onClick={addPaarkingOffer}>הוסף</IonButton>
