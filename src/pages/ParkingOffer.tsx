@@ -23,6 +23,7 @@ import { useState, useEffect } from 'react';
 import { RootState } from "../data/configureStore";
 import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { FullParkingOffer } from '../data/parkings-offers-module/types';
+import {Paypal} from "./Paypal";
 
 
 const ParkingOffer: React.FC = () => {
@@ -51,20 +52,19 @@ const ParkingOffer: React.FC = () => {
         <div className={"parking-offer-title"}>
           <IonIcon icon={carOutline} className={"parking-offer-title-icon"} />
           <div className={"parking-offer-title-details"}>
-            <IonText color="primary">חניה בית</IonText>
             <IonText color="primary">{parkingOffer?.parking.address}</IonText>
           </div>
         </div>
         <div color="primary" className={"parking-offer-details"}>
           <IonText color="primary" className={"parking-description"}>{parkingOffer.parking.description}</IonText>
           <IonGrid className={"parking-grid"}>
-            {/* <IonRow>
+            <IonRow>
                         <IonCol><IonText color="primary">סטטוס</IonText></IonCol>
                         <IonCol>
-                            {parkingOffer.parking.status == "Free" && <IonText color="primary">פנויה</IonText>}
-                            {parkingOffer.parking.status == "Taken" &&<IonText color="primary">תפוסה</IonText>}
+                            {parkingOffer.status == "Open" && <IonText color="primary">פנויה</IonText>}
+                            {parkingOffer.status == "Closed" && <IonText color="primary">תפוסה</IonText>}
                         </IonCol>
-                      </IonRow> */}
+                      </IonRow>
             <IonRow>
               <IonCol><IonText color="primary">תאריך התחלה</IonText></IonCol>
               <IonCol> <IonText color="primary">{new Date(parkingOffer.start).getDate()}/{new Date(parkingOffer.start).getMonth() + 1}/{new Date(parkingOffer.start).getFullYear()} {new Date(parkingOffer.start).getHours()}:{new Date(parkingOffer.start).getMinutes()}</IonText></IonCol>
@@ -84,8 +84,10 @@ const ParkingOffer: React.FC = () => {
               <IonCol><IonText color="primary">מחיר</IonText></IonCol>
               <IonCol><IonText color="primary">{parkingOffer.price}&#8362;</IonText></IonCol>
             </IonRow>
+              <IonRow className={"paypal-row"}>
+                  <Paypal price={parkingOffer.price} merchantId={parkingOffer.merchantId} parkingOfferId={parkingOffer.id}/>
+              </IonRow>
           </IonGrid>
-
         </div>
       </IonContent>
     </IonPage>

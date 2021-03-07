@@ -1,5 +1,5 @@
 import { ParkingOfferAction, ParkingsOffersState } from "./types";
-import { SET_PARKINGS_OFFERS, ADD_PARKING_OFFER } from "./actions.types";
+import {SET_PARKINGS_OFFERS, ADD_PARKING_OFFER, EDIT_PARKING_OFFER} from "./actions.types";
 
 export const initialState: ParkingsOffersState = {
   parkingsOffers: [],
@@ -27,6 +27,23 @@ const reducer: ExampleReducer = (
           ...state.parkingsOffers,
           { ...action.payload }
         ]
+      };
+    case EDIT_PARKING_OFFER:
+      const currentParkingsOffers = state.parkingsOffers;
+      const newParkingsOffers = currentParkingsOffers.map((po) => {
+        if (action.payload.id === po.id) {
+          return {
+            ...po,
+            ...action.payload
+          }
+        }
+
+        return po;
+      });
+
+      return {
+        ...state,
+        parkingsOffers: newParkingsOffers
       };
     default:
       return state;

@@ -2,12 +2,15 @@ import * as actions from "./actions.types";
 import { ActionCreator } from "../common/types";
 import {Parking} from "../parkings-module/types";
 
+type Parking_Offer_Status = "Open" | "Closed";
 interface ParkingOfferBaseline {
   id: number;
-  price: number | undefined;
+  price: number;
   start: Date;
   end: Date;
   isPermanent: boolean
+  merchantId: string;
+  status: Parking_Offer_Status
 }
 
 export type ParkingOffer = ParkingOfferBaseline & {
