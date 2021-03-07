@@ -10,26 +10,31 @@ import {
   IonTitle,
   IonToolbar,
   useIonViewWillEnter,
-  IonText, IonSearchbar
+  IonText,
+  IonSearchbar,
+  IonButtons,
+  IonBackButton
 } from '@ionic/react';
 import './Home.css';
 import { userSelector } from '../data/user-module/selectors';
-import {useDispatch, useSelector} from "react-redux";
-import {getParkings} from "../data/parkings-module/actions";
-import { parkingsWithFilterSelector} from "../data/parkings-module/selectors";
-import {RootState} from "../data/configureStore";
-import {Parking} from "../data/parkings-module/types";
-import {fullParkingsOffersWithFilterSelector} from "../data/parkings-offers-module/selectors";
-import {FullParkingOffer} from "../data/parkings-offers-module/types";
-import {getParkingsOffers} from "../data/parkings-offers-module/actions";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getParkings } from "../data/parkings-module/actions";
+import { parkingsWithFilterSelector } from "../data/parkings-module/selectors";
+import { RootState } from "../data/configureStore";
+import { Parking } from "../data/parkings-module/types";
+import { fullParkingsOffersWithFilterSelector } from "../data/parkings-offers-module/selectors";
+import { FullParkingOffer } from "../data/parkings-offers-module/types";
+import { getParkingsOffers } from "../data/parkings-offers-module/actions";
+import { useHistory } from "react-router-dom";
 
 const Home: React.FC = () => {
 
   const [searchText, setSearchText] = useState<string>("");
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const user = useSelector(userSelector);
-  const parkingsOffers: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithFilterSelector(state, {searchText}));
+  const parkingsOffers: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithFilterSelector(state, { searchText }));
 
   const refresh = (e: CustomEvent) => {
     setTimeout(() => {
@@ -37,11 +42,11 @@ const Home: React.FC = () => {
     }, 3000);
   };
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getParkings());
-    dispatch(getParkingsOffers());
-  }, []);
+  const onParkingClick = (parking: Parking) => {
+    history.push(`/parking/${parking.id}`);
+  }
+
+  const goLogin = () => history.push('login');
 
   return (
     <IonPage id="home-page">
@@ -49,8 +54,11 @@ const Home: React.FC = () => {
         <IonToolbar className={"toolbar"}>
           <IonTitle>Inbox</IonTitle>
           <IonText className={"userName"} color="primary">
-          {user}  שלום
+            {user}  שלום
           </IonText>
+          <IonButtons>
+            <IonBackButton text="הוסף הצעת חניה" defaultHref="/addParkingOffer"></IonBackButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -66,7 +74,7 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} animated placeholder={"חפש חניה"}/>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} animated placeholder={"חפש חניה"} />
         <IonList>
           {parkingsOffers.map(po => <ParkingOfferListItem key={po.id} parkingOffer={po} />)}
         </IonList>

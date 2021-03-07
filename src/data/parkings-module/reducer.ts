@@ -1,5 +1,5 @@
-import { ParkingAction, ParkingsState} from "./types";
-import { SET_PARKINGS } from "./actions.types";
+import { ParkingAction, ParkingsState } from "./types";
+import { ADD_PARKING, SET_PARKINGS } from "./actions.types";
 
 export const initialState: ParkingsState = {
   parkings: [],
@@ -19,6 +19,14 @@ const reducer: ExampleReducer = (
       return {
         ...state,
         parkings: action.payload,
+      };
+    case ADD_PARKING:
+      return {
+        ...state,
+        parkings: [
+          ...state.parkings,
+          { ...action.payload }
+        ]
       };
     default:
       return state;

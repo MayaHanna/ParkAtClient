@@ -4,9 +4,10 @@ import {Parking} from "../parkings-module/types";
 
 interface ParkingOfferBaseline {
   id: number;
-  price: number;
+  price: number | undefined;
   start: Date;
   end: Date;
+  isPermanent: boolean
   merchantId: string;
 }
 
