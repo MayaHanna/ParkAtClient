@@ -23,6 +23,7 @@ import {
   import {RootState} from "../data/configureStore";
   import {getParkingsOffers} from "../data/parkings-offers-module/actions";
 import { FullParkingOffer } from '../data/parkings-offers-module/types';
+import {Paypal} from "./Paypal";
 
 
 const ParkingOffer: React.FC = () => {
@@ -83,6 +84,9 @@ const ParkingOffer: React.FC = () => {
                       <IonRow>
                         <IonCol><IonText color="primary">מחיר</IonText></IonCol>
                         <IonCol><IonText color="primary">{parkingOffer.price}&#8362;</IonText></IonCol>
+                    </IonRow>
+                    <IonRow className={"paypal-row"}>
+                        <Paypal price={parkingOffer.price} merchantId={parkingOffer.merchantId}/>
                     </IonRow>
                 </IonGrid>
 

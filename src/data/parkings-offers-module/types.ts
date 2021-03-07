@@ -7,6 +7,7 @@ interface ParkingOfferBaseline {
   price: number;
   start: Date;
   end: Date;
+  merchantId: string;
 }
 
 export type ParkingOffer = ParkingOfferBaseline & {

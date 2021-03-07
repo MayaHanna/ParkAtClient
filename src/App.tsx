@@ -77,9 +77,6 @@ const App: React.FC = () =>{
         <Route path="/parkingOffer/:id">
           <ParkingOffer/>
         </Route>
-          <Route path="/pay" exact={true}>
-              <Paypal/>
-          </Route>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
