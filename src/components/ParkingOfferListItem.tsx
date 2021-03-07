@@ -14,8 +14,7 @@ interface MessageListItemProps {
 }
 
 const ParkingOfferListItem: React.FC<MessageListItemProps> = ({ parkingOffer }) => {
-  const dotClassName = `dot dot-Free`;
-  // const dotClassName = `dot dot-${parkingOffer.parking.status}`;
+  const dotClassName = `dot dot-${parkingOffer.status}`;
   const startDate = new Date(parkingOffer.start);
   const endDate = new Date(parkingOffer.end);
   return (

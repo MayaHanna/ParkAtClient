@@ -53,11 +53,11 @@ ion-item ion-note.md {
   border-radius: 50%;
 }
 
-.dot-Free {
+.dot-Open {
   background: #009688;
 }
 
-.dot-Taken {
+.dot-Closed {
   background: #fd453c;
 }
 

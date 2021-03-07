@@ -76,7 +76,7 @@ const Home: React.FC = () => {
 
         <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} animated placeholder={"חפש חניה"} />
         <IonList>
-          {parkingsOffers.map(po => <ParkingOfferListItem key={po.id} parkingOffer={po} />)}
+          {parkingsOffers.map(po => po.status === "Open" && <ParkingOfferListItem key={po.id} parkingOffer={po} />)}
         </IonList>
       </IonContent>
     </IonPage>

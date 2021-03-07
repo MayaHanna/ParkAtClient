@@ -38,9 +38,11 @@ const initializedFields: ParkingOffer = {
     start: new Date(),
     end: new Date(),
     isPermanent: false,
-    price: undefined,
-    parking: 1
-}
+    price: 0,
+    parking: 1,
+    merchantId: "sb",
+    status: "Open"
+};
 
 function AddPrivateOffer() {
     const [isChoosingFromList, setIsChoosingFromList] = useState(true);

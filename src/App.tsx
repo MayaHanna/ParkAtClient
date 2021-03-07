@@ -72,9 +72,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/home" exact={true}>
             <Home />
-            {/* {
+            {
               currentScreen === "Loading" ? <IonLoading isOpen={true} /> : currentScreen === "Home" ? <Home /> : <Redirect to="/login" />
-            } */}
+            }
           </Route>
           <Route path="/message/:id">
             <ViewMessage />

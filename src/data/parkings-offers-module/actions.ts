@@ -1,4 +1,4 @@
-import { ADD_PARKING_OFFER, GET_PARKINGS_OFFERS, SET_PARKINGS_OFFERS } from "./actions.types";
+import { ADD_PARKING_OFFER, GET_PARKINGS_OFFERS, SET_PARKINGS_OFFERS, EDIT_PARKING_OFFER } from "./actions.types";
 import { ParkingOffer, ParkingOfferActionCreator } from "./types";
 
 export const setParkingsOffers: ParkingOfferActionCreator<ParkingOffer[]> = (payload) => {
@@ -17,6 +17,13 @@ export const getParkingsOffers = () => {
 export const addParkingOffer: ParkingOfferActionCreator<ParkingOffer> = (payload) => {
   return {
     type: ADD_PARKING_OFFER,
+    payload
+  };
+};
+
+export const editParkingOffer: ParkingOfferActionCreator<Partial<ParkingOffer>> = (payload) => {
+  return {
+    type: EDIT_PARKING_OFFER,
     payload
   };
 };

@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from "axios";
+import {ParkingOffer} from "./types";
 
 export const fetchParkingsOffers = async () => {
     const response:AxiosResponse = await axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/parkingsOffers`);
@@ -8,6 +9,13 @@ export const fetchParkingsOffers = async () => {
 export const addParkingOffer = (formData: any) => {
     return axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/parkingsOffers`,
         { formData },
+        { withCredentials: true }
+    );
+};
+
+export const editParkingOffer = (parkingOfferId: number, parkingOfferFields: Partial<ParkingOffer>) => {
+    return axios.put(`${process.env.REACT_APP_SERVER_ADDRESS}/parkingsOffers`,
+        { id:  parkingOfferId, formData: parkingOfferFields},
         { withCredentials: true }
     );
 };
