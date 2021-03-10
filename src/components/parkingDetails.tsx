@@ -7,6 +7,8 @@ import {
 import './parkingDetails.css';
 import { carOutline } from 'ionicons/icons';
 import { Parking } from "../data/parkings-module/types";
+import {ReactComponent as BigParking} from "../resources/truck.svg";
+import {ReactComponent as SmallParking} from "../resources/car.svg";
 
 interface ParkingDetailsProps {
   parking: Parking | undefined
@@ -17,9 +19,8 @@ const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking }) => {
   return (
     <IonCard className="parkingTitle">
       <div className="headerWrapper">
-        <div >
-          <IonIcon icon={carOutline} className="title-icon" />
-        </div>
+        {parking?.size === "Big" && <BigParking className={"title-icon"} />}
+        {parking?.size === "Small" && <SmallParking className={"title-icon"} />}
         <div className="details">
           <IonText color="primary">{parking?.name}</IonText>
           <IonText color="primary">{parking?.address}</IonText>

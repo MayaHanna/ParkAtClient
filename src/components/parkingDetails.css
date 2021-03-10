@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     min-height: 20%;
+    height: 10%;
 }
 
 .details {
@@ -16,12 +17,14 @@
 .title-icon {
     font-size: 4em;
     margin-left: 0.5em;
-    color: black;
+    height: 50%;
+    width: 10%;
 }
 
 .headerWrapper {
     display: flex;
     align-items: center;
+    height: 100%;
 }
 
 .detailsWrapper{

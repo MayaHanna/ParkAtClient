@@ -18,7 +18,10 @@ import {
     IonTextarea,
     IonButton,
     IonRadioGroup,
-    IonRadio
+    IonRadio,
+    IonRow,
+    IonCol,
+    IonGrid
 } from '@ionic/react';
 import { personCircle } from 'ionicons/icons';
 import { useParams } from 'react-router';
@@ -74,16 +77,17 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking }) => {
 
     return (
         <form className="formWrapper">
-            <IonItem>
-                <IonLabel>שם חניה</IonLabel>
-                <IonInput type="text" name="name" onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
+
+            <IonItem >
+                <IonLabel className="labelText">שם חניה</IonLabel>
+                <IonInput className="innerText" type="text" name="name" onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
+            </IonItem>
+            <IonItem >
+                <IonLabel className="labelText">כתובת</IonLabel>
+                <IonInput className="innerText" type="text" name="address" onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
             </IonItem>
             <IonItem>
-                <IonLabel>כתובת</IonLabel>
-                <IonInput type="text" name="address" onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
-            </IonItem>
-            <IonItem>
-                <IonLabel>סוג חניה </IonLabel>
+                <IonLabel className="labelText" >סוג חניה </IonLabel>
                 <IonButtons className="itemButtonWrapper">
                     <IonItem
                         className={parking.isPrivate ? "choosenButton" : ""}
@@ -94,7 +98,7 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking }) => {
                 </IonButtons>
             </IonItem>
             <IonItem>
-                <IonLabel>גודל חניה </IonLabel>
+                <IonLabel className="labelText" >גודל חניה </IonLabel>
                 <IonButtons className="itemButtonWrapper">
                     <IonItem
                         className={parking.size == "Big" ? "choosenButton" : ""}
@@ -104,12 +108,12 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking }) => {
                         onClick={() => handleFieldChange("size", "Small")}>קטנה </IonItem>
                 </IonButtons>
             </IonItem>
-            <IonItem>
-                <IonLabel>תיאור</IonLabel>
-                <IonTextarea name="description" onIonChange={e => handleFieldChangeByEvent(e)}></IonTextarea>
+            <IonItem >
+                <IonLabel className="labelText">תיאור</IonLabel>
+                <IonTextarea className="innerText" name="description" onIonChange={e => handleFieldChangeByEvent(e)}></IonTextarea>
             </IonItem>
             <IonButtons>
-                <IonButton onClick={addParkingSpot}>הוסף חניה</IonButton>
+                <IonButton className="innerText" onClick={addParkingSpot}>הוסף חניה</IonButton>
             </IonButtons>
         </form >
     );
