@@ -13,7 +13,13 @@ import {
   IonText,
   IonSearchbar,
   IonButtons,
-  IonBackButton
+  IonBackButton,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonFabList,
+  IonButton,
+  IonCard
 } from '@ionic/react';
 import './Home.css';
 import { userSelector } from '../data/user-module/selectors';
@@ -26,6 +32,7 @@ import { fullParkingsOffersWithFilterSelector } from "../data/parkings-offers-mo
 import { FullParkingOffer } from "../data/parkings-offers-module/types";
 import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router-dom";
+import { add } from 'ionicons/icons';
 
 const Home: React.FC = () => {
 
@@ -52,13 +59,13 @@ const Home: React.FC = () => {
     <IonPage id="home-page">
       <IonHeader>
         <IonToolbar className={"toolbar"}>
-          <IonTitle>Inbox</IonTitle>
-          <IonText className={"userName"} color="primary">
-            {user}  שלום
+          <div className="userWrapper"><IonText color="primary">
+            שלום
           </IonText>
-          <IonButtons>
-            <IonBackButton text="הוסף הצעת חניה" defaultHref="/addParkingOffer"></IonBackButton>
-          </IonButtons>
+            <IonText className="userName" color="primary">
+              {user}
+            </IonText>
+          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -74,11 +81,29 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} animated placeholder={"חפש חניה"} />
+        <IonSearchbar className="searchBar" value={searchText} onIonChange={e => setSearchText(e.detail.value!)} animated placeholder={"חפש חניה"} />
         <IonList>
           {parkingsOffers.map(po => po.status === "Open" && <ParkingOfferListItem key={po.id} parkingOffer={po} />)}
         </IonList>
       </IonContent>
+      <IonFab className="fabButton" vertical="bottom" horizontal="end" slot="fixed">
+        <IonFabButton color="secondary">
+          <IonIcon icon={add} />
+        </IonFabButton>
+        <IonFabList side="top" className="fabList">
+          <IonCard className="menu">
+            <IonButtons className="menuButtons">
+              <IonButton onClick={() => history.push("/addParkingOffer")}> הוסף הצעה </IonButton>
+              <IonButton> דווח </IonButton>
+            </IonButtons>
+          </IonCard>
+
+
+          {/* <IonFabButton> */}
+          {/* <IonButton> הוסף הצעת חניה </IonButton> */}
+          {/* </IonFabButton> */}
+        </IonFabList>
+      </IonFab>
     </IonPage>
   );
 };

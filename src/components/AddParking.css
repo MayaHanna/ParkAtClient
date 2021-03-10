@@ -17,3 +17,10 @@ ion-buttons {
     justify-content: space-evenly;
     width: 50%;
 }
+
+.innerText {
+    color:white;
+}
+.labelText {
+    color: #666666  !important;
+}

@@ -127,7 +127,7 @@ function AddPrivateOffer() {
                     <>
                         {
                             parkingsList.length == 0 &&
-                            < h1 > לא נמצאו חניות שמורות </h1 >
+                            < h1 className="innerText"> לא נמצאו חניות שמורות </h1 >
                         }
                         <IonList>
                             {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} />)}
@@ -143,12 +143,13 @@ function AddPrivateOffer() {
             <ParkingDetails parking={chosenParking} />
             <form className="formWrapper">
                 <IonItem>
-                    <IonLabel>מחיר</IonLabel>
-                    <IonInput type="number" name="price" value={parkingOffer.price} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
+                    <IonLabel className="labelText">מחיר</IonLabel>
+                    <IonInput className="innerText" name="price" value={parkingOffer.price} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
                 </IonItem>
                 <IonItem>
-                    <IonLabel>בחר תאריך התחלה</IonLabel>
+                    <IonLabel className="labelText">בחר תאריך התחלה</IonLabel>
                     <IonDatetime
+                        className="innerText"
                         displayFormat="DD/MM/YYYY H:mm"
                         name="start"
                         value={parkingOffer.start.toString()}
@@ -158,8 +159,9 @@ function AddPrivateOffer() {
                     ></IonDatetime>
                 </IonItem>
                 <IonItem>
-                    <IonLabel>בחר תאריך סיום</IonLabel>
+                    <IonLabel className="labelText">בחר תאריך סיום</IonLabel>
                     <IonDatetime
+                        className="innerText"
                         displayFormat="DD/MM/YYYY H:mm"
                         name="end"
                         value={parkingOffer.end.toString()}
@@ -169,7 +171,7 @@ function AddPrivateOffer() {
                     ></IonDatetime>
                 </IonItem>
                 <IonItem>
-                    <IonLabel>אפשרות להצעה קבועה </IonLabel>
+                    <IonLabel className="labelText" >אפשרות להצעה קבועה </IonLabel>
                     <IonButtons className="itemButtonWrapper">
                         <IonItem
                             className={parkingOffer.isPermanent ? "choosenButton" : ""}
@@ -180,11 +182,11 @@ function AddPrivateOffer() {
                     </IonButtons>
                 </IonItem>
                 <IonItem>
-                    <IonLabel>חשבון paypal לזיכוי</IonLabel>
-                    <IonInput name="merchantId" value={parkingOffer.merchantId} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
+                    <IonLabel className="labelText">חשבון paypal לזיכוי</IonLabel>
+                    <IonInput className="innerText" name="merchantId" value={parkingOffer.merchantId} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
                 </IonItem>
                 <IonButtons>
-                    <IonButton onClick={addPaarkingOffer}>הוסף</IonButton>
+                    <IonButton className="innerText" onClick={addPaarkingOffer}>הוסף</IonButton>
                 </IonButtons>
             </form>
         </>
@@ -206,7 +208,7 @@ function AddPrivateOffer() {
                     chosenParking?.id ? (
                         <>
                             <IonButtons>
-                                <IonButton onClick={() => setChosenParking(undefined)} >בחר חניה אחרת</IonButton>
+                                <IonButton className="innerText" onClick={() => setChosenParking(undefined)} >בחר חניה אחרת</IonButton>
                             </IonButtons>
 
                             {displayParkingOfferForm()}
