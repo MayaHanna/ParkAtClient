@@ -17,6 +17,8 @@
 .parking-offer-title-icon {
     font-size: 4em;
     margin-left: 0.5em;
+    height: 50%;
+    width: 10%;
 }
 
 .parking-offer-details {
