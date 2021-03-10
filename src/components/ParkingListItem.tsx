@@ -23,7 +23,7 @@ const ParkingListItem: React.FC<MessageListItemProps> = ({ parking, onClick }) =
         {parking.size === "Big" && <BigParking className={"parking-size"} />}
         {parking.size === "Small" && <SmallParking className={"parking-size"} />}
       </div>
-      <IonLabel className="ion-text-wrap">
+      <IonLabel className="ion-text-wrap" color="primary">
         <h2>
           {parking.address}
         </h2>

@@ -28,3 +28,7 @@
     color: white;
     margin-top: 5%;
 }
+
+ion-list {
+    padding: 1em;
+}
