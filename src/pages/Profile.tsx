@@ -1,29 +1,24 @@
 import {
   IonContent,
   IonPage,
-  useIonViewWillEnter,
   IonText,
-  useIonViewDidLeave,
-  useIonViewWillLeave,
-  IonImg,
-  IonAvatar
-
+  IonAvatar,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton
 } from '@ionic/react';
-import firebase from "firebase"; 
-import * as firebaseui from "firebaseui";
-import {useDispatch, useSelector,} from "react-redux";
-import { setUser} from "../data/user-module/actions";
-import { useHistory } from "react-router";
-import {useState, useEffect, useRef} from 'react';
+import { call, person, settings } from 'ionicons/icons';
+
+import { useSelector,} from "react-redux";
+import {useState, useEffect} from 'react';
 import {userSelector} from "../data/user-module/selectors";
-import auth from "firebaseui";
 import './Profile.css';
 import { getParkingsByOwner } from "../data/parkings-module/api";
 import { Parking } from "../data/parkings-module/types";
 import { FullParkingOffer } from "../data/parkings-offers-module/types";
 import ParkingListItem from "../components/ParkingListItem";
 import ParkingOfferListItem from "../components/ParkingOfferListItem";
-import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { fullParkingsOffersWithOwnerSelector, fullParkingsOffersWithClientSelector } from '../data/parkings-offers-module/selectors';
 import { RootState } from '../data/configureStore';
 
@@ -49,6 +44,13 @@ const Profile: React.FC = () => {
   
   return (
       <IonPage>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons>
+              <IonBackButton color="secondary" />
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
         <IonContent fullscreen>
 
           <div className={"profile-title"}>
@@ -76,6 +78,7 @@ const Profile: React.FC = () => {
             <IonText color="primary" className={"profile-section-title"}>היסטוריה - חניות</IonText>
             {parkingHistory && parkingHistory?.map(p=> <ParkingOfferListItem key={p.id} parkingOffer={p}/>)}
           </div>
+        
         </IonContent>
       </IonPage>
     );

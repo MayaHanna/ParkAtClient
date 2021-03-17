@@ -59,13 +59,13 @@ const Home: React.FC = () => {
     <IonPage id="home-page">
       <IonHeader>
         <IonToolbar className={"toolbar"}>
-          <div className="userWrapper"><IonText color="primary">
+          <a className="userWrapper" href="/profile"><IonText color="primary">
             שלום
           </IonText>
             <IonText className="userName" color="primary">
               {user.userDisplayName}
             </IonText>
-          </div>
+          </a>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
