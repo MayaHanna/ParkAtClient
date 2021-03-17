@@ -42,10 +42,17 @@ export const fullParkingsOffersWithIdSelector = createSelector(
 
 export const fullParkingsOffersWithOwnerSelector = createSelector(
     [fullParkingsOffersSelector, getProps], (parkingsOffers: FullParkingOffer[], owner) => {
-        var parking: FullParkingOffer[] =  parkingsOffers.filter(_=>_.parking.owner.toString() == owner);
+        const parking: FullParkingOffer[] =  parkingsOffers.filter(_=>_.parking.owner.toString() == owner);
     
-
         return parking;
     }
 );
 
+
+export const fullParkingsOffersWithClientSelector = createSelector(
+    [fullParkingsOffersSelector, getProps], (parkingsOffers: FullParkingOffer[], client) => {
+        const parking: FullParkingOffer[] =  parkingsOffers.filter(_=> _.status == "Closed" && _.client == client);
+
+        return parking;
+    }
+);

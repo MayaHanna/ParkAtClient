@@ -24,7 +24,7 @@ import { FullParkingOffer } from "../data/parkings-offers-module/types";
 import ParkingListItem from "../components/ParkingListItem";
 import ParkingOfferListItem from "../components/ParkingOfferListItem";
 import { getParkingsOffers } from "../data/parkings-offers-module/actions";
-import { fullParkingsOffersWithOwnerSelector } from '../data/parkings-offers-module/selectors';
+import { fullParkingsOffersWithOwnerSelector, fullParkingsOffersWithClientSelector } from '../data/parkings-offers-module/selectors';
 import { RootState } from '../data/configureStore';
 
 const Profile: React.FC = () => {
@@ -44,7 +44,9 @@ const Profile: React.FC = () => {
   },[user]);
 
   const parkingOffers: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithOwnerSelector(state, user.userMailAddress));
+  const parkingHistory: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithClientSelector(state, user.userMailAddress));
 
+  
   return (
       <IonPage>
         <IonContent fullscreen>
@@ -66,8 +68,13 @@ const Profile: React.FC = () => {
           </div>
 
           <div color="primary"  className={"profile-section"}>
-            <IonText color="primary" className={"profile-section-title"}>היסטוריה- הצעות</IonText>
-            {parkingOffers && parkingOffers?.map(p=> <ParkingOfferListItem key={p.id} parkingOffer={p}></ParkingOfferListItem>)}
+            <IonText color="primary" className={"profile-section-title"}>היסטוריה - הצעות</IonText>
+            {parkingOffers && parkingOffers?.map(p=> <ParkingOfferListItem key={p.id} parkingOffer={p}/>)}
+          </div>
+
+          <div color="primary"  className={"profile-section"}>
+            <IonText color="primary" className={"profile-section-title"}>היסטוריה - חניות</IonText>
+            {parkingHistory && parkingHistory?.map(p=> <ParkingOfferListItem key={p.id} parkingOffer={p}/>)}
           </div>
         </IonContent>
       </IonPage>
