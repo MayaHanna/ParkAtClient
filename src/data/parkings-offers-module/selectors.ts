@@ -39,3 +39,13 @@ export const fullParkingsOffersWithIdSelector = createSelector(
         return parking;
     }
 );
+
+export const fullParkingsOffersWithOwnerSelector = createSelector(
+    [fullParkingsOffersSelector, getProps], (parkingsOffers: FullParkingOffer[], owner) => {
+        var parking: FullParkingOffer[] =  parkingsOffers.filter(_=>_.parking.owner.toString() == owner);
+    
+
+        return parking;
+    }
+);
+
