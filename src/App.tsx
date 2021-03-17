@@ -36,6 +36,7 @@ import { useEffect, useRef, useState } from "react";
 import { setUser } from "./data/user-module/actions";
 import { getParkings } from "./data/parkings-module/actions";
 import { getParkingsOffers } from "./data/parkings-offers-module/actions";
+import Profile from './pages/Profile';
 
 const App: React.FC = () => {
   const user = useSelector(userSelector);
@@ -60,7 +61,9 @@ const App: React.FC = () => {
 
   if (!userRef.current && currentUser) {
     setCurrentScreen("Home");
-    dispatch(setUser({ userDisplayName: currentUser.displayName || undefined }))
+    dispatch(setUser({ userDisplayName: currentUser.displayName || undefined,
+       userPicture: currentUser.photoURL || undefined,
+       userMailAddress: currentUser.email|| undefined }))
   }
   userRef.current = currentUser;
   return (
@@ -81,6 +84,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/login" exact={true}>
             <Login />
+          </Route>
+          <Route path="/profile" exact={true}>
+            <Profile />
           </Route>
           <Route path="/parkingOffer/:id">
             <ParkingOffer />

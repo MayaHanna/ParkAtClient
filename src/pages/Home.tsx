@@ -63,7 +63,7 @@ const Home: React.FC = () => {
             שלום
           </IonText>
             <IonText className="userName" color="primary">
-              {user}
+              {user.userDisplayName}
             </IonText>
           </div>
         </IonToolbar>
