@@ -35,11 +35,6 @@ const ParkingOffer: React.FC = () => {
   const parkingOffer: FullParkingOffer = useSelector((state: RootState) => fullParkingsOffersWithIdSelector(state, params.id));
 
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   // dispatch(getParkings());
-  //   // dispatch(getParkingsOffers());
-  // }, []);
-
 
   return (
     <IonPage>

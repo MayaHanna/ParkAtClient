@@ -6,9 +6,9 @@ import {
   IonHeader,
   IonToolbar,
   IonButtons,
-  IonBackButton
+  IonBackButton,
+  IonLoading
 } from '@ionic/react';
-import { call, person, settings } from 'ionicons/icons';
 
 import { useSelector,} from "react-redux";
 import {useState, useEffect} from 'react';
@@ -26,12 +26,14 @@ const Profile: React.FC = () => {
   const user = useSelector(userSelector);
 
   const [userParkings, setUserParkings] = useState<Parking[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(()=>{
     if(user.userMailAddress == undefined)
-      return;
+      return setIsLoading(true);
 
     getParkingsByOwner(user.userMailAddress).then(res => {
+      setIsLoading(false);
       setUserParkings(res);
     });
 
@@ -43,21 +45,23 @@ const Profile: React.FC = () => {
 
   
   return (
+    <>
+      <IonLoading isOpen={isLoading}></IonLoading>
+      {!isLoading && 
       <IonPage>
         <IonHeader>
           <IonToolbar>
-            <IonButtons>
-              <IonBackButton color="secondary" />
+            <IonButtons slot="start">
+              <IonBackButton color="secondary"/>
             </IonButtons>
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen>
 
+        <IonContent fullscreen>
           <div className={"profile-title"}>
             <IonAvatar  className={"profile-avatar"}>
               <img src={user.userPicture}></img>
             </IonAvatar>
-
 
             <div className={"profile-title-details"}>
               <IonText color="primary">{user.userDisplayName}</IonText>
@@ -80,7 +84,8 @@ const Profile: React.FC = () => {
           </div>
         
         </IonContent>
-      </IonPage>
+      </IonPage>}
+      </>
     );
 }
 

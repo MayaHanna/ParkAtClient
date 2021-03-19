@@ -74,7 +74,6 @@ const App: React.FC = () => {
             <Redirect to="/home" />
           </Route>
           <Route path="/home" exact={true}>
-            <Home />
             {
               currentScreen === "Loading" ? <IonLoading isOpen={true} /> : currentScreen === "Home" ? <Home /> : <Redirect to="/login" />
             }
