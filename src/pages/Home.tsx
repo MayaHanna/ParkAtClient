@@ -19,7 +19,8 @@ import {
   IonIcon,
   IonFabList,
   IonButton,
-  IonCard
+  IonCard,
+  IonAvatar
 } from '@ionic/react';
 import './Home.css';
 import { userSelector } from '../data/user-module/selectors';
@@ -58,14 +59,14 @@ const Home: React.FC = () => {
   return (
     <IonPage id="home-page">
       <IonHeader>
-        <IonToolbar className={"toolbar"}>
-          <div className="userWrapper"><IonText color="primary">
-            שלום
-          </IonText>
-            <IonText className="userName" color="primary">
-              {user}
-            </IonText>
-          </div>
+        <IonToolbar>
+          <IonButtons slot="end">
+            <a href="/profile">
+              <IonAvatar  className={"profile-avatar"}>
+                <img src={user.userPicture} ></img>
+              </IonAvatar>
+            </a>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

@@ -10,11 +10,11 @@ import { ReactComponent as BigParking } from "../resources/truck.svg";
 import { ReactComponent as SmallParking } from "../resources/car.svg";
 import { FullParkingOffer } from "../data/parkings-offers-module/types";
 
-interface MessageListItemProps {
+interface ParkingOfferListItemProps {
   parkingOffer: FullParkingOffer;
 }
 
-const ParkingOfferListItem: React.FC<MessageListItemProps> = ({ parkingOffer }) => {
+const ParkingOfferListItem: React.FC<ParkingOfferListItemProps> = ({ parkingOffer }) => {
   const dotClassName = `dot dot-${parkingOffer.status}`;
   const startDate = new Date(parkingOffer.start);
   const endDate = new Date(parkingOffer.end);
