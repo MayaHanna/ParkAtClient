@@ -34,10 +34,13 @@ import { FullParkingOffer } from "../data/parkings-offers-module/types";
 import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router-dom";
 import { add } from 'ionicons/icons';
+import MapWrapper from '../components/Map';
 
 const Home: React.FC = () => {
 
   const [searchText, setSearchText] = useState<string>("");
+  const [showMap, setShowMap] = useState<boolean>(true);
+
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -53,6 +56,11 @@ const Home: React.FC = () => {
   const onParkingClick = (parking: Parking) => {
     history.push(`/parking/${parking.id}`);
   }
+
+  const onSearch = (text: string) => {
+    setSearchText(text);
+    setShowMap(text == undefined || text == "");
+  };
 
   const goLogin = () => history.push('login');
 
@@ -70,6 +78,7 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+
         <IonRefresher slot="fixed" onIonRefresh={refresh}>
           <IonRefresherContent />
         </IonRefresher>
@@ -82,10 +91,13 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonSearchbar className="searchBar" value={searchText} onIonChange={e => setSearchText(e.detail.value!)} animated placeholder={"חפש חניה"} />
+        <IonSearchbar className="searchBar" value={searchText} onIonChange={e => onSearch(e.detail.value!)} animated placeholder={"חפש חניה"} />
+        {showMap ? 
+        <MapWrapper></MapWrapper>
+         :
         <IonList>
           {parkingsOffers.map(po => po.status === "Open" && <ParkingOfferListItem key={po.id} parkingOffer={po} />)}
-        </IonList>
+        </IonList>}
       </IonContent>
       <IonFab className="fabButton" vertical="bottom" horizontal="end" slot="fixed">
         <IonFabButton color="secondary">
