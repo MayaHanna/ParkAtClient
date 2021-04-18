@@ -77,7 +77,9 @@ const Profile: React.FC = () => {
           </div>
           <div color="primary" className={"profile-section"}>
             <IonText color="primary" className={"profile-section-title"}>החניות שלי</IonText>
-            {userParkings && userParkings?.map(p => <ParkingListItem key={p.id} parking={p} onClick={() => {}} />)}
+            {userParkings && userParkings?.map(p =>
+                  <ParkingListItem key={p.id} parking={p} onClick={() => {}} isRouting={true}/>
+                  )}
           </div>
 
           <div color="primary"  className={"profile-section"}>

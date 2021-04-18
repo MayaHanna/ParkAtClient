@@ -5,19 +5,26 @@ import {
   IonNote
 } from '@ionic/react';
 import './parkingDetails.css';
-import { carOutline } from 'ionicons/icons';
 import { Parking } from "../data/parkings-module/types";
 import {ReactComponent as BigParking} from "../resources/truck.svg";
 import {ReactComponent as SmallParking} from "../resources/car.svg";
+import {useDispatch} from "react-redux";
 
 interface ParkingDetailsProps {
-  parking: Parking | undefined
+  parking: Parking,
+  isRouting: boolean
 }
 
-const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking }) => {
-
+const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting }) => {
+  let cardProps = {};
+  if (isRouting) {
+    cardProps = {
+        ...cardProps,
+      routerLink: `/parking/${parking.id}`
+    }
+  }
   return (
-    <IonCard className="parkingTitle">
+    <IonCard className="parkingTitle" {...cardProps}>
       <div className="headerWrapper">
         {parking?.size === "Big" && <BigParking className={"title-icon"} />}
         {parking?.size === "Small" && <SmallParking className={"title-icon"} />}

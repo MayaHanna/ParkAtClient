@@ -37,6 +37,7 @@ import { setUser } from "./data/user-module/actions";
 import { getParkings } from "./data/parkings-module/actions";
 import { getParkingsOffers } from "./data/parkings-offers-module/actions";
 import Profile from './pages/Profile';
+import ParkingProfile from "./pages/ParkingProfile";
 
 const App: React.FC = () => {
   const user = useSelector(userSelector);
@@ -89,6 +90,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/parkingOffer/:id">
             <ParkingOffer />
+          </Route>
+          <Route path="/parking/:id">
+            <ParkingProfile />
           </Route>
           <Route path="/addParkingOffer" exact={true}>
             <AddPrivateOffer />

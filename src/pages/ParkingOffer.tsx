@@ -26,6 +26,7 @@ import { FullParkingOffer } from '../data/parkings-offers-module/types';
 import {Paypal} from "./Paypal";
 import {ReactComponent as BigParking} from "../resources/truck.svg";
 import {ReactComponent as SmallParking} from "../resources/car.svg";
+import ParkingDetails from "../components/parkingDetails";
 
 
 const ParkingOffer: React.FC = () => {
@@ -47,15 +48,8 @@ const ParkingOffer: React.FC = () => {
       </IonHeader>
       
       <IonContent fullscreen>
-        <div className={"parking-offer-title"}>
-          {parkingOffer.parking.size === "Big" && <BigParking className={"parking-offer-title-icon"} />}
-          {parkingOffer.parking.size === "Small" && <SmallParking className={"parking-offer-title-icon"} />}
-          <div className={"parking-offer-title-details"}>
-            <IonText color="primary">{parkingOffer?.parking.address}</IonText>
-          </div>
-        </div>
+        <ParkingDetails parking={parkingOffer?.parking} isRouting={true}/>
         <div color="primary" className={"parking-offer-details"}>
-          <IonText color="primary" className={"parking-description"}>{parkingOffer.parking.description}</IonText>
           <IonGrid className={"parking-grid"}>
             <IonRow>
                         <IonCol><IonText color="primary">סטטוס</IonText></IonCol>

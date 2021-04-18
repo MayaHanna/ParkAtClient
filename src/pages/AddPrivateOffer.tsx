@@ -32,6 +32,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../data/configureStore";
 import { addParkingOffer as addParkingOfferToRudux } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router";
+import {User} from "../data/user-module/types";
+import {userSelector} from "../data/user-module/selectors";
 
 const initializedFields: ParkingOffer = {
     id: 7,
@@ -49,7 +51,8 @@ function AddPrivateOffer() {
     const [isCreatingNewParking, setisCreatingNewParking] = useState(false);
     const [chosenParking, setChosenParking] = useState<Parking>();
     const [parkingOffer, setParkingOffer] = useState<ParkingOffer>(initializedFields);
-    const parkingsList: Parking[] = useSelector((state: RootState) => parkingsWithOwnerSelector(state, "1"));
+    const loggedInUser: User = useSelector(userSelector);
+    const parkingsList: Parking[] = useSelector((state: RootState) => parkingsWithOwnerSelector(state, loggedInUser.userMailAddress));
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -130,7 +133,7 @@ function AddPrivateOffer() {
                             < h1 className="innerText"> לא נמצאו חניות שמורות </h1 >
                         }
                         <IonList>
-                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} />)}
+                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} isRouting={false}/>)}
                         </IonList>
                     </>
                 )
@@ -140,7 +143,7 @@ function AddPrivateOffer() {
 
     const displayParkingOfferForm = () => (
         <>
-            <ParkingDetails parking={chosenParking} />
+            {chosenParking && <ParkingDetails parking={chosenParking} isRouting={true}/> }
             <form className="formWrapper">
                 <IonItem>
                     <IonLabel className="labelText">מחיר</IonLabel>
