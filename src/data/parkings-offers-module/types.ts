@@ -10,8 +10,7 @@ interface ParkingOfferBaseline {
   end: Date;
   isPermanent: boolean
   merchantId: string;
-  status: Parking_Offer_Status;
-  client?: string;
+  status: Parking_Offer_Status
 }
 
 export type ParkingOffer = ParkingOfferBaseline & {

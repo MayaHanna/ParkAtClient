@@ -7,8 +7,6 @@ export interface UserState {
 
 export interface User {
   userDisplayName: string | undefined;
-  userMailAddress: string | undefined;
-  userPicture: string | undefined;
 }
 
 export type UserActionCreator<P> = ActionCreator<keyof typeof actions, P>;

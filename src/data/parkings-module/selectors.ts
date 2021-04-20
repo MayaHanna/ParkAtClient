@@ -27,3 +27,9 @@ export const parkingsWithOwnerSelector = createSelector(
         return parkings.filter(p => p.owner.toString() == ownerId);
     }
 );
+
+export const publicParkingsSelector = createSelector(
+    [parkingsSelector], (parkings: Parking[]) => {
+        return parkings.filter(p => !p.isPrivate);
+    }
+);

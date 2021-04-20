@@ -1,12 +1,16 @@
+.userWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-#home-page .profile-avatar {
-    margin: 0.5em;
-    height: 3em;
-    width: 3em;
+.userName {
+    margin-right: 2%;
 }
 
 .fabButton {
     margin-right: 4%;
+    /* margin-bottom: 1%; */
 }
 
 .menuButtons {

@@ -27,10 +27,8 @@ const Login: React.FC = () => {
   const uiConfig = ({
     callbacks: {
       signInSuccessWithAuthResult: function(authResult: any, redirectUrl: string) {
-        dispatch(setUser({userDisplayName: authResult.user.displayName,
-           userMailAddress: authResult.user.email,
-            userPicture: authResult.user.photoURL}));
-
+        var displayName = authResult.user.displayName;
+        dispatch(setUser({userDisplayName: displayName}));
         dispatch(history.push("/home"));
 
         return true;

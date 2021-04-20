@@ -35,6 +35,11 @@ const ParkingOffer: React.FC = () => {
   const parkingOffer: FullParkingOffer = useSelector((state: RootState) => fullParkingsOffersWithIdSelector(state, params.id));
 
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   // dispatch(getParkings());
+  //   // dispatch(getParkingsOffers());
+  // }, []);
+
 
   return (
     <IonPage>
@@ -45,7 +50,6 @@ const ParkingOffer: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      
       <IonContent fullscreen>
         <div className={"parking-offer-title"}>
           {parkingOffer.parking.size === "Big" && <BigParking className={"parking-offer-title-icon"} />}
@@ -83,11 +87,9 @@ const ParkingOffer: React.FC = () => {
               <IonCol><IonText color="primary">מחיר</IonText></IonCol>
               <IonCol><IonText color="primary">{parkingOffer.price}&#8362;</IonText></IonCol>
             </IonRow>
-            {parkingOffer.status == "Open" &&
-            <IonRow className={"paypal-row"}>
-                <Paypal price={parkingOffer.price} merchantId={parkingOffer.merchantId} parkingOfferId={parkingOffer.id}/>
-            </IonRow>
-            }
+              <IonRow className={"paypal-row"}>
+                  <Paypal price={parkingOffer.price} merchantId={parkingOffer.merchantId} parkingOfferId={parkingOffer.id}/>
+              </IonRow>
           </IonGrid>
         </div>
       </IonContent>

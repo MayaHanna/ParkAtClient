@@ -3,9 +3,7 @@ import {SET_USER } from "./actions.types";
 
 export const initialState: UserState = {
   user: {
-    userDisplayName: undefined,
-    userMailAddress: undefined,
-    userPicture: undefined
+    userDisplayName: undefined
   }
 };
 
@@ -25,8 +23,6 @@ const reducer: UserReducer = (
         user: {
           ...state.user,
           userDisplayName: action.payload.userDisplayName,
-          userMailAddress: action.payload.userMailAddress,
-          userPicture: action.payload.userPicture
         }
       };
     default:

@@ -5,7 +5,8 @@ import { useHistory } from "react-router";
 import Home from './pages/Home';
 import ViewMessage from './pages/ViewMessage';
 import Login from './pages/Login';
-import AddPrivateOffer from './pages/AddPrivateOffer';
+import AddParkingOffer from './pages/AddParkingOffer';
+import ReportParking from './pages/ReportParking';
 import ParkingOffer from './pages/ParkingOffer';
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -36,7 +37,6 @@ import { useEffect, useRef, useState } from "react";
 import { setUser } from "./data/user-module/actions";
 import { getParkings } from "./data/parkings-module/actions";
 import { getParkingsOffers } from "./data/parkings-offers-module/actions";
-import Profile from './pages/Profile';
 
 const App: React.FC = () => {
   const user = useSelector(userSelector);
@@ -61,9 +61,7 @@ const App: React.FC = () => {
 
   if (!userRef.current && currentUser) {
     setCurrentScreen("Home");
-    dispatch(setUser({ userDisplayName: currentUser.displayName || undefined,
-       userPicture: currentUser.photoURL || undefined,
-       userMailAddress: currentUser.email|| undefined }))
+    dispatch(setUser({ userDisplayName: currentUser.displayName || undefined }))
   }
   userRef.current = currentUser;
   return (
@@ -74,6 +72,7 @@ const App: React.FC = () => {
             <Redirect to="/home" />
           </Route>
           <Route path="/home" exact={true}>
+            <Home />
             {
               currentScreen === "Loading" ? <IonLoading isOpen={true} /> : currentScreen === "Home" ? <Home /> : <Redirect to="/login" />
             }
@@ -84,14 +83,14 @@ const App: React.FC = () => {
           <Route path="/login" exact={true}>
             <Login />
           </Route>
-          <Route path="/profile" exact={true}>
-            <Profile />
-          </Route>
           <Route path="/parkingOffer/:id">
             <ParkingOffer />
           </Route>
           <Route path="/addParkingOffer" exact={true}>
-            <AddPrivateOffer />
+            <AddParkingOffer />
+          </Route>
+          <Route path="/reportParking" exact={true}>
+            <ReportParking />
           </Route>
         </IonRouterOutlet>
       </IonReactRouter>

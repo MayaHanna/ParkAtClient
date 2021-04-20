@@ -11,6 +11,7 @@ import parkingsSaga from "./parkings-module/saga";
 import parkingsOffersSaga from "./parkings-offers-module/saga";
 import {ParkingsState} from "./parkings-module/types";
 import {ParkingsOffersState} from "./parkings-offers-module/types";
+import {ParkingReortrsState} from "./parking-reports-module/types";
 import { UserState } from "./user-module/types";
 import User from "./user-module/reducer";
 
@@ -33,4 +34,5 @@ export type RootState = {
   Parkings: ParkingsState;
   User: UserState
   ParkingsOffers: ParkingsOffersState;
+  ParkingReports: ParkingReortrsState;
 };

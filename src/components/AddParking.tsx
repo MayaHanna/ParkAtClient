@@ -31,6 +31,7 @@ import { addParking as addParkingToRudux, getParkings } from "../data/parkings-m
 
 interface AddParkingProps {
     chooseParking: Function;
+    isPublic: boolean;
 }
 
 const initializedFields: Parking = {
@@ -44,9 +45,13 @@ const initializedFields: Parking = {
     owner: 1
 }
 
-const AddParking: React.FC<AddParkingProps> = ({ chooseParking }) => {
+const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
 
-    const [parking, setParking] = useState<Parking>(initializedFields);
+    const [parking, setParking] = useState<Parking>({
+        ...initializedFields,
+        isPrivate: !isPublic
+    });
+
     const dispatch = useDispatch();
 
     const addParkingSpot = () => {
@@ -77,7 +82,6 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking }) => {
 
     return (
         <form className="formWrapper">
-
             <IonItem >
                 <IonLabel className="labelText">שם חניה</IonLabel>
                 <IonInput className="innerText" type="text" name="name" onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
@@ -86,17 +90,20 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking }) => {
                 <IonLabel className="labelText">כתובת</IonLabel>
                 <IonInput className="innerText" type="text" name="address" onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
             </IonItem>
-            <IonItem>
-                <IonLabel className="labelText" >סוג חניה </IonLabel>
-                <IonButtons className="itemButtonWrapper">
-                    <IonItem
-                        className={parking.isPrivate ? "choosenButton" : ""}
-                        onClick={() => handleFieldChange("isPrivate", true)}>פרטית</IonItem>
-                    <IonItem
-                        className={!parking.isPrivate ? "choosenButton" : ""}
-                        onClick={() => handleFieldChange("isPrivate", false)}>ציבורית </IonItem>
-                </IonButtons>
-            </IonItem>
+            {
+                !isPublic &&
+                <IonItem>
+                    <IonLabel className="labelText" >סוג חניה </IonLabel>
+                    <IonButtons className="itemButtonWrapper">
+                        <IonItem
+                            className={parking.isPrivate ? "choosenButton" : ""}
+                            onClick={() => handleFieldChange("isPrivate", true)}>פרטית</IonItem>
+                        <IonItem
+                            className={!parking.isPrivate ? "choosenButton" : ""}
+                            onClick={() => handleFieldChange("isPrivate", false)}>ציבורית </IonItem>
+                    </IonButtons>
+                </IonItem>
+            }
             <IonItem>
                 <IonLabel className="labelText" >גודל חניה </IonLabel>
                 <IonButtons className="itemButtonWrapper">
