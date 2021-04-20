@@ -4,14 +4,18 @@
   "private": true,
   "dependencies": {
     "@capacitor/core": "2.4.6",
+    "@ionic-native/core": "^5.31.1",
+    "@ionic-native/geolocation": "^5.31.1",
     "@ionic/pwa-elements": "^3.0.2",
     "@ionic/react": "^5.5.0",
     "@ionic/react-hooks": "0.0.8",
     "@ionic/react-router": "^5.5.0",
+    "@react-google-maps/api": "^2.1.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
     "@types/firebase": "^3.2.1",
+    "@types/google-map-react": "^2.1.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^12.19.15",
     "@types/react": "^16.14.3",
@@ -19,6 +23,7 @@
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.21.1",
+    "cordova-plugin-geolocation": "^4.1.0",
     "firebase": "^8.2.9",
     "firebaseui": "^4.7.3",
     "get-google-fonts": "^1.2.2",
@@ -76,7 +81,7 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "^0.0.113",
+    "@capacitor/cli": "2.4.6",
     "@types/react-redux": "^7.1.16"
   },
   "description": "An Ionic project"

@@ -32,7 +32,7 @@ rootSaga.forEach((saga) => sagaMiddleware.run(saga));
 export type RootState = {
   Example: ExampleState;
   Parkings: ParkingsState;
-  User: UserState
+  User: UserState;
   ParkingsOffers: ParkingsOffersState;
   ParkingReports: ParkingReortrsState;
 };

@@ -19,7 +19,8 @@ import {
   IonIcon,
   IonFabList,
   IonButton,
-  IonCard
+  IonCard,
+  IonAvatar
 } from '@ionic/react';
 import './Home.css';
 import { userSelector } from '../data/user-module/selectors';
@@ -33,10 +34,12 @@ import { FullParkingOffer } from "../data/parkings-offers-module/types";
 import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router-dom";
 import { add } from 'ionicons/icons';
+import MapWrapper from '../components/Map';
 
 const Home: React.FC = () => {
 
   const [searchText, setSearchText] = useState<string>("");
+  const [showMap, setShowMap] = useState<boolean>(true);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -53,22 +56,28 @@ const Home: React.FC = () => {
     history.push(`/parking/${parking.id}`);
   }
 
+  const onSearch = (text: string) => {
+    setSearchText(text);
+    setShowMap(text == undefined || text == "");
+  };
+
   const goLogin = () => history.push('login');
 
   return (
     <IonPage id="home-page">
       <IonHeader>
-        <IonToolbar className={"toolbar"}>
-          <div className="userWrapper"><IonText color="primary">
-            שלום
-          </IonText>
-            <IonText className="userName" color="primary">
-              {user}
-            </IonText>
-          </div>
+        <IonToolbar>
+          <IonButtons slot="end">
+            <a href="/profile">
+              <IonAvatar  className={"profile-avatar"}>
+                <img src={user.userPicture} ></img>
+              </IonAvatar>
+            </a>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+
         <IonRefresher slot="fixed" onIonRefresh={refresh}>
           <IonRefresherContent />
         </IonRefresher>
@@ -81,10 +90,13 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonSearchbar className="searchBar" value={searchText} onIonChange={e => setSearchText(e.detail.value!)} animated placeholder={"חפש חניה"} />
+        <IonSearchbar className="searchBar" value={searchText} onIonChange={e => onSearch(e.detail.value!)} animated placeholder={"חפש חניה"} />
+        {showMap ?
+        <MapWrapper></MapWrapper>
+         :
         <IonList>
           {parkingsOffers.map(po => po.status === "Open" && <ParkingOfferListItem key={po.id} parkingOffer={po} />)}
-        </IonList>
+        </IonList>}
       </IonContent>
       <IonFab className="fabButton" vertical="bottom" horizontal="end" slot="fixed">
         <IonFabButton color="secondary">
@@ -97,7 +109,7 @@ const Home: React.FC = () => {
               <IonButton onClick={() => history.push("/reportParking")}> דווח </IonButton>
             </IonButtons>
           </IonCard>
-          
+
 
           {/* <IonFabButton> */}
           {/* <IonButton> הוסף הצעת חניה </IonButton> */}

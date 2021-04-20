@@ -8,9 +8,14 @@
     margin-right: 2%;
 }
 
+#home-page .profile-avatar {
+    margin: 0.5em;
+    height: 3em;
+    width: 3em;
+}
+
 .fabButton {
     margin-right: 4%;
-    /* margin-bottom: 1%; */
 }
 
 .menuButtons {

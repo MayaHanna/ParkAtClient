@@ -4,8 +4,9 @@ import { editParkingOffer} from "../data/parkings-offers-module/api";
 import {
     editParkingOffer as editParkingOfferAction
 } from "../data/parkings-offers-module/actions";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router";
+import {userSelector} from "../data/user-module/selectors";
 
 export interface PayPalProps {
     price: number;
@@ -13,8 +14,12 @@ export interface PayPalProps {
     parkingOfferId: number;
 }
 export const Paypal = ({price, merchantId, parkingOfferId}: PayPalProps) => {
+
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const user = useSelector(userSelector);
+
     return (
         <PayPalButton
             options={{
@@ -31,7 +36,7 @@ export const Paypal = ({price, merchantId, parkingOfferId}: PayPalProps) => {
                 editParkingOffer(parkingOfferId, {status: "Closed"})
                     .then(res => {
                         console.log("הצעת החניה נתפסה בהצלחה");
-                        dispatch(editParkingOfferAction({id: parkingOfferId, status: "Closed"}));
+                        dispatch(editParkingOfferAction({id: parkingOfferId, status: "Closed", client: user.userMailAddress}));
                         history.push("/home");
                     })
                     .catch(err => console.log(err))
