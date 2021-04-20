@@ -35,6 +35,11 @@ const ParkingOffer: React.FC = () => {
   const parkingOffer: FullParkingOffer = useSelector((state: RootState) => fullParkingsOffersWithIdSelector(state, params.id));
 
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   // dispatch(getParkings());
+  //   // dispatch(getParkingsOffers());
+  // }, []);
+
 
   return (
     <IonPage>
@@ -45,7 +50,7 @@ const ParkingOffer: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      
+
       <IonContent fullscreen>
         <div className={"parking-offer-title"}>
           {parkingOffer.parking.size === "Big" && <BigParking className={"parking-offer-title-icon"} />}

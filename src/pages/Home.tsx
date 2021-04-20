@@ -40,7 +40,6 @@ const Home: React.FC = () => {
 
   const [searchText, setSearchText] = useState<string>("");
   const [showMap, setShowMap] = useState<boolean>(true);
-
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -92,7 +91,7 @@ const Home: React.FC = () => {
         </IonHeader>
 
         <IonSearchbar className="searchBar" value={searchText} onIonChange={e => onSearch(e.detail.value!)} animated placeholder={"חפש חניה"} />
-        {showMap ? 
+        {showMap ?
         <MapWrapper></MapWrapper>
          :
         <IonList>
@@ -107,7 +106,7 @@ const Home: React.FC = () => {
           <IonCard className="menu">
             <IonButtons className="menuButtons">
               <IonButton onClick={() => history.push("/addParkingOffer")}> הוסף הצעה </IonButton>
-              <IonButton> דווח </IonButton>
+              <IonButton onClick={() => history.push("/reportParking")}> דווח </IonButton>
             </IonButtons>
           </IonCard>
 

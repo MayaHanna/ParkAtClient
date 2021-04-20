@@ -1,3 +1,12 @@
+.userWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userName {
+    margin-right: 2%;
+}
 
 #home-page .profile-avatar {
     margin: 0.5em;

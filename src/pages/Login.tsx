@@ -5,7 +5,7 @@ import {
     IonText,
     useIonViewDidLeave,
     useIonViewWillLeave,
-    
+
   } from '@ionic/react';
   import './Login.css';
   import firebase from "firebase"; 
@@ -13,9 +13,9 @@ import {
   import {useDispatch, useSelector,} from "react-redux";
   import { setUser} from "../data/user-module/actions";
   import { useHistory } from "react-router";
-import {useState, useEffect, useRef} from 'react';
-import {userSelector} from "../data/user-module/selectors";
-import auth from "firebaseui";
+  import {useState, useEffect, useRef} from 'react';
+  import {userSelector} from "../data/user-module/selectors";
+  import auth from "firebaseui";
 
 
 const Login: React.FC = () => {
