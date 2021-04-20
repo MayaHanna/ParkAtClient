@@ -120,7 +120,7 @@ function AddPrivateOffer() {
             </IonButtons>
             {
                 isCreatingNewParking &&
-                <AddParking chooseParking={handleChooseParking} />
+                <AddParking chooseParking={handleChooseParking} isPublic={false}/>
             }
             {
                 isChoosingFromList && (
