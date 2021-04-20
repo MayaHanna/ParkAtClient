@@ -1,0 +1,34 @@
+.userWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userName {
+    margin-right: 2%;
+}
+
+.fabButton {
+    margin-right: 4%;
+    /* margin-bottom: 1%; */
+}
+
+.menuButtons {
+    flex-direction: column;
+    color:white;
+}
+
+.menu {
+    background-color: #009688;
+    width:200%;
+    margin-right: 100%;
+}
+
+.searchBar {
+    color: white;
+    margin-top: 5%;
+}
+
+ion-list {
+    padding: 1em;
+}
