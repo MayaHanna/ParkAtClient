@@ -24,7 +24,7 @@ const MapWrapper: React.FC = () => {
 
     const {isLoaded} = useJsApiLoader({
         id: 'ParkAt',
-        googleMapsApiKey: "AIzaSyBLOYIVFpldCMdD67yaIlqz21gPc9qqEUI"
+        googleMapsApiKey: "AIzaSyAe1Rhuj_BjDOoiqc3qF39_FOGFhd78d5Q"
     });
 
     const parkings: Coords[] = [
