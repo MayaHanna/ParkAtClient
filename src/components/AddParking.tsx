@@ -46,7 +46,7 @@ const initializedFields: Parking = {
     // suittableFor: "motorcycle",
     owner: "",
     comments: []
-};
+    location: {lat: 0, lng: 0}
 
 const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
 
