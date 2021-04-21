@@ -7,6 +7,11 @@ import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { carOutline } from 'ionicons/icons';
 import {ReactComponent as BigParking} from "../resources/truck.svg";
 import {ReactComponent as SmallParking} from "../resources/car.svg";
+import { getParkings } from "../data/parkings-module/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { parkingsSelector } from '../data/parkings-module/selectors';
+import { RootState } from '../data/configureStore';
+import { Parking } from '../data/parkings-module/types';
 
 
 const containerStyle = {
@@ -24,14 +29,11 @@ const MapWrapper: React.FC = () => {
 
     const {isLoaded} = useJsApiLoader({
         id: 'ParkAt',
-        googleMapsApiKey: "AIzaSyAe1Rhuj_BjDOoiqc3qF39_FOGFhd78d5Q"
+        googleMapsApiKey: "AIzaSyAe1Rhuj_BjDOoiqc3qF39_FOGFhd78d5Q",
+        libraries: ["places"]
     });
 
-    const parkings: Coords[] = [
-        { lat: 32.023004577099655, lng: 34.76947814192939 },
-        { lat: 32.02536958076407, lng: 34.769403040079816 },
-        { lat: 32.02541506100541, lng: 34.7700896855616 }
-    ];
+    const parkings: Parking[] = useSelector((state: RootState) => parkingsSelector(state));
         
     const [center, setCenter] = useState<Coords>(initialCenter);
 
@@ -47,7 +49,7 @@ const MapWrapper: React.FC = () => {
     return isLoaded ? (
         <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
             { /* Child components, such as markers, info windows, etc. */ }
-            {parkings.map(coord => <Marker position={coord}></Marker>)}
+            {parkings.map(parking => <Marker position={parking.location}></Marker>)}
             <></>
         </GoogleMap>
     ) : <></>;
