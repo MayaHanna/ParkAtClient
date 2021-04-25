@@ -13,20 +13,14 @@ import {
   IonButtons
 } from '@ionic/react';
 import './ParkingOffer.css';
-import { useParams } from 'react-router';
-import { carOutline } from 'ionicons/icons';
-import { useDispatch, useSelector } from "react-redux";
-import { getParkings } from "../data/parkings-module/actions";
+import {useLocation, useParams} from 'react-router';
+import { useSelector } from "react-redux";
 import { fullParkingsOffersWithIdSelector } from "../data/parkings-offers-module/selectors";
-import { Parking } from "../data/parkings-module/types";
-import { useState, useEffect } from 'react';
 import { RootState } from "../data/configureStore";
-import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { FullParkingOffer } from '../data/parkings-offers-module/types';
 import {Paypal} from "./Paypal";
-import {ReactComponent as BigParking} from "../resources/truck.svg";
-import {ReactComponent as SmallParking} from "../resources/car.svg";
 import ParkingDetails from "../components/parkingDetails";
+import { boolean } from "boolean";
 
 
 const ParkingOffer: React.FC = () => {
@@ -35,7 +29,10 @@ const ParkingOffer: React.FC = () => {
 
   const parkingOffer: FullParkingOffer = useSelector((state: RootState) => fullParkingsOffersWithIdSelector(state, params.id));
 
-  const dispatch = useDispatch();
+  const location = useLocation();
+  const search = location.search;
+
+  const canAddComment = search.split("=")[1];
 
   return (
     <IonPage>
@@ -48,7 +45,7 @@ const ParkingOffer: React.FC = () => {
       </IonHeader>
       
       <IonContent fullscreen>
-        <ParkingDetails parking={parkingOffer?.parking} isRouting={true}/>
+        <ParkingDetails parking={parkingOffer?.parking} isRouting={true} isCanAddComment={boolean(canAddComment)}/>
         <div color="primary" className={"parking-offer-details"}>
           <IonGrid className={"parking-grid"}>
             <IonRow>

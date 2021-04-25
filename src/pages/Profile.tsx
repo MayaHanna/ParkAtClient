@@ -23,6 +23,7 @@ import ParkingOfferListItem from "../components/ParkingOfferListItem";
 import { fullParkingsOffersWithOwnerSelector, fullParkingsOffersWithClientSelector } from '../data/parkings-offers-module/selectors';
 import { RootState } from '../data/configureStore';
 import { Merchant } from '../data/merchants-module/types';
+import {useLocation} from "react-router";
 
 const Profile: React.FC = () => {
   const user = useSelector(userSelector);
@@ -89,7 +90,7 @@ const Profile: React.FC = () => {
 
           <div color="primary"  className={"profile-section"}>
             <IonText color="primary" className={"profile-section-title"}>היסטוריה - חניות</IonText>
-            {parkingHistory && parkingHistory?.map(p=> <ParkingOfferListItem key={p.id} parkingOffer={p}/>)}
+            {parkingHistory && parkingHistory?.map(p=> <ParkingOfferListItem key={p.id} parkingOffer={p} isCanAddComment={true}/>)}
           </div>
 
           {userMerchantIds &&

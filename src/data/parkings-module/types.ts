@@ -6,8 +6,8 @@ type Size = "Small" | "Big";
 // type Parking_Status = "Free" | "Taken";
 
 export interface Comment {
-  rating: number;
-  content: string;
+  rating?: number;
+  content?: string;
   publisher: string;
   publisherName: string;
 }

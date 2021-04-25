@@ -11,18 +11,36 @@ import {ReactComponent as SmallParking} from "../resources/car.svg";
 import {useDispatch} from "react-redux";
 
 interface ParkingDetailsProps {
-  parking: Parking,
-  isRouting: boolean
+  parking: Parking;
+  isRouting: boolean;
+  isCanAddComment?: boolean;
 }
 
-const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting }) => {
+const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting, isCanAddComment }) => {
   let cardProps = {};
   if (isRouting) {
     cardProps = {
         ...cardProps,
-      routerLink: `/parking/${parking.id}`
+      routerLink: `/parking/${parking.id}?canAddComment=${isCanAddComment || false}`
     }
   }
+
+  const calculateParkingRatingAvg = () => {
+    if (parking) {
+      let sum = 0;
+      let count = 0;
+      parking.comments.forEach((c) => {
+        if (c.rating) {
+          sum += c.rating;
+          count += 1;
+        }
+      });
+
+      return Math.round(sum / count)
+    }
+
+    return 0;
+  };
   return (
     <IonCard className="parkingTitle" {...cardProps}>
       <div className="headerWrapper">
@@ -35,6 +53,10 @@ const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting }) =
           {parking?.isPrivate ?
             <IonNote color="primary">חניה פרטית</IonNote>
             : <IonNote color="primary">חניה ציבורית</IonNote>}
+        </div>
+        <div className={"comment-wrapper"}>
+          <IonText color="primary" className={"average-rating"}>5 / {calculateParkingRatingAvg()}</IonText>
+          <IonText color="primary" className={"comment-count"}>{parking?.comments.length} תגובות </IonText>
         </div>
       </div>
     </IonCard>

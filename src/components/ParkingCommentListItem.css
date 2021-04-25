@@ -1,3 +1,7 @@
+.parking-comment-item {
+  padding: 0 3vw;
+}
+
 ion-item {
   --padding-start: 0;
   --inner-padding-end: 0;
@@ -67,4 +71,26 @@ ion-item ion-note.md {
 
 .price {
   margin-left: 1vw;
+}
+
+.ratingWrapper {
+  display: flex;
+}
+
+.ratingInput {
+  margin-right: 5px;
+  width: 2vw;
+  text-align: left;
+}
+
+.ratingInput > .native-input {
+  padding: 0;
+}
+
+.comment-content-label {
+  overflow: visible !important;
+}
+
+.parking-content-input {
+  width: 300%;
 }

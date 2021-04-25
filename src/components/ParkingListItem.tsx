@@ -11,7 +11,7 @@ import { ReactComponent as SmallParking } from "../resources/car.svg";
 interface MessageListItemProps {
   parking: Parking,
   onClick: Function,
-    isRouting: boolean
+  isRouting: boolean
 }
 
 interface ItemProps {
