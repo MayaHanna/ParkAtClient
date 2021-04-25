@@ -14,7 +14,7 @@ export interface PayPalProps {
     parkingOfferId: number;
 }
 export const Paypal = ({price, merchantId, parkingOfferId}: PayPalProps) => {
-    
+
     const dispatch = useDispatch();
     const history = useHistory();
 

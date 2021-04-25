@@ -34,6 +34,7 @@ const ParkingOffer: React.FC = () => {
 
   const canAddComment = search.split("=")[1];
 
+
   return (
     <IonPage>
       <IonHeader>
@@ -43,7 +44,7 @@ const ParkingOffer: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      
+
       <IonContent fullscreen>
         <ParkingDetails parking={parkingOffer?.parking} isRouting={true} isCanAddComment={boolean(canAddComment)}/>
         <div color="primary" className={"parking-offer-details"}>

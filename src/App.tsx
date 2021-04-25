@@ -1,12 +1,13 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, IonLoading } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { useHistory } from "react-router";
 import Home from './pages/Home';
 import ViewMessage from './pages/ViewMessage';
 import Login from './pages/Login';
-import AddPrivateOffer from './pages/AddPrivateOffer';
+import AddParkingOffer from './pages/AddParkingOffer';
+import ReportParking from './pages/ReportParking';
 import ParkingOffer from './pages/ParkingOffer';
+import AddPrivateOffer from './pages/AddPrivateOffer';
 import firebase from "firebase/app";
 import "firebase/auth";
 import "./App.css"
@@ -95,7 +96,10 @@ const App: React.FC = () => {
             <ParkingProfile />
           </Route>
           <Route path="/addParkingOffer" exact={true}>
-            <AddPrivateOffer />
+            <AddParkingOffer />
+          </Route>
+          <Route path="/reportParking" exact={true}>
+            <ReportParking />
           </Route>
         </IonRouterOutlet>
       </IonReactRouter>

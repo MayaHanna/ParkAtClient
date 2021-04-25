@@ -23,7 +23,7 @@ import {
     IonList
 } from '@ionic/react';
 import { useParams } from 'react-router';
-import './AddPrivateOffer.css';
+import './AddParkingOffer.css';
 import AddParking from "../components/AddParking";
 import { getParkingsByOwner } from "../data/parkings-module/api";
 import { parkingsWithOwnerSelector } from "../data/parkings-module/selectors";
@@ -32,8 +32,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../data/configureStore";
 import { addParkingOffer as addParkingOfferToRudux } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router";
-import {User} from "../data/user-module/types";
-import {userSelector} from "../data/user-module/selectors";
 
 const initializedFields: ParkingOffer = {
     id: 7,
@@ -46,13 +44,12 @@ const initializedFields: ParkingOffer = {
     status: "Open"
 };
 
-function AddPrivateOffer() {
+function AddParkingOffer() {
     const [isChoosingFromList, setIsChoosingFromList] = useState(true);
     const [isCreatingNewParking, setisCreatingNewParking] = useState(false);
     const [chosenParking, setChosenParking] = useState<Parking>();
     const [parkingOffer, setParkingOffer] = useState<ParkingOffer>(initializedFields);
-    const loggedInUser: User = useSelector(userSelector);
-    const parkingsList: Parking[] = useSelector((state: RootState) => parkingsWithOwnerSelector(state, loggedInUser.userMailAddress));
+    const parkingsList: Parking[] = useSelector((state: RootState) => parkingsWithOwnerSelector(state, "1"));
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -123,7 +120,7 @@ function AddPrivateOffer() {
             </IonButtons>
             {
                 isCreatingNewParking &&
-                <AddParking chooseParking={handleChooseParking} isPublic={false}/>
+                <AddParking chooseParking={handleChooseParking} isPublic={false} />
             }
             {
                 isChoosingFromList && (
@@ -133,7 +130,7 @@ function AddPrivateOffer() {
                             < h1 className="innerText"> לא נמצאו חניות שמורות </h1 >
                         }
                         <IonList>
-                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} isRouting={false}/>)}
+                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} />)}
                         </IonList>
                     </>
                 )
@@ -143,11 +140,17 @@ function AddPrivateOffer() {
 
     const displayParkingOfferForm = () => (
         <>
-            {chosenParking && <ParkingDetails parking={chosenParking} isRouting={true}/> }
+            <ParkingDetails parking={chosenParking} />
             <form className="formWrapper">
                 <IonItem>
-                    <IonLabel className="labelText">מחיר</IonLabel>
-                    <IonInput className="innerText" type="number" name="price" value={parkingOffer.price} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
+                    {chosenParking?.isPrivate &&
+                        (
+                            <IonItem>
+                                <IonLabel className="labelText">מחיר</IonLabel>
+                                <IonInput className="innerText" name="price" value={parkingOffer.price} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
+                            </IonItem>
+                        )
+                    }
                 </IonItem>
                 <IonItem>
                     <IonLabel className="labelText">בחר תאריך התחלה</IonLabel>
@@ -173,17 +176,21 @@ function AddPrivateOffer() {
                         onIonChange={e => handleDateChange(e)}
                     ></IonDatetime>
                 </IonItem>
-                <IonItem>
-                    <IonLabel className="labelText">אפשרות להצעה קבועה </IonLabel>
-                    <IonButtons className="itemButtonWrapper">
-                        <IonItem
-                            className={parkingOffer.isPermanent ? "choosenButton" : ""}
-                            onClick={() => handleFieldChange("isPermanent", true)}>כן</IonItem>
-                        <IonItem
-                            className={!parkingOffer.isPermanent ? "choosenButton" : ""}
-                            onClick={() => handleFieldChange("isPermanent", false)}>לא </IonItem>
-                    </IonButtons>
-                </IonItem>
+                {chosenParking?.isPrivate &&
+                        (
+                            <IonItem>
+                            <IonLabel className="labelText" >אפשרות להצעה קבועה </IonLabel>
+                            <IonButtons className="itemButtonWrapper">
+                                <IonItem
+                                    className={parkingOffer.isPermanent ? "choosenButton" : ""}
+                                    onClick={() => handleFieldChange("isPermanent", true)}>כן</IonItem>
+                                <IonItem
+                                    className={!parkingOffer.isPermanent ? "choosenButton" : ""}
+                                    onClick={() => handleFieldChange("isPermanent", false)}>לא </IonItem>
+                            </IonButtons>
+                        </IonItem>
+                        )
+                    }
                 <IonItem>
                     <IonLabel className="labelText">חשבון paypal לזיכוי</IonLabel>
                     <IonInput className="innerText" name="merchantId" value={parkingOffer.merchantId} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
@@ -224,4 +231,4 @@ function AddPrivateOffer() {
     );
 }
 
-export default AddPrivateOffer;
+export default AddParkingOffer;
