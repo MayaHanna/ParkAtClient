@@ -1,0 +1,96 @@
+.parking-comment-item {
+  padding: 0 3vw;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+ion-label {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+ion-item h2 {
+  font-weight: 600;
+  margin: 0;
+}
+
+ion-item p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 95%;
+}
+
+.comment-publisher {
+  opacity: 60%;
+}
+
+ion-item ion-icon {
+  color: #c9c9ca;
+}
+
+ion-item ion-note {
+  font-size: 15px;
+  margin-right: 8px;
+  font-weight: normal;
+}
+
+ion-item ion-note.md {
+  margin-right: 14px;
+}
+
+.icon-wrapper {
+  height: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.parking-size {
+  height: 3vh;
+  width: 6vw;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+}
+
+.dot-Open {
+  background: #009688;
+}
+
+.dot-Closed {
+  background: #fd453c;
+}
+
+.price {
+  margin-left: 1vw;
+}
+
+.ratingWrapper {
+  display: flex;
+}
+
+.ratingInput {
+  margin-right: 5px;
+  width: 2vw;
+  text-align: left;
+}
+
+.ratingInput > .native-input {
+  padding: 0;
+}
+
+.comment-content-label {
+  overflow: visible !important;
+}
+
+.parking-content-input {
+  width: 300%;
+}

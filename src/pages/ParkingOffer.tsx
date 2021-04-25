@@ -13,19 +13,14 @@ import {
   IonButtons
 } from '@ionic/react';
 import './ParkingOffer.css';
-import { useParams } from 'react-router';
-import { carOutline } from 'ionicons/icons';
-import { useDispatch, useSelector } from "react-redux";
-import { getParkings } from "../data/parkings-module/actions";
+import {useLocation, useParams} from 'react-router';
+import { useSelector } from "react-redux";
 import { fullParkingsOffersWithIdSelector } from "../data/parkings-offers-module/selectors";
-import { Parking } from "../data/parkings-module/types";
-import { useState, useEffect } from 'react';
 import { RootState } from "../data/configureStore";
-import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { FullParkingOffer } from '../data/parkings-offers-module/types';
 import {Paypal} from "./Paypal";
-import {ReactComponent as BigParking} from "../resources/truck.svg";
-import {ReactComponent as SmallParking} from "../resources/car.svg";
+import ParkingDetails from "../components/parkingDetails";
+import { boolean } from "boolean";
 
 
 const ParkingOffer: React.FC = () => {
@@ -34,11 +29,10 @@ const ParkingOffer: React.FC = () => {
 
   const parkingOffer: FullParkingOffer = useSelector((state: RootState) => fullParkingsOffersWithIdSelector(state, params.id));
 
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //   // dispatch(getParkings());
-  //   // dispatch(getParkingsOffers());
-  // }, []);
+  const location = useLocation();
+  const search = location.search;
+
+  const canAddComment = search.split("=")[1];
 
 
   return (
@@ -52,15 +46,8 @@ const ParkingOffer: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <div className={"parking-offer-title"}>
-          {parkingOffer.parking.size === "Big" && <BigParking className={"parking-offer-title-icon"} />}
-          {parkingOffer.parking.size === "Small" && <SmallParking className={"parking-offer-title-icon"} />}
-          <div className={"parking-offer-title-details"}>
-            <IonText color="primary">{parkingOffer?.parking.address}</IonText>
-          </div>
-        </div>
+        <ParkingDetails parking={parkingOffer?.parking} isRouting={true} isCanAddComment={boolean(canAddComment)}/>
         <div color="primary" className={"parking-offer-details"}>
-          <IonText color="primary" className={"parking-description"}>{parkingOffer.parking.description}</IonText>
           <IonGrid className={"parking-grid"}>
             <IonRow>
                         <IonCol><IonText color="primary">סטטוס</IonText></IonCol>

@@ -5,6 +5,13 @@ import { ActionCreator } from "../common/types";
 type Size = "Small" | "Big";
 // type Parking_Status = "Free" | "Taken";
 
+export interface Comment {
+  rating?: number;
+  content?: string;
+  publisher: string;
+  publisherName: string;
+}
+
 export interface Parking {
   id: number;
   address: string;
@@ -14,7 +21,8 @@ export interface Parking {
   // suittableFor: SuitableFor,
   size: Size;
   // status: Parking_Status;
-  owner: number;
+  owner: string;
+  comments: Comment[]
 }
 export interface ParkingsState {
   parkings: Parking[];

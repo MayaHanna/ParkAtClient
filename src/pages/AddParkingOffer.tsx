@@ -130,7 +130,7 @@ function AddParkingOffer() {
                             < h1 className="innerText"> לא נמצאו חניות שמורות </h1 >
                         }
                         <IonList>
-                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} />)}
+                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} isRouting={true}/>)}
                         </IonList>
                     </>
                 )
@@ -140,7 +140,7 @@ function AddParkingOffer() {
 
     const displayParkingOfferForm = () => (
         <>
-            <ParkingDetails parking={chosenParking} />
+            {chosenParking && <ParkingDetails parking={chosenParking} isRouting={true}/>}
             <form className="formWrapper">
                 <IonItem>
                     {chosenParking?.isPrivate &&

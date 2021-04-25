@@ -28,6 +28,8 @@ import { useParams } from 'react-router';
 import './AddParking.css';
 import { useDispatch, useSelector } from "react-redux";
 import { addParking as addParkingToRudux, getParkings } from "../data/parkings-module/actions";
+import {User} from "../data/user-module/types";
+import {userSelector} from "../data/user-module/selectors";
 
 interface AddParkingProps {
     chooseParking: Function;
@@ -42,8 +44,9 @@ const initializedFields: Parking = {
     description: "",
     size: "Small",
     // suittableFor: "motorcycle",
-    owner: 1
-}
+    owner: "",
+    comments: []
+};
 
 const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
 
@@ -51,15 +54,24 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
         ...initializedFields,
         isPrivate: !isPublic
     });
+    const loggedInUser: User = useSelector(userSelector);
 
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if (loggedInUser && loggedInUser.userMailAddress) {
+            setParking({
+                ...parking,
+                owner: loggedInUser.userMailAddress
+            })
+        }
+    }, [loggedInUser]);
     const addParkingSpot = () => {
         chooseParking(parking);
 
         addParking(parking)
             .then(res => {
-                console.log(" החניה נוספה בהצלחה")
+                console.log(" החניה נוספה בהצלחה");
                 dispatch(addParkingToRudux(parking));
             })
             .catch(err => console.log(err))

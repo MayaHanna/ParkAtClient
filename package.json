@@ -23,6 +23,7 @@
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.21.1",
+    "boolean": "^3.0.3",
     "cordova-plugin-geolocation": "^4.1.0",
     "firebase": "^8.2.9",
     "firebaseui": "^4.7.3",
