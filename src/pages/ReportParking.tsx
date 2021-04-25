@@ -105,7 +105,7 @@ function ReportParking() {
                             < h1 className="title"> לא נמצאו חניות ציבוריות במערכת </h1 >
                         }
                         <IonList>
-                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} />)}
+                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} isRouting={true}/>)}
                         </IonList>
                     </>
                 )
@@ -132,7 +132,7 @@ function ReportParking() {
                                 <IonButton className="innerText" onClick={() => setChosenParking(undefined)} >בחר חניה אחרת</IonButton>
                             </IonButtons>
 
-                            <ParkingDetails parking={chosenParking} />
+                            {chosenParking && <ParkingDetails parking={chosenParking} isRouting={true}/>}
                             <IonButtons>
                                 <IonButton className="innerText" onClick={report}>דווח</IonButton>
                             </IonButtons>

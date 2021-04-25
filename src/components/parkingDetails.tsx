@@ -36,11 +36,16 @@ const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting, isC
         }
       });
 
-      return Math.round(sum / count)
+      if (count > 0) {
+        return Math.round(sum / count)
+      }
+
+      return 0;
     }
 
     return 0;
   };
+
   return (
     <IonCard className="parkingTitle" {...cardProps}>
       <div className="headerWrapper">
@@ -55,7 +60,9 @@ const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting, isC
             : <IonNote color="primary">חניה ציבורית</IonNote>}
         </div>
         <div className={"comment-wrapper"}>
-          <IonText color="primary" className={"average-rating"}>5 / {calculateParkingRatingAvg()}</IonText>
+          {
+            parking?.comments.length > 0 && <IonText color="primary" className={"average-rating"}>5 / {calculateParkingRatingAvg()}</IonText>
+          }
           <IonText color="primary" className={"comment-count"}>{parking?.comments.length} תגובות </IonText>
         </div>
       </div>
