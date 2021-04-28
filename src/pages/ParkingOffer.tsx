@@ -122,8 +122,6 @@ const ParkingOffer: React.FC = () => {
                 <IonText className="text" > לחץ כדי לתפוס את החניה בשעות הנוחות לך !</IonText>
                 <form className="formWrapper">
                   {displaySlots()}
-                  {displaySlots()}
-                  {displaySlots()}
                 </form>
                 <br></br>
                 <IonButtons>
