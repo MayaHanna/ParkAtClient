@@ -23,7 +23,7 @@ import {
     IonList
 } from '@ionic/react';
 import { useParams } from 'react-router';
-import './AddParkingOffer.css';
+import './ReportParking.css';
 import AddParking from "../components/AddParking";
 import { getParkingsByOwner } from "../data/parkings-module/api";
 import { publicParkingsSelector } from "../data/parkings-module/selectors";
