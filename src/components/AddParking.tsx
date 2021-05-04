@@ -28,8 +28,11 @@ import { useParams } from 'react-router';
 import './AddParking.css';
 import { useDispatch, useSelector } from "react-redux";
 import { addParking as addParkingToRudux, getParkings } from "../data/parkings-module/actions";
-import {User} from "../data/user-module/types";
-import {userSelector} from "../data/user-module/selectors";
+import axios, { AxiosResponse } from "axios";
+import { GoogleMap, useJsApiLoader, Marker,  } from '@react-google-maps/api';
+import { User } from '../data/user-module/types';
+import { userSelector } from '../data/user-module/selectors';
+
 
 interface AddParkingProps {
     chooseParking: Function;
@@ -67,7 +70,9 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
             })
         }
     }, [loggedInUser]);
+    
     const addParkingSpot = () => {
+        findLocationByAddress();
         chooseParking(parking);
 
         addParking(parking)
@@ -77,6 +82,27 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
             })
             .catch(err => console.log(err))
     }
+
+    
+    const findLocationByAddress = () => {
+
+        if(isLoaded){
+            axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/parkingsOffers/find/`+parking.address)
+            .then(res => {
+                if(res.data.candidates.length != 1)
+                    console.log("todo");
+                else{
+                    var location  = res.data.candidates[0].geometry.location
+                    setParking({
+                        ...parking,
+                        location: location
+                    })
+                }
+            })
+            .catch(err => console.log(err))
+        }
+    }
+    
 
     const handleFieldChangeByEvent = (e: any) => {
         setParking({
@@ -91,8 +117,7 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
             [field]: value
         })
     }
-
-
+    
     return (
         <form className="formWrapper">
             <IonItem >
