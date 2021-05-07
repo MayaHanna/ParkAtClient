@@ -1,0 +1,12 @@
+.searchModal {
+    z-index: 10;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80vw;
+    height: 35vh;
+    padding: 1em;
+}

@@ -86,7 +86,6 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
     
     const findLocationByAddress = () => {
 
-        if(isLoaded){
             axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/parkingsOffers/find/`+parking.address)
             .then(res => {
                 if(res.data.candidates.length != 1)
@@ -100,7 +99,6 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
                 }
             })
             .catch(err => console.log(err))
-        }
     }
     
 

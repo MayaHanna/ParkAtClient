@@ -20,7 +20,8 @@ import {
   IonFabList,
   IonButton,
   IonCard,
-  IonAvatar
+  IonAvatar,
+  IonBackdrop
 } from '@ionic/react';
 import './Home.css';
 import { userSelector } from '../data/user-module/selectors';
@@ -35,11 +36,13 @@ import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router-dom";
 import { add } from 'ionicons/icons';
 import MapWrapper from '../components/Map';
+import SearchModal from '../components/SearchModal';
 
 const Home: React.FC = () => {
 
   const [searchText, setSearchText] = useState<string>("");
   const [showMap, setShowMap] = useState<boolean>(true);
+  const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -65,6 +68,12 @@ const Home: React.FC = () => {
 
   return (
     <IonPage id="home-page">
+      {showSearchModal && 
+      <>
+      <IonBackdrop className="backdrop" visible={true} onIonBackdropTap={e=>console.log("you tapped on me")}/>
+      <SearchModal></SearchModal>
+      </>
+      }
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="end">
@@ -77,7 +86,6 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-
         <IonRefresher slot="fixed" onIonRefresh={refresh}>
           <IonRefresherContent />
         </IonRefresher>
@@ -90,7 +98,8 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonSearchbar className="searchBar" value={searchText} onIonChange={e => onSearch(e.detail.value!)} animated placeholder={"חפש חניה"} />
+        <IonSearchbar className="searchBar" value={searchText} onIonFocus={e => setShowSearchModal(true)} onIonChange={e => onSearch(e.detail.value!)} animated placeholder={"חפש חניה"} />
+
         {showMap ?
         <MapWrapper></MapWrapper>
          :
