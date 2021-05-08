@@ -32,6 +32,7 @@ import axios, { AxiosResponse } from "axios";
 import { GoogleMap, useJsApiLoader, Marker,  } from '@react-google-maps/api';
 import { User } from '../data/user-module/types';
 import { userSelector } from '../data/user-module/selectors';
+import { findLocationByAddress } from '../data/location-module/api';
 
 
 interface AddParkingProps {
@@ -72,7 +73,7 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
     }, [loggedInUser]);
     
     const addParkingSpot = () => {
-        findLocationByAddress();
+        setLocation();
         chooseParking(parking);
 
         addParking(parking)
@@ -84,21 +85,13 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
     }
 
     
-    const findLocationByAddress = () => {
-
-            axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/parkingsOffers/find/`+parking.address)
-            .then(res => {
-                if(res.data.candidates.length != 1)
-                    console.log("todo");
-                else{
-                    var location  = res.data.candidates[0].geometry.location
-                    setParking({
-                        ...parking,
-                        location: location
-                    })
-                }
+    const setLocation = () => {
+        findLocationByAddress(parking.address).then(location=>
+            setParking({
+                ...parking,
+                location: location
             })
-            .catch(err => console.log(err))
+        )
     }
     
 

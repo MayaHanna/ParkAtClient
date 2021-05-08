@@ -24,8 +24,11 @@ const initialCenter: Coords = {
     lng: 34.77273508410942
 };
 
+interface MapWrapperProps {
+    centerProp?: Coords;
+  }
 
-const MapWrapper: React.FC = () => {
+const MapWrapper: React.FC<MapWrapperProps> = ({centerProp}) => {
 
     const {isLoaded} = useJsApiLoader({
         id: 'ParkAt',
@@ -35,16 +38,18 @@ const MapWrapper: React.FC = () => {
 
     const parkings: Parking[] = useSelector((state: RootState) => parkingsSelector(state));
         
-    const [center, setCenter] = useState<Coords>(initialCenter);
+    const [center, setCenter] = useState<Coords>(centerProp ? centerProp : initialCenter);
 
     useEffect(() => {
-        Geolocation.getCurrentPosition().then(position =>{
-            setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
-        }).catch(e=> {
-            // TODO: Throw error
-            setCenter({lat: 31.970021633983528, lng: 34.77273508410942});
-        });
+        if(!!center)
+            Geolocation.getCurrentPosition().then(position =>{
+                setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+            });
     });
+
+    useEffect(() => {
+        setCenter(centerProp ? centerProp : center);
+    }, [centerProp]);
 
     return isLoaded ? (
         <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>

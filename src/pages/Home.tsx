@@ -31,18 +31,21 @@ import { parkingsWithFilterSelector } from "../data/parkings-module/selectors";
 import { RootState } from "../data/configureStore";
 import { Parking } from "../data/parkings-module/types";
 import { fullParkingsOffersWithFilterSelector } from "../data/parkings-offers-module/selectors";
-import { FullParkingOffer } from "../data/parkings-offers-module/types";
+import { FullParkingOffer, ParkingOfferSearch } from "../data/parkings-offers-module/types";
 import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router-dom";
 import { add } from 'ionicons/icons';
 import MapWrapper from '../components/Map';
 import SearchModal from '../components/SearchModal';
+import { Coords } from 'google-map-react';
 
 const Home: React.FC = () => {
 
   const [searchText, setSearchText] = useState<string>("");
   const [showMap, setShowMap] = useState<boolean>(true);
   const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
+  const [center, setCenter] = useState<Coords>();
+
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -59,9 +62,12 @@ const Home: React.FC = () => {
     history.push(`/parking/${parking.id}`);
   }
 
-  const onSearch = (text: string) => {
-    setSearchText(text);
-    setShowMap(text == undefined || text == "");
+  const onSearch = (searchParams: ParkingOfferSearch) => {
+    setShowSearchModal(false);
+    setCenter(searchParams.centerLocation);
+
+    //setSearchText(text);
+    //setShowMap(text == undefined || text == "");
   };
 
   const goLogin = () => history.push('login');
@@ -71,7 +77,7 @@ const Home: React.FC = () => {
       {showSearchModal && 
       <>
       <IonBackdrop className="backdrop" visible={true} onIonBackdropTap={e=>console.log("you tapped on me")}/>
-      <SearchModal></SearchModal>
+      <SearchModal search={onSearch}></SearchModal>
       </>
       }
       <IonHeader>
@@ -98,10 +104,10 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonSearchbar className="searchBar" value={searchText} onIonFocus={e => setShowSearchModal(true)} onIonChange={e => onSearch(e.detail.value!)} animated placeholder={"חפש חניה"} />
+        <IonSearchbar className="searchBar" value={searchText} onIonFocus={e => setShowSearchModal(true)} animated placeholder={"חפש חניה"} />
 
         {showMap ?
-        <MapWrapper></MapWrapper>
+        <MapWrapper centerProp={center ?? center}></MapWrapper>
          :
         <IonList>
           {parkingsOffers.map(po => po.status === "Open" && <ParkingOfferListItem key={po.id} parkingOffer={po} />)}
