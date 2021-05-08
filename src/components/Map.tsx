@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { parkingsSelector } from '../data/parkings-module/selectors';
 import { RootState } from '../data/configureStore';
 import { Parking } from '../data/parkings-module/types';
+import { ParkingOffersMapParams } from '../data/parkings-offers-module/types';
+import { fullParkingsOffersWithFilterSelector } from '../data/parkings-offers-module/selectors';
 
 
 const containerStyle = {
@@ -25,10 +27,10 @@ const initialCenter: Coords = {
 };
 
 interface MapWrapperProps {
-    centerProp?: Coords;
+    filterParams?: ParkingOffersMapParams
   }
 
-const MapWrapper: React.FC<MapWrapperProps> = ({centerProp}) => {
+const MapWrapper: React.FC<MapWrapperProps> = ({filterParams}) => {
 
     const {isLoaded} = useJsApiLoader({
         id: 'ParkAt',
@@ -36,9 +38,8 @@ const MapWrapper: React.FC<MapWrapperProps> = ({centerProp}) => {
         libraries: ["places"]
     });
 
-    const parkings: Parking[] = useSelector((state: RootState) => parkingsSelector(state));
-        
-    const [center, setCenter] = useState<Coords>(centerProp ? centerProp : initialCenter);
+    const parkings: Parking[] = useSelector((state: RootState) => fullParkingsOffersWithFilterSelector(state, filterParams).filter(po=>po.status=== "Open").map(po=>po.parking));        
+    const [center, setCenter] = useState<Coords>(filterParams?.centerLocation ? filterParams?.centerLocation : initialCenter);
 
     useEffect(() => {
         if(!!center)
@@ -48,13 +49,13 @@ const MapWrapper: React.FC<MapWrapperProps> = ({centerProp}) => {
     });
 
     useEffect(() => {
-        setCenter(centerProp ? centerProp : center);
-    }, [centerProp]);
+        setCenter(filterParams?.centerLocation ? filterParams?.centerLocation : center);
+    }, [filterParams?.centerLocation]);
 
     return isLoaded ? (
         <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
             { /* Child components, such as markers, info windows, etc. */ }
-            {parkings.map(parking => <Marker position={parking.location}></Marker>)}
+            {parkings.map((parking, k) => <Marker position={parking.location}></Marker>)}
             <></>
         </GoogleMap>
     ) : <></>;

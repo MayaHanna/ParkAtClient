@@ -25,9 +25,9 @@ export const fullParkingsOffersWithFilterSelector = createSelector(
     [fullParkingsOffersSelector, getProps], (parkingsOffers: FullParkingOffer[], props) => {
         return parkingsOffers
         .filter(po => 
-            (!props.maxPrice || po.price < props?.maxPrice) && 
-            (!props.ignorePrivate || (props.ignorePrivate && !po.parking.isPrivate)) &&
-            (!props.ignorePublic || (props.ignorePublic && po.parking.isPrivate)) 
+            (!props?.maxPrice || po.price <= props?.maxPrice) && 
+            (!props?.ignorePrivate || (props.ignorePrivate && !po.parking.isPrivate)) &&
+            (!props?.ignorePublic || (props.ignorePublic && po.parking.isPrivate)) 
         )
     }
 );
