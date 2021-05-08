@@ -12,8 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { parkingsSelector } from '../data/parkings-module/selectors';
 import { RootState } from '../data/configureStore';
 import { Parking } from '../data/parkings-module/types';
-import { ParkingOffersMapParams } from '../data/parkings-offers-module/types';
+import { FullParkingOffer, ParkingOffer, ParkingOffersMapParams } from '../data/parkings-offers-module/types';
 import { fullParkingsOffersWithFilterSelector } from '../data/parkings-offers-module/selectors';
+import { useHistory } from 'react-router';
 
 
 const containerStyle = {
@@ -35,14 +36,14 @@ interface MapWrapperProps {
   } 
 
 const MapWrapper: React.FC<MapWrapperProps> = ({filterParams}) => {
-
+    const history = useHistory();
     const {isLoaded} = useJsApiLoader({
         id: 'ParkAt',
         googleMapsApiKey: "AIzaSyAe1Rhuj_BjDOoiqc3qF39_FOGFhd78d5Q",
         libraries: ["places"]
     });
 
-    const parkings: Parking[] = useSelector((state: RootState) => fullParkingsOffersWithFilterSelector(state, filterParams).filter(po=>po.status=== "Open").map(po=>po.parking));        
+    const parkingOffers: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithFilterSelector(state, filterParams).filter(po=>po.status=== "Open"));
     const [center, setCenter] = useState<Coords>(filterParams?.centerLocation ? filterParams?.centerLocation : initialCenter);
     const [zoom, setZoom] = useState<number>(15);
 
@@ -60,14 +61,13 @@ const MapWrapper: React.FC<MapWrapperProps> = ({filterParams}) => {
     useEffect(() => {
         if(!!filterParams?.maxDistanceFromCenter){
             setZoom(getBaseLog(2, 40000 / (filterParams?.maxDistanceFromCenter  / 2)))
-            console.log("zoom "+zoom);
         }
     }, [filterParams?.maxDistanceFromCenter]);
 
     return isLoaded ? (
         <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
             { /* Child components, such as markers, info windows, etc. */ }
-            {parkings.map((parking, k) => <Marker position={parking.location}></Marker>)}
+            {parkingOffers.map((po, k) => <Marker position={po.parking.location} onClick={e=> history.push(`/parkingOffer/${po.id}`)}></Marker>)}
             <></>
         </GoogleMap>
     ) : <></>;
