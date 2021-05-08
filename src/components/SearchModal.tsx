@@ -32,8 +32,6 @@ const SearchModal: React.FC<SearchModaProps> = ({search}) => {
     const [maxPrice, setMaxPrice] = useState<number>();
     const [maxDistance, setMaxDistance] = useState<number>();
     const [parkingTypes, setParkingTypes] = useState<string[]>(["private", "public"]);
-    //const [number, setNumber] = useState<number>();
-
     
     const [addressPlaceHolder, setAddressPlaceHolder] = useState<string>("");
     const [disableAddressInput, setDisableAddressInput] = useState<boolean>(false);
@@ -77,21 +75,21 @@ const SearchModal: React.FC<SearchModaProps> = ({search}) => {
         </IonItem>
         <IonItem className="searchRow">
             <IonLabel color="primary"> מחיר מקסימלי</IonLabel>
-            <IonInput color="primary" type="number" value={maxPrice} placeholder="Enter Number" onIonChange={e => setMaxPrice(parseInt(e.detail.value!, 10))}></IonInput>
+            <IonInput color="primary" type="number" value={maxPrice} placeholder="הכנס מספר" onIonChange={e => setMaxPrice(parseInt(e.detail.value!, 10))}></IonInput>
         </IonItem>
         <IonItem className="searchRow">
             <IonLabel color="primary">טווח רצוי מהכתובת</IonLabel>
-            <IonInput color="primary" type="number" value={maxDistance} placeholder="Enter Number" onIonChange={e => setMaxDistance(parseInt(e.detail.value!, 10))}></IonInput>
+            <IonInput color="primary" type="number" value={maxDistance} placeholder="הכנס מספר" onIonChange={e => setMaxDistance(parseInt(e.detail.value!, 10))}></IonInput>
             <IonLabel color="primary">ק"מ</IonLabel>
         </IonItem>
         <IonItem className="searchRow">
             <IonLabel color="primary">סוג חניה</IonLabel>
-            <IonSelect value={parkingTypes} multiple={true} cancelText="ביטול" okText="אישור" onIonChange={e => setParkingTypes(e.detail.value)}>
+            <IonSelect color="primary" value={parkingTypes} multiple={true} cancelText="ביטול" okText="אישור" onIonChange={e => setParkingTypes(e.detail.value)}>
               <IonSelectOption value="public" color="secondary" >ציבורית</IonSelectOption>
               <IonSelectOption value="private" color="secondary" >פרטית</IonSelectOption>
             </IonSelect>
         </IonItem>
-        <button onClick={e => onSearch()} disabled={disableAddressInput}>חפש</button>
+        <button className={"searchButton"} onClick={e => onSearch()} disabled={disableAddressInput}>חפש</button>
     </IonCard>
     );
   };
