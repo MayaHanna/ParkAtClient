@@ -18,17 +18,12 @@ import {
 import { useEffect, useState } from 'react';
 import { Coords } from 'google-map-react';
 import { findLocationByAddress } from '../data/location-module/api';
-import { ParkingOfferSearch } from '../data/parkings-offers-module/types';
+import { ParkingOffersMapParams } from '../data/parkings-offers-module/types';
 import { Geolocation,Geoposition } from '@ionic-native/geolocation';
 
 interface SearchModaProps {
-    search: (search: ParkingOfferSearch) => void
+    search: (search: ParkingOffersMapParams) => void
 }
-
-const initialCenter: Coords = {
-    lat: 31.970021633983528, 
-    lng: 34.77273508410942
-};
 
 
 const SearchModal: React.FC<SearchModaProps> = ({search}) => {
@@ -68,7 +63,7 @@ const SearchModal: React.FC<SearchModaProps> = ({search}) => {
             ignorePublic: parkingTypes.includes("private"),
             maxDistanceFromCenter: maxDistance,
             maxPrice: maxPrice
-            } as ParkingOfferSearch)
+            } as ParkingOffersMapParams)
     }
 
     return (

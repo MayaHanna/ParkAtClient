@@ -30,7 +30,7 @@ export type FullParkingOffer = ParkingOfferBaseline & {
 export type ParkingOfferActionCreator<P> = ActionCreator<keyof typeof actions, P>;
 export type ParkingOfferAction = ReturnType<ParkingOfferActionCreator<never>>;
 
-export type ParkingOfferSearch = {
+export type ParkingOffersMapParams = {
   maxPrice?: number;
   ignorePrivate: boolean;
   ignorePublic: boolean;
