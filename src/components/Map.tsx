@@ -30,6 +30,10 @@ interface MapWrapperProps {
     filterParams?: ParkingOffersMapParams
   }
 
+  function getBaseLog(x: number, y: number) {
+    return Math.log(y) / Math.log(x);
+  } 
+
 const MapWrapper: React.FC<MapWrapperProps> = ({filterParams}) => {
 
     const {isLoaded} = useJsApiLoader({
@@ -40,6 +44,7 @@ const MapWrapper: React.FC<MapWrapperProps> = ({filterParams}) => {
 
     const parkings: Parking[] = useSelector((state: RootState) => fullParkingsOffersWithFilterSelector(state, filterParams).filter(po=>po.status=== "Open").map(po=>po.parking));        
     const [center, setCenter] = useState<Coords>(filterParams?.centerLocation ? filterParams?.centerLocation : initialCenter);
+    const [zoom, setZoom] = useState<number>(15);
 
     useEffect(() => {
         if(!!center)
@@ -52,8 +57,15 @@ const MapWrapper: React.FC<MapWrapperProps> = ({filterParams}) => {
         setCenter(filterParams?.centerLocation ? filterParams?.centerLocation : center);
     }, [filterParams?.centerLocation]);
 
+    useEffect(() => {
+        if(!!filterParams?.maxDistanceFromCenter){
+            setZoom(getBaseLog(2, 40000 / (filterParams?.maxDistanceFromCenter  / 2)))
+            console.log("zoom "+zoom);
+        }
+    }, [filterParams?.maxDistanceFromCenter]);
+
     return isLoaded ? (
-        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
+        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
             { /* Child components, such as markers, info windows, etc. */ }
             {parkings.map((parking, k) => <Marker position={parking.location}></Marker>)}
             <></>
