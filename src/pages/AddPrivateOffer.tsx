@@ -199,7 +199,7 @@ function AddPrivateOffer() {
         < IonPage id="view-message-page" >
             <IonHeader translucent>
                 <IonToolbar>
-                    <IonButtons>
+                    <IonButtons  slot="end">
                         <IonBackButton text="מסך בית" defaultHref="/home"></IonBackButton>
                     </IonButtons>
                 </IonToolbar>

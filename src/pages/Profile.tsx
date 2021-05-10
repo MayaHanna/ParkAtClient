@@ -109,8 +109,8 @@ const Profile: React.FC = () => {
       <IonPage>
         <IonHeader>
           <IonToolbar>
-            <IonButtons slot="start">
-              <IonBackButton color="secondary" defaultHref="home" />
+            <IonButtons  slot="end">
+              <IonBackButton  text="מסך בית" color="secondary" defaultHref="home" />
             </IonButtons>
           </IonToolbar>
         </IonHeader>
