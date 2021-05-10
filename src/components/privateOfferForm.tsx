@@ -41,7 +41,8 @@ const initializedFields: ParkingOffer = {
     price: 0,
     parking: 1,
     merchantId: "",
-    status: "Open"
+    status: "Open",
+    slots: []
 };
 
 interface ParkingDetailsProps {

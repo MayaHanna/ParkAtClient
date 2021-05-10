@@ -32,6 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../data/configureStore";
 import { addParkingOffer as addParkingOfferToRudux } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router";
+import { Slot } from '../data/slots-module/types';
 
 const initializedFields: ParkingOffer = {
     id: 7,
@@ -41,7 +42,8 @@ const initializedFields: ParkingOffer = {
     price: 0,
     parking: 1,
     merchantId: "",
-    status: "Open"
+    status: "Open",
+    slots: []
 };
 
 interface ParkingDetailsProps {
@@ -56,10 +58,53 @@ const PublicOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd }
         chosenParking ?
             setParkingOffer({
                 ...parkingOffer,
-                parking: chosenParking.id
+                parking: chosenParking.id,
             }) :
             setParkingOffer(initializedFields);
     }, [chosenParking])
+
+    const builldSlots = () => {
+        const slots: Slot[] = [];
+
+        let endTime = parkingOffer.end.getTime();
+
+        let slotStart = new Date(parkingOffer.start);
+        let slotEnd = new Date(slotStart);
+
+        slotEnd.setHours(slotStart.getHours() + 1);
+
+        while (slotStart.getTime() < endTime) {
+
+            const currSlot: Slot = {
+                start: slotStart,
+                end: slotEnd
+            }
+
+            slots.push(currSlot);
+
+            slotStart = new Date(slotEnd);
+            slotEnd = new Date(slotEnd);
+
+            slotEnd.setHours(slotEnd.getHours() + 1);
+        }
+
+        const numberOfSlots = slots.length;
+
+        if (numberOfSlots > 0) {
+            slots[numberOfSlots - 1].end = parkingOffer.end;
+        }
+
+        return slots;
+    }
+
+    const addPublicOffer = () => {
+        const newOffer = {
+            ...parkingOffer,
+            slots: builldSlots()
+        }
+
+        onAdd(newOffer)
+    }
 
     const handleFieldChangeByEvent = (e: any) => {
         setParkingOffer({
@@ -83,7 +128,7 @@ const PublicOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd }
     }
 
     return (
-       <>
+        <>
             <ParkingDetails parking={chosenParking} />
             <form className="formWrapper">
                 <IonItem>
@@ -107,7 +152,7 @@ const PublicOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd }
                     ></IonDatetime>
                 </IonItem>
                 <IonButtons>
-                    <IonButton className="innerText" onClick={() => onAdd(parkingOffer)}>הוסף</IonButton>
+                    <IonButton className="innerText" onClick={addPublicOffer}>הוסף</IonButton>
                 </IonButtons>
             </form>
         </>

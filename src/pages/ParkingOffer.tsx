@@ -25,37 +25,47 @@ import { useState, useEffect } from 'react';
 import { RootState } from "../data/configureStore";
 import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { FullParkingOffer } from '../data/parkings-offers-module/types';
+import { Slot } from '../data/slots-module/types';
 import { Paypal } from "./Paypal";
 import { ReactComponent as BigParking } from "../resources/truck.svg";
 import { ReactComponent as SmallParking } from "../resources/car.svg";
 import SlotItem from '../components/SlotItem';
+import { userSelector } from "../data/user-module/selectors";
+import { useHistory } from "react-router";
+import { editParkingOffer } from "../data/parkings-offers-module/api";
+import { editParkingOffer as UpdateParkingOfferInRudux } from "../data/parkings-offers-module/actions";
 
 const ParkingOffer: React.FC = () => {
 
   const params = useParams<{ id: string }>();
 
   const parkingOffer: FullParkingOffer = useSelector((state: RootState) => fullParkingsOffersWithIdSelector(state, params.id));
+  const [parkingOfferToUpdate, setParkingOfferToUpdate] = useState<FullParkingOffer>(parkingOffer);
 
+  const user = useSelector(userSelector);
+  const history = useHistory();
   const dispatch = useDispatch();
-
-  const displaySlots = () => {
-    const slots: any[] = [];
-
-    let endHour = new Date(parkingOffer.end).getHours();
-    let displayedDate = new Date(parkingOffer.start);
-    let displayedHour = displayedDate.getHours();
-    let displayedMinutes = displayedDate.getMinutes();
-
-    while (displayedHour < endHour) {
-      slots.push(<SlotItem time={`${displayedHour + 1}:${displayedMinutes} - ${displayedHour}:${displayedMinutes}`} />);
-      displayedHour++;
-    }
-
-    return slots;
-  }
 
   const acceptOffer = () => {
 
+    editParkingOffer(parkingOfferToUpdate.id, { slots: parkingOfferToUpdate.slots })
+      .then(res => {
+        console.log("הצעת החניה עודכנה בהצלחה");
+        dispatch(UpdateParkingOfferInRudux({ slots: parkingOfferToUpdate.slots }));
+        history.push("/home");
+      })
+      .catch(err => console.log(err))
+  }
+
+  const handleSlot = (slot: Slot, slotIndex: number, isTaken: Boolean) => {
+    const newParkingOffer: FullParkingOffer = { ...parkingOffer, slots: [...parkingOffer.slots] };
+
+    newParkingOffer.slots[slotIndex] = {
+      ...newParkingOffer.slots[slotIndex],
+      incomingUser: isTaken ? user.userMailAddress : undefined
+    }
+
+    setParkingOfferToUpdate(newParkingOffer);
   }
 
   return (
@@ -121,7 +131,17 @@ const ParkingOffer: React.FC = () => {
               <>
                 <IonText className="text" > לחץ כדי לתפוס את החניה בשעות הנוחות לך !</IonText>
                 <form className="slotFormWrapper">
-                  {displaySlots()}
+                  {
+                    parkingOffer.slots.map((slot, slotIndex) => (
+
+                      <SlotItem
+                        endDate={slot.end}
+                        startDate={slot.start}
+                        incomingUser={slot.incomingUser}
+                        onClick={(isTaken: Boolean) => handleSlot(slot, slotIndex, isTaken)}
+                      />
+                    )
+                    )}
                 </form>
                 <br></br>
                 <IonButtons>

@@ -17,16 +17,36 @@ import {
 import './SlotItem.css';
 
 interface ParkingDetailsProps {
-    time: String
+    // time: String,
+    endDate: Date,
+    startDate: Date,
+    incomingUser: String | undefined,
+    onClick: Function
 }
 
-const SlotItem: React.FC<ParkingDetailsProps> = ({ time }) => {
-    const [isTaken, setIsTaken] = useState(false);
+const SlotItem: React.FC<ParkingDetailsProps> = ({ endDate, startDate, incomingUser, onClick }) => {
+    const [isTaken, setIsTaken] = useState(incomingUser ? true : false);
+    const [displayTime, setDisplayTime] = useState("");
+
+    useEffect(() => {
+        setDisplayTime(`${endDate.getHours()}:${getMinutesToDisplay(endDate)} - 
+        ${startDate.getHours()}:${getMinutesToDisplay(startDate)}`)
+    }, [])
+
+
+    const getMinutesToDisplay = (date: Date) => {
+        let minutes = date.getMinutes();
+        return minutes < 10  ? `0${minutes}` : minutes
+    }
 
     return (
         <>
-            <IonItem className={"slot"} onClick={() => setIsTaken(!isTaken)}>
-                <IonText color="primary">{time}</IonText>
+            <IonItem className={"slot"} onClick={() => {
+                const newIsTaken = !isTaken;
+                setIsTaken(newIsTaken);
+                onClick(newIsTaken);
+            }}>
+                <IonText color="primary">{displayTime}</IonText>
                 {
                     isTaken &&
                     <IonText className={"takenSlot"}>///////</IonText>
@@ -35,5 +55,30 @@ const SlotItem: React.FC<ParkingDetailsProps> = ({ time }) => {
         </>
     );
 }
+// interface ParkingDetailsProps {
+//     time: String,
+//     incomingUser: String | undefined,
+//     onClick: Function
+// }
+
+// const SlotItem: React.FC<ParkingDetailsProps> = ({ time, incomingUser, onClick }) => {
+//     const [isTaken, setIsTaken] = useState(incomingUser ? true : false);
+
+//     return (
+//         <>
+//             <IonItem className={"slot"} onClick={() => {
+//                 const newIsTaken = !isTaken;
+//                 setIsTaken(newIsTaken);
+//                 onClick(newIsTaken);
+//             }}>
+//                 <IonText color="primary">{time}</IonText>
+//                 {
+//                     isTaken &&
+//                     <IonText className={"takenSlot"}>///////</IonText>
+//                 }
+//             </IonItem>
+//         </>
+//     );
+// }
 
 export default SlotItem;

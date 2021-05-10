@@ -1,6 +1,7 @@
 import * as actions from "./actions.types";
 import { ActionCreator } from "../common/types";
 import {Parking} from "../parkings-module/types";
+import {Slot} from "../slots-module/types";
 
 type Parking_Offer_Status = "Open" | "Closed";
 interface ParkingOfferBaseline {
@@ -12,6 +13,7 @@ interface ParkingOfferBaseline {
   merchantId: string;
   status: Parking_Offer_Status;
   client?: string;
+  slots: Slot[];
 }
 
 export type ParkingOffer = ParkingOfferBaseline & {
