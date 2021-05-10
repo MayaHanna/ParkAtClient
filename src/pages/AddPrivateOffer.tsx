@@ -41,8 +41,8 @@ const initializedFields: ParkingOffer = {
     end: new Date(),
     isPermanent: false,
     price: 0,
-    parking: 1,
-    merchantId: "",
+    parkingId: 1,
+    owner: "",
     status: "Open"
 };
 
@@ -60,7 +60,7 @@ function AddPrivateOffer() {
         chosenParking ?
             setParkingOffer({
                 ...parkingOffer,
-                parking: chosenParking.id
+                parkingId: chosenParking.id
             }) :
             setParkingOffer(initializedFields);
     }, [chosenParking])
@@ -186,7 +186,7 @@ function AddPrivateOffer() {
                 {/*</IonItem>*/}
                 <IonItem>
                     <IonLabel className="labelText">חשבון paypal לזיכוי</IonLabel>
-                    <IonInput className="innerText" name="merchantId" value={parkingOffer.merchantId} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
+                    {/*<IonInput className="innerText" name="merchantId" value={parkingOffer.owner} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>*/}
                 </IonItem>
                 <IonButtons>
                     <IonButton className="innerText" onClick={addPaarkingOffer}>הוסף</IonButton>

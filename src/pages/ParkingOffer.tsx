@@ -14,13 +14,15 @@ import {
 } from '@ionic/react';
 import './ParkingOffer.css';
 import {useLocation, useParams} from 'react-router';
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { fullParkingsOffersWithIdSelector } from "../data/parkings-offers-module/selectors";
 import { RootState } from "../data/configureStore";
 import { FullParkingOffer } from '../data/parkings-offers-module/types';
 import {Paypal} from "./Paypal";
 import ParkingDetails from "../components/parkingDetails";
 import { boolean } from "boolean";
+import {getMerchantByUser} from "../data/merchants-module/api";
+import {useEffect, useState} from "react";
 
 
 const ParkingOffer: React.FC = () => {
@@ -34,6 +36,15 @@ const ParkingOffer: React.FC = () => {
 
   const canAddComment = search.split("=")[1];
 
+  const [merchantId, setMerchantId] = useState("");
+
+  useEffect(() => {
+    if (parkingOffer) {
+      getMerchantByUser(parkingOffer.parking.owner).then(data => {
+        setMerchantId(data.merchantId);
+      });
+    }
+  }, [parkingOffer]);
 
   return (
     <IonPage>
@@ -77,7 +88,7 @@ const ParkingOffer: React.FC = () => {
             </IonRow>
             {parkingOffer.status == "Open" &&
             <IonRow className={"paypal-row"}>
-                <Paypal price={parkingOffer.price} merchantId={parkingOffer.merchantId} parkingOfferId={parkingOffer.id}/>
+                <Paypal price={parkingOffer.price} merchantId={merchantId} parkingOfferId={parkingOffer.id}/>
             </IonRow>
             }
           </IonGrid>

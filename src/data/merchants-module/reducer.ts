@@ -4,7 +4,7 @@ import {SET_MERCHANT} from "./actions.types";
 export const initialState: MerchantState = {
   merchant: {
     merchantId: "",
-    userMailAddress: "",
+    userEmailAddress: "",
     points: 0
   },
 };
