@@ -30,8 +30,19 @@
 }
 
 .searchBar {
-    color: white;
-    margin-top: 5%;
+    width: 100%;
+    color: lightgray;
+    background-color: hsl(223, 7%, 20%);
+    font-size: 1em;
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.searchIcon {
+    font-size: 1em;
+    margin-left: 2em;
 }
 
 ion-list {

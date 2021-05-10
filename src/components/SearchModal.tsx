@@ -84,9 +84,9 @@ const SearchModal: React.FC<SearchModaProps> = ({search}) => {
         </IonItem>
         <IonItem className="searchRow">
             <IonLabel color="primary">סוג חניה</IonLabel>
-            <IonSelect color="primary" value={parkingTypes} multiple={true} cancelText="ביטול" okText="אישור" onIonChange={e => setParkingTypes(e.detail.value)}>
-              <IonSelectOption value="public" color="secondary" >ציבורית</IonSelectOption>
-              <IonSelectOption value="private" color="secondary" >פרטית</IonSelectOption>
+            <IonSelect value={parkingTypes} multiple={true} cancelText="ביטול" okText="אישור" onIonChange={e => setParkingTypes(e.detail.value)}>
+              <IonSelectOption value="public" >ציבורית</IonSelectOption>
+              <IonSelectOption value="private" >פרטית</IonSelectOption>
             </IonSelect>
         </IonItem>
         <button className={"searchButton"} onClick={e => onSearch()} disabled={disableAddressInput}>חפש</button>
