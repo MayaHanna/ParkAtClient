@@ -196,13 +196,14 @@ function AddParkingOffer() {
                 {/*        </IonItem>*/}
                 {/*        )*/}
                 {/*    }*/}
-                <IonItem>
-                    <IonLabel className="labelText">חשבון paypal לזיכוי</IonLabel>
-                    <IonText color="primary">{merchant.merchantId}</IonText>
-                </IonItem>
-                <IonButtons>
-                    <IonButton className="innerText" onClick={addPaarkingOffer}>הוסף</IonButton>
-                </IonButtons>
+                {
+                    !merchant ?
+                    <IonButtons>
+                        <IonButton className="innerText" onClick={addPaarkingOffer}>הוסף</IonButton>
+                    </IonButtons>
+                    :
+                    <IonText color="danger">אין חשבון פייפאל לזיכוי. הוסף חשבון פייפאל בפרופיל על מנת להשלים את הצעת החניה</IonText> 
+                }
             </form>
         </>
     )
