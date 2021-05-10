@@ -28,7 +28,39 @@ import { Merchant } from '../data/merchants-module/types';
 import {useLocation} from "react-router";
 import {merchantSelector} from "../data/merchants-module/selectors";
 import {editMerchant} from "../data/merchants-module/actions";
+import {ReactComponent as Rank1 } from "../resources/ranks/rank1.svg";
+import {ReactComponent as Rank2 } from "../resources/ranks/rank2.svg";
+import {ReactComponent as Rank3 } from "../resources/ranks/rank3.svg";
+import {ReactComponent as Rank4 } from "../resources/ranks/rank4.svg";
+import {ReactComponent as Rank5 } from "../resources/ranks/rank5.svg";
+import {ReactComponent as Rank6 } from "../resources/ranks/rank6.svg";
 
+
+const ranks = [{
+  maxPoints: 50,
+  name: "חונה מתחיל",
+  icon: Rank1
+}, {
+  maxPoints: 100,
+  name: "חונה מתקדם",
+  icon: Rank2
+}, {
+  maxPoints: 200,
+  name: "חונה עם נסיון",
+  icon: Rank3
+}, {
+  maxPoints: 300,
+  name: "חונה מקצועי",
+  icon: Rank4
+}, {
+  maxPoints: 450,
+  name: "מאסטר החניות",
+  icon: Rank5
+}, {
+  maxPoints: 10000000,
+  name: "מלך הכביש",
+  icon: Rank6
+}];
 const Profile: React.FC = () => {
   const user = useSelector(userSelector);
   const userMerchant = useSelector(merchantSelector);
@@ -37,6 +69,13 @@ const Profile: React.FC = () => {
   const [currentUserPayPal, setCurrentUserPayPal] = useState(userMerchant.merchantId);
   const [userParkings, setUserParkings] = useState<Parking[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [userRankIndex, setUserRankIndex] = useState(() => {
+      return ranks.findIndex(r => userMerchant.points < r.maxPoints);
+  });
+
+  useEffect(() => {
+      setUserRankIndex(ranks.findIndex(r => userMerchant.points < r.maxPoints));
+  }, [userMerchant]);
 
   useEffect(()=>{
     if(user.userMailAddress == undefined)
@@ -60,6 +99,9 @@ const Profile: React.FC = () => {
     }));
     setIsEditUser(false);
   };
+
+  const RankIcon = ranks[userRankIndex]?.icon || Rank1;
+  const rankText = `${userMerchant.points} נקודות | ${userRankIndex !== 5 ? ranks[userRankIndex].maxPoints - userMerchant.points : 0} נקודות לדרגה הבאה`;
   return (
     <>
       <IonLoading isOpen={isLoading}></IonLoading>
@@ -84,8 +126,10 @@ const Profile: React.FC = () => {
               <IonText color="primary" className={"user-mail"}>{user.userMailAddress}</IonText>
             </div>
             {userMerchant &&
-              <div className={"user-rank"}>
-                <IonText color="primary">{userMerchant?.points} נקודות</IonText>
+              <div className={"user-rank-wrapper"}>
+                  <RankIcon className={"user-rank"}/>
+                  <IonText color="primary" className={"user-rank-name"}>{ranks[userRankIndex].name}</IonText>
+                  <IonText color="primary" className={"user-rank-next-rank"}>{rankText}</IonText>
               </div>
             }
           </div>
