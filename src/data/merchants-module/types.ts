@@ -4,7 +4,7 @@ import * as actions from "./actions.types";
 export interface Merchant {
   merchantId: string;
   points: number;
-  userMailAddress: string;
+  userEmailAddress: string;
 }
 
 export interface MerchantState {

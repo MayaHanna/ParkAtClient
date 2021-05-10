@@ -15,7 +15,7 @@ export const fullParkingsOffersSelector = createSelector(
         return parkingsOffers.map(po => {
             return {
                 ...po,
-                parking: parkings.find(p => p.id === po.parking)
+                parking: parkings.find(p => p.id === po.parkingId)
             }
         })
     }

@@ -59,6 +59,7 @@ const MapWrapper: React.FC<MapWrapperProps> = ({filterParams}) => {
         }
     }, [filterParams?.maxDistanceFromCenter]);
 
+    console.log(parkingOffers);
     return isLoaded ? (
         <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
             {parkingOffers.map((po, k) =>

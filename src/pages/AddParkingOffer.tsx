@@ -41,8 +41,8 @@ const initializedFields: ParkingOffer = {
     end: new Date(),
     isPermanent: false,
     price: 0,
-    parking: 1,
-    merchantId: "",
+    parkingId: 1,
+    owner: "",
     status: "Open"
 };
 
@@ -62,10 +62,17 @@ function AddParkingOffer() {
         chosenParking ?
             setParkingOffer({
                 ...parkingOffer,
-                parking: chosenParking.id
+                parkingId: chosenParking.id
             }) :
             setParkingOffer(initializedFields);
-    }, [chosenParking])
+    }, [chosenParking]);
+
+    useEffect(() => {
+        setParkingOffer({
+            ...parkingOffer,
+            owner: merchant.userEmailAddress
+        })
+    }, [merchant]);
 
     const handleFieldChangeByEvent = (e: any) => {
         setParkingOffer({
@@ -99,11 +106,15 @@ function AddParkingOffer() {
     }
 
     const handleChooseParking = (parkingSpot: Parking) => {
-        setChosenParking(parkingSpot);
+        setChosenParking({
+            ...chosenParking,
+            ...parkingSpot
+        });
     }
 
     const addPaarkingOffer = () => {
-        addParkingOffer(parkingOffer)
+        console.log(parkingOffer);
+        addParkingOffer(parkingOffer.owner? parkingOffer : {...parkingOffer, owner: merchant.userEmailAddress})
             .then(res => {
                 console.log("הצעת החניה נוספה בהצלחה");
                 dispatch(addParkingOfferToRudux(parkingOffer));
@@ -197,7 +208,7 @@ function AddParkingOffer() {
                 {/*        )*/}
                 {/*    }*/}
                 {
-                    !merchant ?
+                    merchant.merchantId ?
                     <IonButtons>
                         <IonButton className="innerText" onClick={addPaarkingOffer}>הוסף</IonButton>
                     </IonButtons>

@@ -74,12 +74,13 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
     
     const addParkingSpot = () => {
         setLocation();
-        chooseParking(parking);
 
         addParking(parking)
             .then(res => {
                 console.log(" החניה נוספה בהצלחה");
                 dispatch(addParkingToRudux(parking));
+                console.log(res);
+                chooseParking(res.data);
             })
             .catch(err => console.log(err))
     }

@@ -75,6 +75,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
       setUserRankIndex(ranks.findIndex(r => userMerchant.points < r.maxPoints));
+      setCurrentUserPayPal(userMerchant.merchantId);
   }, [userMerchant]);
 
   useEffect(()=>{
