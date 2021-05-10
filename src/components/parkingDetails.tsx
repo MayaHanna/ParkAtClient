@@ -5,49 +5,19 @@ import {
   IonNote
 } from '@ionic/react';
 import './parkingDetails.css';
+import { carOutline } from 'ionicons/icons';
 import { Parking } from "../data/parkings-module/types";
 import {ReactComponent as BigParking} from "../resources/truck.svg";
 import {ReactComponent as SmallParking} from "../resources/car.svg";
-import {useDispatch} from "react-redux";
 
 interface ParkingDetailsProps {
-  parking: Parking;
-  isRouting: boolean;
-  isCanAddComment?: boolean;
+  parking: Parking | undefined
 }
 
-const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting, isCanAddComment }) => {
-  let cardProps = {};
-  if (isRouting) {
-    cardProps = {
-        ...cardProps,
-      routerLink: `/parking/${parking.id}?canAddComment=${isCanAddComment || false}`
-    }
-  }
-
-  const calculateParkingRatingAvg = () => {
-    if (parking) {
-      let sum = 0;
-      let count = 0;
-      parking.comments.forEach((c) => {
-        if (c.rating) {
-          sum += c.rating;
-          count += 1;
-        }
-      });
-
-      if (count > 0) {
-        return Math.round(sum / count)
-      }
-
-      return 0;
-    }
-
-    return 0;
-  };
+const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking }) => {
 
   return (
-    <IonCard className="parkingTitle" {...cardProps}>
+    <IonCard className="parkingTitle">
       <div className="headerWrapper">
         {parking?.size === "Big" && <BigParking className={"title-icon"} />}
         {parking?.size === "Small" && <SmallParking className={"title-icon"} />}
@@ -58,12 +28,6 @@ const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting, isC
           {parking?.isPrivate ?
             <IonNote color="primary">חניה פרטית</IonNote>
             : <IonNote color="primary">חניה ציבורית</IonNote>}
-        </div>
-        <div className={"comment-wrapper"}>
-          {
-            parking?.comments.length > 0 && <IonText color="primary" className={"average-rating"}>5 / {calculateParkingRatingAvg()}</IonText>
-          }
-          <IonText color="primary" className={"comment-count"}>{parking?.comments.length} תגובות </IonText>
         </div>
       </div>
     </IonCard>

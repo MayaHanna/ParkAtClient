@@ -1,0 +1,10 @@
+.takenSlot {
+    position: absolute;
+    font-size: xx-large  !important;
+}
+
+
+.slot {
+    height: fit-content;
+    position: relative;
+}

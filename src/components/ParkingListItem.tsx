@@ -10,31 +10,14 @@ import { ReactComponent as SmallParking } from "../resources/car.svg";
 
 interface MessageListItemProps {
   parking: Parking,
-  onClick: Function,
-  isRouting: boolean
+  onClick: Function
 }
 
-interface ItemProps {
-    onClick: () => void;
-    routerLink?: string;
-}
-
-const ParkingListItem: React.FC<MessageListItemProps> = ({ parking, onClick, isRouting }) => {
+const ParkingListItem: React.FC<MessageListItemProps> = ({ parking, onClick }) => {
   const dotClassName = `dot dot-Free`;
   // const dotClassName = `dot dot-${parking.status}`;
-
-    let itemProps: ItemProps = {
-        onClick: () => onClick(parking)
-    };
-
-    if (isRouting) {
-        itemProps = {
-            ...itemProps,
-            routerLink: `/parking/${parking.id}`
-        }
-    }
   return (
-    <IonItem button {...itemProps}>
+    <IonItem button onClick={() => onClick(parking)}>
       <div slot="start" className={"icon-wrapper"}>
         <div className={dotClassName} />
         {parking.size === "Big" && <BigParking className={"parking-size"} />}

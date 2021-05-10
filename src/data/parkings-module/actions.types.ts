@@ -1,4 +1,3 @@
 export const SET_PARKINGS = "SET_PARKINGS";
 export const GET_PARKINGS = "GET_PARKINGS";
 export const ADD_PARKING = "ADD_PARKING";
-export const ADD_COMMENT_TO_PARKING = "ADD_COMMENT_TO_PARKING";

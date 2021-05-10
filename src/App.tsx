@@ -7,7 +7,6 @@ import Login from './pages/Login';
 import AddParkingOffer from './pages/AddParkingOffer';
 import ReportParking from './pages/ReportParking';
 import ParkingOffer from './pages/ParkingOffer';
-import AddPrivateOffer from './pages/AddPrivateOffer';
 import firebase from "firebase/app";
 import "firebase/auth";
 import "./App.css"
@@ -38,9 +37,6 @@ import { setUser } from "./data/user-module/actions";
 import { getParkings } from "./data/parkings-module/actions";
 import { getParkingsOffers } from "./data/parkings-offers-module/actions";
 import Profile from './pages/Profile';
-import ParkingProfile from "./pages/ParkingProfile";
-import {getMerchantByUser} from "./data/merchants-module/api";
-import {getMerchant} from "./data/merchants-module/actions";
 
 const App: React.FC = () => {
   const user = useSelector(userSelector);
@@ -62,12 +58,6 @@ const App: React.FC = () => {
     dispatch(getParkings());
     dispatch(getParkingsOffers());
   }, []);
-
-  useEffect(() => {
-    if (user && user.userMailAddress) {
-      dispatch(getMerchant(user.userMailAddress));
-    }
-  }, [user]);
 
   if (!userRef.current && currentUser) {
     setCurrentScreen("Home");
@@ -99,9 +89,6 @@ const App: React.FC = () => {
           </Route>
           <Route path="/parkingOffer/:id">
             <ParkingOffer />
-          </Route>
-          <Route path="/parking/:id">
-            <ParkingProfile />
           </Route>
           <Route path="/addParkingOffer" exact={true}>
             <AddParkingOffer />

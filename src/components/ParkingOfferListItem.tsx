@@ -12,15 +12,14 @@ import { FullParkingOffer } from "../data/parkings-offers-module/types";
 
 interface ParkingOfferListItemProps {
   parkingOffer: FullParkingOffer;
-  isCanAddComment?: boolean;
 }
 
-const ParkingOfferListItem: React.FC<ParkingOfferListItemProps> = ({ parkingOffer, isCanAddComment }) => {
+const ParkingOfferListItem: React.FC<ParkingOfferListItemProps> = ({ parkingOffer }) => {
   const dotClassName = `dot dot-${parkingOffer.status}`;
   const startDate = new Date(parkingOffer.start);
   const endDate = new Date(parkingOffer.end);
   return (
-    <IonItem routerLink={`/parkingOffer/${parkingOffer.id}?canAddComment=${isCanAddComment || false}`} detail={false}>
+    <IonItem routerLink={`/parkingOffer/${parkingOffer.id}`} detail={false}>
       <div slot="start" className={"icon-wrapper"} >
         <div className={dotClassName} />
         {parkingOffer.parking.size === "Big" && <BigParking className={"parking-size"} />}

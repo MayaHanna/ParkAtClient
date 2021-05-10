@@ -28,12 +28,6 @@ import { useParams } from 'react-router';
 import './AddParking.css';
 import { useDispatch, useSelector } from "react-redux";
 import { addParking as addParkingToRudux, getParkings } from "../data/parkings-module/actions";
-import axios, { AxiosResponse } from "axios";
-import { GoogleMap, useJsApiLoader, Marker,  } from '@react-google-maps/api';
-import { User } from '../data/user-module/types';
-import { userSelector } from '../data/user-module/selectors';
-import { findLocationByAddress } from '../data/location-module/api';
-
 
 interface AddParkingProps {
     chooseParking: Function;
@@ -48,9 +42,7 @@ const initializedFields: Parking = {
     description: "",
     size: "Small",
     // suittableFor: "motorcycle",
-    owner: "",
-    comments: [],
-    location: {lat: 0, lng: 0}
+    owner: 1
 }
 
 const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
@@ -59,41 +51,19 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
         ...initializedFields,
         isPrivate: !isPublic
     });
-    const loggedInUser: User = useSelector(userSelector);
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (loggedInUser && loggedInUser.userMailAddress) {
-            setParking({
-                ...parking,
-                owner: loggedInUser.userMailAddress
-            })
-        }
-    }, [loggedInUser]);
-    
     const addParkingSpot = () => {
-        setLocation();
         chooseParking(parking);
 
         addParking(parking)
             .then(res => {
-                console.log(" החניה נוספה בהצלחה");
+                console.log(" החניה נוספה בהצלחה")
                 dispatch(addParkingToRudux(parking));
             })
             .catch(err => console.log(err))
     }
-
-    
-    const setLocation = () => {
-        findLocationByAddress(parking.address).then(location=>
-            setParking({
-                ...parking,
-                location: location
-            })
-        )
-    }
-    
 
     const handleFieldChangeByEvent = (e: any) => {
         setParking({
@@ -108,7 +78,8 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
             [field]: value
         })
     }
-    
+
+
     return (
         <form className="formWrapper">
             <IonItem >
