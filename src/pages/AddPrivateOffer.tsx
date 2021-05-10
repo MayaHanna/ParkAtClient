@@ -173,17 +173,17 @@ function AddPrivateOffer() {
                         onIonChange={e => handleDateChange(e)}
                     ></IonDatetime>
                 </IonItem>
-                <IonItem>
-                    <IonLabel className="labelText">אפשרות להצעה קבועה </IonLabel>
-                    <IonButtons className="itemButtonWrapper">
-                        <IonItem
-                            className={parkingOffer.isPermanent ? "choosenButton" : ""}
-                            onClick={() => handleFieldChange("isPermanent", true)}>כן</IonItem>
-                        <IonItem
-                            className={!parkingOffer.isPermanent ? "choosenButton" : ""}
-                            onClick={() => handleFieldChange("isPermanent", false)}>לא </IonItem>
-                    </IonButtons>
-                </IonItem>
+                {/*<IonItem>*/}
+                {/*    <IonLabel className="labelText">אפשרות להצעה קבועה </IonLabel>*/}
+                {/*    <IonButtons className="itemButtonWrapper">*/}
+                {/*        <IonItem*/}
+                {/*            className={parkingOffer.isPermanent ? "choosenButton" : ""}*/}
+                {/*            onClick={() => handleFieldChange("isPermanent", true)}>כן</IonItem>*/}
+                {/*        <IonItem*/}
+                {/*            className={!parkingOffer.isPermanent ? "choosenButton" : ""}*/}
+                {/*            onClick={() => handleFieldChange("isPermanent", false)}>לא </IonItem>*/}
+                {/*    </IonButtons>*/}
+                {/*</IonItem>*/}
                 <IonItem>
                     <IonLabel className="labelText">חשבון paypal לזיכוי</IonLabel>
                     <IonInput className="innerText" name="merchantId" value={parkingOffer.merchantId} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>

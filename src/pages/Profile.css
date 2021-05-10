@@ -39,8 +39,32 @@
     white-space: nowrap;
     direction: ltr;
 }
-.user-rank {
-    font-size: 1.5em;
+.user-rank-wrapper {
     margin-right: auto;
-    margin-left: 5vw;
+    display: flex;
+    flex-direction: column;
+    min-width: 30%;
+}
+
+.user-rank {
+    height: 10vh;
+    width: 20vw;
+    margin: 0 auto;
+}
+
+.user-rank-name {
+    font-size: 0.75em;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.user-rank-next-rank {
+    font-size: 0.5em;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.title-wrapper {
+    display: flex;
+    gap: 5%;
 }
