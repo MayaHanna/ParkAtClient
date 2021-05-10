@@ -18,6 +18,8 @@
     display: flex;
     flex-direction: column;
     font-size: 1.5em;
+    max-height: 50%;
+    max-width: 50%;
 }
 
 .profile-section {
@@ -29,4 +31,16 @@
 .profile-section-title {
     font-size: 1.5em;
     align-self: center;
+}
+
+.user-mail {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    direction: ltr;
+}
+.user-rank {
+    font-size: 1.5em;
+    margin-right: auto;
+    margin-left: 5vw;
 }
