@@ -6,9 +6,9 @@ export const fetchParkingsOffers = async () => {
     return await response.data;
 }
 
-export const addParkingOffer = (formData: any) => {
+export const addParkingOffer = (formData: any, userEmailAddress: string) => {
     return axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/parkingsOffers`,
-        { formData },
+        { formData, userEmailAddress},
         { withCredentials: true }
     );
 };
