@@ -2,15 +2,17 @@ import {
   IonContent,
   IonPage,
   IonText,
+  IonIcon,
+  IonInput,
   IonAvatar,
   IonHeader,
   IonToolbar,
   IonButtons,
   IonBackButton,
-  IonLoading
+  IonLoading, IonButton
 } from '@ionic/react';
-
-import { useSelector,} from "react-redux";
+import { pencil } from 'ionicons/icons';
+import {useDispatch, useSelector,} from "react-redux";
 import {useState, useEffect} from 'react';
 import {userSelector} from "../data/user-module/selectors";
 import './Profile.css';
@@ -25,11 +27,14 @@ import { RootState } from '../data/configureStore';
 import { Merchant } from '../data/merchants-module/types';
 import {useLocation} from "react-router";
 import {merchantSelector} from "../data/merchants-module/selectors";
+import {editMerchant} from "../data/merchants-module/actions";
 
 const Profile: React.FC = () => {
   const user = useSelector(userSelector);
   const userMerchant = useSelector(merchantSelector);
 
+  const [isEditUser, setIsEditUser] = useState(false);
+  const [currentUserPayPal, setCurrentUserPayPal] = useState(userMerchant.merchantId);
   const [userParkings, setUserParkings] = useState<Parking[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -46,7 +51,15 @@ const Profile: React.FC = () => {
   const parkingOffers: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithOwnerSelector(state, user.userMailAddress));
   const parkingHistory: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithClientSelector(state, user.userMailAddress));
 
-  
+
+  const dispatch = useDispatch();
+  const onPayPalAccountChanged = () => {
+    dispatch(editMerchant({
+        ...userMerchant,
+      merchantId: currentUserPayPal
+    }));
+    setIsEditUser(false);
+  };
   return (
     <>
       <IonLoading isOpen={isLoading}></IonLoading>
@@ -96,8 +109,22 @@ const Profile: React.FC = () => {
           {userMerchant &&
           <div color="primary"  className={"profile-section"}>
             <IonText color="primary" className={"profile-section-title"}>פרטי מסחר</IonText>
-            <IonText color="primary"> פייפל:</IonText>
-            {userMerchant.merchantId && <IonText color="primary">{userMerchant.merchantId}</IonText>}
+            <div className={"title-wrapper"}>
+              <IonText color="primary">חשבון PayPal:</IonText>
+              {
+                !isEditUser && <IonIcon icon={pencil} color="primary" onClick={e=> setIsEditUser(true)} />}
+            </div>
+            {
+              isEditUser ?
+                  <>
+                  <IonInput className="innerText" type="text" name="merchantId" value={currentUserPayPal} onIonChange={e => setCurrentUserPayPal(e.detail.value!)} placeholder={"הכנס חשבון PayPal כאן"}/>
+                  <IonButtons>
+                    <IonButton className="innerText" onClick={onPayPalAccountChanged}>שמור</IonButton>
+                  </IonButtons>
+                  </>
+              : <IonText color="primary">{userMerchant.merchantId || "הכנס חשבון PayPal כאן"}</IonText>
+            }
+
           </div>
           }
         

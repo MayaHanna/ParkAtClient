@@ -44,3 +44,8 @@
     margin-right: auto;
     margin-left: 5vw;
 }
+
+.title-wrapper {
+    display: flex;
+    gap: 5%;
+}

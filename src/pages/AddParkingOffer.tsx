@@ -20,7 +20,7 @@ import {
     IonRadio,
     IonRadioGroup,
     IonButton,
-    IonList
+    IonList, IonText
 } from '@ionic/react';
 import { useParams } from 'react-router';
 import './AddParkingOffer.css';
@@ -32,6 +32,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../data/configureStore";
 import { addParkingOffer as addParkingOfferToRudux } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router";
+import {userSelector} from "../data/user-module/selectors";
+import {merchantSelector} from "../data/merchants-module/selectors";
 
 const initializedFields: ParkingOffer = {
     id: 7,
@@ -49,7 +51,10 @@ function AddParkingOffer() {
     const [isCreatingNewParking, setisCreatingNewParking] = useState(false);
     const [chosenParking, setChosenParking] = useState<Parking>();
     const [parkingOffer, setParkingOffer] = useState<ParkingOffer>(initializedFields);
-    const parkingsList: Parking[] = useSelector((state: RootState) => parkingsWithOwnerSelector(state, "1"));
+    const user = useSelector(userSelector);
+    const merchant = useSelector(merchantSelector);
+    const parkingsList = useSelector((state: RootState) => parkingsWithOwnerSelector(state, user.userMailAddress));
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -130,7 +135,7 @@ function AddParkingOffer() {
                             < h1 className="innerText"> לא נמצאו חניות שמורות </h1 >
                         }
                         <IonList>
-                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} isRouting={true}/>)}
+                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} isRouting={false}/>)}
                         </IonList>
                     </>
                 )
@@ -176,24 +181,24 @@ function AddParkingOffer() {
                         onIonChange={e => handleDateChange(e)}
                     ></IonDatetime>
                 </IonItem>
-                {chosenParking?.isPrivate &&
-                        (
-                            <IonItem>
-                            <IonLabel className="labelText" >אפשרות להצעה קבועה </IonLabel>
-                            <IonButtons className="itemButtonWrapper">
-                                <IonItem
-                                    className={parkingOffer.isPermanent ? "choosenButton" : ""}
-                                    onClick={() => handleFieldChange("isPermanent", true)}>כן</IonItem>
-                                <IonItem
-                                    className={!parkingOffer.isPermanent ? "choosenButton" : ""}
-                                    onClick={() => handleFieldChange("isPermanent", false)}>לא </IonItem>
-                            </IonButtons>
-                        </IonItem>
-                        )
-                    }
+                {/*{chosenParking?.isPrivate &&*/}
+                {/*        (*/}
+                {/*            <IonItem>*/}
+                {/*            <IonLabel className="labelText" >אפשרות להצעה קבועה </IonLabel>*/}
+                {/*            <IonButtons className="itemButtonWrapper">*/}
+                {/*                <IonItem*/}
+                {/*                    className={parkingOffer.isPermanent ? "choosenButton" : ""}*/}
+                {/*                    onClick={() => handleFieldChange("isPermanent", true)}>כן</IonItem>*/}
+                {/*                <IonItem*/}
+                {/*                    className={!parkingOffer.isPermanent ? "choosenButton" : ""}*/}
+                {/*                    onClick={() => handleFieldChange("isPermanent", false)}>לא </IonItem>*/}
+                {/*            </IonButtons>*/}
+                {/*        </IonItem>*/}
+                {/*        )*/}
+                {/*    }*/}
                 <IonItem>
                     <IonLabel className="labelText">חשבון paypal לזיכוי</IonLabel>
-                    <IonInput className="innerText" name="merchantId" value={parkingOffer.merchantId} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
+                    <IonText color="primary">{merchant.merchantId}</IonText>
                 </IonItem>
                 <IonButtons>
                     <IonButton className="innerText" onClick={addPaarkingOffer}>הוסף</IonButton>
