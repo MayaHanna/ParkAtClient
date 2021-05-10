@@ -39,8 +39,8 @@ const ParkingOffer: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton color="secondary" />
+          <IonButtons slot="end">
+            <IonBackButton text="חזור" color="secondary" />
           </IonButtons>
         </IonToolbar>
       </IonHeader>

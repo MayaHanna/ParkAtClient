@@ -13,7 +13,6 @@ import {
   IonText,
   IonSearchbar,
   IonButtons,
-  IonBackButton,
   IonFab,
   IonInput,
   IonFabButton,
