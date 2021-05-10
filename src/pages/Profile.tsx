@@ -24,13 +24,14 @@ import { fullParkingsOffersWithOwnerSelector, fullParkingsOffersWithClientSelect
 import { RootState } from '../data/configureStore';
 import { Merchant } from '../data/merchants-module/types';
 import {useLocation} from "react-router";
+import {merchantSelector} from "../data/merchants-module/selectors";
 
 const Profile: React.FC = () => {
   const user = useSelector(userSelector);
+  const userMerchant = useSelector(merchantSelector);
 
   const [userParkings, setUserParkings] = useState<Parking[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [userMerchantIds, setUserMerchantIds] = useState<string[]>();
 
   useEffect(()=>{
     if(user.userMailAddress == undefined)
@@ -40,12 +41,6 @@ const Profile: React.FC = () => {
       setIsLoading(false);
       setUserParkings(res);
     });
-
-    getMerchantByUser(user.userMailAddress).then((res:Merchant[]) => {
-      setUserMerchantIds(res.map(_=>_.merchantId));
-    });
-
-
   },[user]);
 
   const parkingOffers: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithOwnerSelector(state, user.userMailAddress));
@@ -73,8 +68,13 @@ const Profile: React.FC = () => {
 
             <div className={"profile-title-details"}>
               <IonText color="primary">{user.userDisplayName}</IonText>
-              <IonText color="primary">{user.userMailAddress}</IonText>
+              <IonText color="primary" className={"user-mail"}>{user.userMailAddress}</IonText>
             </div>
+            {userMerchant &&
+              <div className={"user-rank"}>
+                <IonText color="primary">{userMerchant?.points} נקודות</IonText>
+              </div>
+            }
           </div>
           <div color="primary" className={"profile-section"}>
             <IonText color="primary" className={"profile-section-title"}>החניות שלי</IonText>
@@ -93,11 +93,11 @@ const Profile: React.FC = () => {
             {parkingHistory && parkingHistory?.map(p=> <ParkingOfferListItem key={p.id} parkingOffer={p} isCanAddComment={true}/>)}
           </div>
 
-          {userMerchantIds &&
+          {userMerchant &&
           <div color="primary"  className={"profile-section"}>
             <IonText color="primary" className={"profile-section-title"}>פרטי מסחר</IonText>
             <IonText color="primary"> פייפל:</IonText>
-            {userMerchantIds?.map(merchantId=> <IonText color="primary">{merchantId}</IonText>)}
+            {userMerchant.merchantId && <IonText color="primary">{userMerchant.merchantId}</IonText>}
           </div>
           }
         

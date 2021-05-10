@@ -106,7 +106,7 @@ const Home: React.FC = () => {
           <IonCard className="menu">
             <IonButtons className="menuButtons">
               <IonButton onClick={() => history.push("/addParkingOffer")}> הוסף הצעה </IonButton>
-              <IonButton onClick={() => history.push("/reportParking")}> דווח </IonButton>
+              <IonButton onClick={() => history.push("/reportParking")}> דווח (10 נקודות) </IonButton>
             </IonButtons>
           </IonCard>
 

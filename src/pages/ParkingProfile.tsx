@@ -90,7 +90,7 @@ const ParkingProfile: React.FC = () => {
                     <IonFabList side="top" className="fabList">
                         <IonCard className="menu">
                             <IonButtons className="menuButtons">
-                                <IonButton onClick={() => setIsAddCommentClicked(true)}> הוסף תגובה </IonButton>
+                                <IonButton onClick={() => setIsAddCommentClicked(true)}> הוסף תגובה (5 נקודות) </IonButton>
                             </IonButtons>
                         </IonCard>
 
