@@ -1,5 +1,6 @@
 import * as actions from "./actions.types";
 import { ActionCreator } from "../common/types";
+import {Coords} from "google-map-react";
 
 // type SuitableFor = "motorcycle" | "car" | "truck";
 type Size = "Small" | "Big";
@@ -22,6 +23,7 @@ export interface Parking {
   size: Size;
   // status: Parking_Status;
   owner: string;
+  location: Coords;
   comments: Comment[]
 }
 export interface ParkingsState {

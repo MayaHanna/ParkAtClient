@@ -20,7 +20,8 @@ import {
   IonFabList,
   IonButton,
   IonCard,
-  IonAvatar
+  IonAvatar,
+  IonBackdrop
 } from '@ionic/react';
 import './Home.css';
 import { userSelector } from '../data/user-module/selectors';
@@ -30,21 +31,26 @@ import { parkingsWithFilterSelector } from "../data/parkings-module/selectors";
 import { RootState } from "../data/configureStore";
 import { Parking } from "../data/parkings-module/types";
 import { fullParkingsOffersWithFilterSelector } from "../data/parkings-offers-module/selectors";
-import { FullParkingOffer } from "../data/parkings-offers-module/types";
+import { FullParkingOffer, ParkingOffersMapParams } from "../data/parkings-offers-module/types";
 import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router-dom";
 import { add } from 'ionicons/icons';
 import MapWrapper from '../components/Map';
+import SearchModal from '../components/SearchModal';
+import { Coords } from 'google-map-react';
 
 const Home: React.FC = () => {
 
   const [searchText, setSearchText] = useState<string>("");
   const [showMap, setShowMap] = useState<boolean>(true);
+  const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
+  const [mapFilterParams, setMapFilterParams] = useState<ParkingOffersMapParams>();
+
   const history = useHistory();
   const dispatch = useDispatch();
 
   const user = useSelector(userSelector);
-  const parkingsOffers: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithFilterSelector(state, { searchText }));
+ // const parkingsOffers: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithFilterSelector(state, { searchText }));
 
   const refresh = (e: CustomEvent) => {
     setTimeout(() => {
@@ -56,15 +62,24 @@ const Home: React.FC = () => {
     history.push(`/parking/${parking.id}`);
   }
 
-  const onSearch = (text: string) => {
-    setSearchText(text);
-    setShowMap(text == undefined || text == "");
+  const onSearch = (searchParams: ParkingOffersMapParams) => {
+    setShowSearchModal(false);
+    setMapFilterParams(searchParams);
+
+    //setSearchText(text);
+    //setShowMap(text == undefined || text == "");
   };
 
   const goLogin = () => history.push('login');
 
   return (
     <IonPage id="home-page">
+      {showSearchModal && 
+      <>
+      <IonBackdrop className="backdrop" visible={true} onIonBackdropTap={e=>console.log("you tapped on me")}/>
+      <SearchModal search={onSearch}></SearchModal>
+      </>
+      }
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="end">
@@ -77,7 +92,6 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-
         <IonRefresher slot="fixed" onIonRefresh={refresh}>
           <IonRefresherContent />
         </IonRefresher>
@@ -90,12 +104,13 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonSearchbar className="searchBar" value={searchText} onIonChange={e => onSearch(e.detail.value!)} animated placeholder={"חפש חניה"} />
+        <IonSearchbar className="searchBar" value={searchText} onIonFocus={e => setShowSearchModal(true)} animated placeholder={"חפש חניה"} />
+
         {showMap ?
-        <MapWrapper></MapWrapper>
+        <MapWrapper filterParams={mapFilterParams ?? mapFilterParams}></MapWrapper>
          :
         <IonList>
-          {parkingsOffers.map(po => po.status === "Open" && <ParkingOfferListItem key={po.id} parkingOffer={po} />)}
+          {/*parkingsOffers.map(po => po.status === "Open" && <ParkingOfferListItem key={po.id} parkingOffer={po} />)*/}
         </IonList>}
       </IonContent>
       <IonFab className="fabButton" vertical="bottom" horizontal="end" slot="fixed">
@@ -106,7 +121,7 @@ const Home: React.FC = () => {
           <IonCard className="menu">
             <IonButtons className="menuButtons">
               <IonButton onClick={() => history.push("/addParkingOffer")}> הוסף הצעה </IonButton>
-              <IonButton onClick={() => history.push("/reportParking")}> דווח </IonButton>
+              <IonButton onClick={() => history.push("/reportParking")}> דווח (10 נקודות) </IonButton>
             </IonButtons>
           </IonCard>
 

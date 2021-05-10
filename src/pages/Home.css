@@ -37,3 +37,7 @@
 ion-list {
     padding: 1em;
 }
+
+.backdrop {
+    opacity: 0.3;
+}
