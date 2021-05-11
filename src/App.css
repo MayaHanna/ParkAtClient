@@ -1,3 +1,7 @@
 ion-app {
     direction: rtl;
 }
+
+ion-back-button {
+    direction: ltr !important;
+}

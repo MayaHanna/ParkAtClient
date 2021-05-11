@@ -34,7 +34,7 @@ import { addParkingOffer as addParkingOfferToRudux } from "../data/parkings-offe
 import { useHistory } from "react-router";
 
 const initializedFields: ParkingOffer = {
-    id: 7,
+    id: 1,
     start: new Date(),
     end: new Date(),
     isPermanent: false,
@@ -85,7 +85,7 @@ const PrivateOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd 
 
     return (
         <>
-            <ParkingDetails parking={chosenParking} />
+            <ParkingDetails parking={chosenParking} isRouting={false} isCanAddComment={false} />
             <form className="formWrapper">
                 <IonItem>
                     <IonItem>

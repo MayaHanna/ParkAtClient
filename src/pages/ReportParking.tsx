@@ -32,6 +32,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../data/configureStore";
 import { addParkingReports as addParkingReportsToRudux } from "../data/parking-reports-module/actions";
 import { useHistory } from "react-router";
+import {addPointsToMerchant} from "../data/merchants-module/actions";
+import {userSelector} from "../data/user-module/selectors";
 
 const initializedFields: ParkingReport = {
     id: 7,
@@ -44,6 +46,7 @@ function ReportParking() {
     const [isCreatingNewParking, setisCreatingNewParking] = useState(false);
     const [chosenParking, setChosenParking] = useState<Parking>();
     const [parkingReport, setParkingReport] = useState<ParkingReport>(initializedFields);
+    const user = useSelector(userSelector);
     const parkingsList: Parking[] = useSelector((state: RootState) => publicParkingsSelector(state));
     const dispatch = useDispatch();
     const history = useHistory();
@@ -77,6 +80,10 @@ function ReportParking() {
             .then(res => {
                 console.log("הדיווח נשלח בהצלחה");
                 dispatch(addParkingReportsToRudux(parkingReport));
+                user.userMailAddress && dispatch(addPointsToMerchant({
+                    userMail: user.userMailAddress,
+                    pointsToAdd: 10
+                }));
                 history.push("/home");
                 setChosenParking(undefined);
             })
@@ -105,7 +112,7 @@ function ReportParking() {
                             < h1 className="title"> לא נמצאו חניות ציבוריות במערכת </h1 >
                         }
                         <IonList>
-                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} />)}
+                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} isRouting={true}/>)}
                         </IonList>
                     </>
                 )
@@ -117,7 +124,7 @@ function ReportParking() {
         < IonPage id="view-message-page" >
             <IonHeader translucent>
                 <IonToolbar>
-                    <IonButtons>
+                    <IonButtons  slot="end">
                         <IonBackButton text="מסך בית" defaultHref="/home"></IonBackButton>
                     </IonButtons>
                 </IonToolbar>
@@ -132,9 +139,9 @@ function ReportParking() {
                                 <IonButton className="innerText" onClick={() => setChosenParking(undefined)} >בחר חניה אחרת</IonButton>
                             </IonButtons>
 
-                            <ParkingDetails parking={chosenParking} />
+                            {chosenParking && <ParkingDetails parking={chosenParking} isRouting={true}/>}
                             <IonButtons>
-                                <IonButton className="innerText" onClick={report}>דווח</IonButton>
+                                <IonButton className="innerText" onClick={report}> דווח (10 נקודות)</IonButton>
                             </IonButtons>
                         </>
 

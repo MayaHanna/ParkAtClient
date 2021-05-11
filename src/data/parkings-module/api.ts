@@ -16,3 +16,8 @@ export const addParking = (formData: any) => {
         { withCredentials: true }
     );
 };
+
+export const postCommentToParking = (parkingId: number, comment: Comment) => {
+    return axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/parkings/comment`, { parkingId, comment },
+        { withCredentials: true })
+};

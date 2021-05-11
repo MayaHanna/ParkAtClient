@@ -35,7 +35,7 @@ import { useHistory } from "react-router";
 import { Slot } from '../data/slots-module/types';
 
 const initializedFields: ParkingOffer = {
-    id: 7,
+    id: 1,
     start: new Date(),
     end: new Date(),
     isPermanent: false,
@@ -129,7 +129,7 @@ const PublicOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd }
 
     return (
         <>
-            <ParkingDetails parking={chosenParking} />
+            <ParkingDetails parking={chosenParking} isRouting={false} isCanAddComment={false} />
             <form className="formWrapper">
                 <IonItem>
                     <IonLabel className="labelText">בחר שעת התחלה</IonLabel>
