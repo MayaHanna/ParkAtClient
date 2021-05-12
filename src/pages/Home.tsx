@@ -13,8 +13,8 @@ import {
   IonText,
   IonSearchbar,
   IonButtons,
-  IonBackButton,
   IonFab,
+  IonInput,
   IonFabButton,
   IonIcon,
   IonFabList,
@@ -34,14 +34,13 @@ import { fullParkingsOffersWithFilterSelector } from "../data/parkings-offers-mo
 import { FullParkingOffer, ParkingOffersMapParams } from "../data/parkings-offers-module/types";
 import { getParkingsOffers } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router-dom";
-import { add } from 'ionicons/icons';
+import { add, searchOutline } from 'ionicons/icons';
 import MapWrapper from '../components/Map';
 import SearchModal from '../components/SearchModal';
 import { Coords } from 'google-map-react';
 
 const Home: React.FC = () => {
 
-  const [searchText, setSearchText] = useState<string>("");
   const [showMap, setShowMap] = useState<boolean>(true);
   const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
   const [mapFilterParams, setMapFilterParams] = useState<ParkingOffersMapParams>();
@@ -50,7 +49,6 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   const user = useSelector(userSelector);
- // const parkingsOffers: FullParkingOffer[] = useSelector((state: RootState) => fullParkingsOffersWithFilterSelector(state, { searchText }));
 
   const refresh = (e: CustomEvent) => {
     setTimeout(() => {
@@ -58,16 +56,9 @@ const Home: React.FC = () => {
     }, 3000);
   };
 
-  const onParkingClick = (parking: Parking) => {
-    history.push(`/parking/${parking.id}`);
-  }
-
   const onSearch = (searchParams: ParkingOffersMapParams) => {
     setShowSearchModal(false);
     setMapFilterParams(searchParams);
-
-    //setSearchText(text);
-    //setShowMap(text == undefined || text == "");
   };
 
   const goLogin = () => history.push('login');
@@ -75,9 +66,9 @@ const Home: React.FC = () => {
   return (
     <IonPage id="home-page">
       {showSearchModal && 
-      <>
-      <IonBackdrop className="backdrop" visible={true} onIonBackdropTap={e=>console.log("you tapped on me")}/>
-      <SearchModal search={onSearch}></SearchModal>
+      <> 
+        <IonBackdrop className="backdrop" visible={true} onIonBackdropTap={e=> setShowSearchModal(false)}/>
+        <SearchModal search={onSearch}></SearchModal>
       </>
       }
       <IonHeader>
@@ -103,15 +94,12 @@ const Home: React.FC = () => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-
-        <IonSearchbar className="searchBar" value={searchText} onIonFocus={e => setShowSearchModal(true)} animated placeholder={"חפש חניה"} />
-
-        {showMap ?
-        <MapWrapper filterParams={mapFilterParams ?? mapFilterParams}></MapWrapper>
-         :
-        <IonList>
-          {/*parkingsOffers.map(po => po.status === "Open" && <ParkingOfferListItem key={po.id} parkingOffer={po} />)*/}
-        </IonList>}
+        <button className="searchBar" onClick={e=> setShowSearchModal(true)}>
+          חפש חניה
+          <IonIcon className="searchIcon" icon={searchOutline} />
+        </button>
+        {showMap &&
+        <MapWrapper filterParams={mapFilterParams ?? mapFilterParams}></MapWrapper>}
       </IonContent>
       <IonFab className="fabButton" vertical="bottom" horizontal="end" slot="fixed">
         <IonFabButton color="secondary">

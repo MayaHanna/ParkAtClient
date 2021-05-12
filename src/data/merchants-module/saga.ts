@@ -8,12 +8,12 @@ function* getMerchant(action: MerchantAction) {
   try {
     const merchant = yield call(getMerchantByUser, action.payload);
 
-    if (merchant) {
+    if (merchant && Object.keys(merchant).length > 0) {
       yield put(setMerchant(merchant));
     } else {
       yield put(addMerchantAction({
         merchantId: "",
-        userMailAddress: action.payload,
+        userEmailAddress: action.payload,
         points: 0
       }))
     }

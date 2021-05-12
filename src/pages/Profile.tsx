@@ -87,6 +87,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     setUserRankIndex(ranks.findIndex((r) => userMerchant.points < r.maxPoints));
+    setCurrentUserPayPal(userMerchant.merchantId);
   }, [userMerchant]);
 
   useEffect(() => {
@@ -117,9 +118,9 @@ const Profile: React.FC = () => {
   };
 
   const RankIcon = ranks[userRankIndex]?.icon || Rank1;
-  const rankText = `${userMerchant.points} נקודות | ${
+  const rankText = `${userMerchant?.points} נקודות | ${
     userRankIndex !== 5
-      ? ranks[userRankIndex].maxPoints - userMerchant.points
+      ? ranks[userRankIndex]?.maxPoints - userMerchant?.points
       : 0
   } נקודות לדרגה הבאה`;
   return (
@@ -129,8 +130,12 @@ const Profile: React.FC = () => {
         <IonPage>
           <IonHeader>
             <IonToolbar>
-              <IonButtons slot="start">
-                <IonBackButton color="secondary" defaultHref="home" />
+              <IonButtons slot="end">
+                <IonBackButton
+                  text="מסך בית"
+                  color="secondary"
+                  defaultHref="home"
+                />
               </IonButtons>
             </IonToolbar>
           </IonHeader>
@@ -151,7 +156,7 @@ const Profile: React.FC = () => {
                 <div className={"user-rank-wrapper"}>
                   <RankIcon className={"user-rank"} />
                   <IonText color="primary" className={"user-rank-name"}>
-                    {ranks[userRankIndex].name}
+                    {ranks[userRankIndex]?.name}
                   </IonText>
                   <IonText color="primary" className={"user-rank-next-rank"}>
                     {rankText}
@@ -186,11 +191,15 @@ const Profile: React.FC = () => {
 
             <div color="primary" className={"profile-section"}>
               <IonText color="primary" className={"profile-section-title"}>
-                היסטוריה - הצעות
+                היסטוריה - חניות
               </IonText>
-              {parkingOffers &&
-                parkingOffers?.map((p) => (
-                  <ParkingOfferListItem key={p.id} parkingOffer={p} />
+              {parkingHistory &&
+                parkingHistory?.map((p) => (
+                  <ParkingOfferListItem
+                    key={p.id}
+                    parkingOffer={p}
+                    isCanAddComment={true}
+                  />
                 ))}
             </div>
 

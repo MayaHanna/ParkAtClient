@@ -42,8 +42,8 @@ const initializedFields: ParkingOffer = {
   end: new Date(),
   isPermanent: false,
   price: 0,
-  parking: 1,
-  merchantId: "",
+  parkingId: 1,
+  owner: "",
   status: "Open",
 };
 
@@ -51,18 +51,14 @@ function AddParkingOffer() {
   const [isChoosingFromList, setIsChoosingFromList] = useState(true);
   const [isCreatingNewParking, setisCreatingNewParking] = useState(false);
   const [chosenParking, setChosenParking] = useState<Parking>();
-  const [parkingOffer, setParkingOffer] = useState<ParkingOffer>(
-    initializedFields
-  );
+  const [parkingOffer, setParkingOffer] =
+    useState<ParkingOffer>(initializedFields);
   const user = useSelector(userSelector);
   const merchant = useSelector(merchantSelector);
   const parkingsList = useSelector((state: RootState) =>
     parkingsWithOwnerSelector(state, user.userMailAddress)
   );
 
-  const userEmailAddress = useSelector(
-    (state: RootState) => userSelector(state).userMailAddress
-  );
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -70,10 +66,17 @@ function AddParkingOffer() {
     chosenParking
       ? setParkingOffer({
           ...parkingOffer,
-          parking: chosenParking.id,
+          parkingId: chosenParking.id,
         })
       : setParkingOffer(initializedFields);
   }, [chosenParking]);
+
+  useEffect(() => {
+    setParkingOffer({
+      ...parkingOffer,
+      owner: merchant.userEmailAddress,
+    });
+  }, [merchant]);
 
   const handleFieldChangeByEvent = (e: any) => {
     setParkingOffer({
@@ -107,11 +110,19 @@ function AddParkingOffer() {
   };
 
   const handleChooseParking = (parkingSpot: Parking) => {
-    setChosenParking(parkingSpot);
+    setChosenParking({
+      ...chosenParking,
+      ...parkingSpot,
+    });
   };
 
   const addPaarkingOffer = () => {
-    addParkingOffer(parkingOffer, userEmailAddress!)
+    console.log(parkingOffer);
+    addParkingOffer(
+      parkingOffer.owner
+        ? parkingOffer
+        : { ...parkingOffer, owner: merchant.userEmailAddress }
+    )
       .then((res) => {
         console.log("הצעת החניה נוספה בהצלחה");
         dispatch(addParkingOfferToRudux(parkingOffer));
@@ -223,15 +234,18 @@ function AddParkingOffer() {
         {/*        </IonItem>*/}
         {/*        )*/}
         {/*    }*/}
-        <IonItem>
-          <IonLabel className="labelText">חשבון paypal לזיכוי</IonLabel>
-          <IonText color="primary">{merchant.merchantId}</IonText>
-        </IonItem>
-        <IonButtons>
-          <IonButton className="innerText" onClick={addPaarkingOffer}>
-            הוסף
-          </IonButton>
-        </IonButtons>
+        {merchant.merchantId ? (
+          <IonButtons>
+            <IonButton className="innerText" onClick={addPaarkingOffer}>
+              הוסף
+            </IonButton>
+          </IonButtons>
+        ) : (
+          <IonText color="danger">
+            אין חשבון פייפאל לזיכוי. הוסף חשבון פייפאל בפרופיל על מנת להשלים את
+            הצעת החניה
+          </IonText>
+        )}
       </form>
     </>
   );
@@ -240,7 +254,7 @@ function AddParkingOffer() {
     <IonPage id="view-message-page">
       <IonHeader translucent>
         <IonToolbar>
-          <IonButtons>
+          <IonButtons slot="end">
             <IonBackButton text="מסך בית" defaultHref="/home"></IonBackButton>
           </IonButtons>
         </IonToolbar>
