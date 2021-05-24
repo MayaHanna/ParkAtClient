@@ -59,12 +59,13 @@ const MapWrapper: React.FC<MapWrapperProps> = ({filterParams}) => {
         }
     }, [filterParams?.maxDistanceFromCenter]);
 
+    console.log(parkingOffers);
     return isLoaded ? (
         <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
             {parkingOffers.map((po, k) =>
-             <Marker position={po.parking.location}
+             <Marker position={po?.parking?.location}
                 onClick={e=> history.push(`/parkingOffer/${po.id}`)}
-                icon={po.parking.isPrivate ? greenLocationIconUrl : blueLocationIconUrl}
+                icon={po?.parking?.isPrivate ? greenLocationIconUrl : blueLocationIconUrl}
             />)}
             <></>
         </GoogleMap>

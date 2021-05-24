@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import {Merchant} from "./types";
 
-export const getMerchantByUser = async (userMailAddress: string) => {
-    return axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/merchants/byUser/${userMailAddress}`)
+export const getMerchantByUser = async (userEmailAddress: string) => {
+    return axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/merchants/byUser/${userEmailAddress}`)
         .then(res => res.data)
         .catch(err => console.log(err))
 };

@@ -11,14 +11,14 @@ interface ParkingOfferBaseline {
   start: Date;
   end: Date;
   isPermanent: boolean
-  merchantId: string;
+  owner: string;
   status: Parking_Offer_Status;
   client?: string;
   slots: Slot[];
 }
 
 export type ParkingOffer = ParkingOfferBaseline & {
-  parking: number;
+  parkingId: number;
 }
 
 export interface ParkingsOffersState {

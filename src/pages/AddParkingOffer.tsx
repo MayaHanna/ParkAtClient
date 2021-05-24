@@ -44,8 +44,8 @@ const initializedFields: ParkingOffer = {
     end: new Date(),
     isPermanent: false,
     price: 0,
-    parking: 1,
-    merchantId: "",
+    parkingId: 1,
+    owner: "",
     status: "Open",
     slots: []
 };
@@ -73,11 +73,14 @@ function AddParkingOffer() {
     }
 
     const handleChooseParking = (parkingSpot: Parking) => {
-        setChosenParking(parkingSpot);
+        setChosenParking({
+            ...chosenParking,
+            ...parkingSpot
+        });
     }
 
     const addPaarkingOffer = (parkingOffer: ParkingOffer) => {
-        addParkingOffer(parkingOffer)
+        addParkingOffer(parkingOffer.owner? parkingOffer : {...parkingOffer, owner: merchant.userEmailAddress})
             .then(res => {
                 console.log("הצעת החניה נוספה בהצלחה");
                 dispatch(addParkingOfferToRudux(parkingOffer));

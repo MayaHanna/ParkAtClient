@@ -39,8 +39,8 @@ const initializedFields: ParkingOffer = {
     end: new Date(),
     isPermanent: false,
     price: 0,
-    parking: 1,
-    merchantId: "",
+    parkingId: 1,
+    owner: "",
     status: "Open",
     slots: []
 };
@@ -57,7 +57,7 @@ const PrivateOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd 
         chosenParking ?
             setParkingOffer({
                 ...parkingOffer,
-                parking: chosenParking.id
+                parkingId: chosenParking.id
             }) :
             setParkingOffer(initializedFields);
     }, [chosenParking])
@@ -129,7 +129,7 @@ const PrivateOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd 
                 </IonItem>
                 <IonItem>
                     <IonLabel className="labelText">חשבון paypal לזיכוי</IonLabel>
-                    <IonInput className="innerText" name="merchantId" value={parkingOffer.merchantId} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
+                    <IonInput className="innerText" name="merchantId" value={parkingOffer.owner} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
                 </IonItem>
 
                 <IonButtons>

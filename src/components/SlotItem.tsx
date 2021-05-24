@@ -55,30 +55,5 @@ const SlotItem: React.FC<ParkingDetailsProps> = ({ endDate, startDate, incomingU
         </>
     );
 }
-// interface ParkingDetailsProps {
-//     time: String,
-//     incomingUser: String | undefined,
-//     onClick: Function
-// }
-
-// const SlotItem: React.FC<ParkingDetailsProps> = ({ time, incomingUser, onClick }) => {
-//     const [isTaken, setIsTaken] = useState(incomingUser ? true : false);
-
-//     return (
-//         <>
-//             <IonItem className={"slot"} onClick={() => {
-//                 const newIsTaken = !isTaken;
-//                 setIsTaken(newIsTaken);
-//                 onClick(newIsTaken);
-//             }}>
-//                 <IonText color="primary">{time}</IonText>
-//                 {
-//                     isTaken &&
-//                     <IonText className={"takenSlot"}>///////</IonText>
-//                 }
-//             </IonItem>
-//         </>
-//     );
-// }
 
 export default SlotItem;

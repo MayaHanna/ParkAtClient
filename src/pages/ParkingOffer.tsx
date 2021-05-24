@@ -30,7 +30,9 @@ import { editParkingOffer } from "../data/parkings-offers-module/api";
 import { editParkingOffer as UpdateParkingOfferInRudux } from "../data/parkings-offers-module/actions";
 import {Paypal} from "./Paypal";
 import ParkingDetails from "../components/parkingDetails";
-import {useState} from "react";
+import { boolean } from "boolean";
+import {getMerchantByUser} from "../data/merchants-module/api";
+import {useEffect, useState} from "react";
 
 
 const ParkingOffer: React.FC = () => {
@@ -45,6 +47,16 @@ const ParkingOffer: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const search = location.search;
+  
+  const [merchantId, setMerchantId] = useState("");
+
+  useEffect(() => {
+    if (parkingOffer) {
+      getMerchantByUser(parkingOffer.parking.owner).then(data => {
+        setMerchantId(data.merchantId);
+      });
+    }
+  }, [parkingOffer]); 
 
   const canAddComment = search.split("=")[1];
 
@@ -69,6 +81,7 @@ const ParkingOffer: React.FC = () => {
 
     setParkingOfferToUpdate(newParkingOffer);
   }
+
 
   return (
     <IonPage>
@@ -106,18 +119,14 @@ const ParkingOffer: React.FC = () => {
                 {parkingOffer.parking.size === "Small" && <IonText color="primary">קטנה</IonText>}
               </IonCol>
             </IonRow>
-            {
-              parkingOffer.status == "Open" &&
-              parkingOffer.parking.isPrivate &&
-              <>
-                <IonRow>
-                  <IonCol><IonText color="primary">מחיר</IonText></IonCol>
-                  <IonCol><IonText color="primary">{parkingOffer.price}&#8362;</IonText></IonCol>
-                </IonRow>
-                <IonRow className={"paypal-row"}>
-                  <Paypal price={parkingOffer.price} merchantId={parkingOffer.merchantId} parkingOfferId={parkingOffer.id} />
-                </IonRow>
-              </>
+            <IonRow>
+              <IonCol><IonText color="primary">מחיר</IonText></IonCol>
+              <IonCol><IonText color="primary">{parkingOffer.price}&#8362;</IonText></IonCol>
+            </IonRow>
+            {parkingOffer.status == "Open" &&
+            <IonRow className={"paypal-row"}>
+                <Paypal price={parkingOffer.price} merchantId={merchantId} parkingOfferId={parkingOffer.id}/>
+            </IonRow>
             }
           </IonGrid>
           {

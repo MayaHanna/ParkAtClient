@@ -40,8 +40,8 @@ const initializedFields: ParkingOffer = {
     end: new Date(),
     isPermanent: false,
     price: 0,
-    parking: 1,
-    merchantId: "",
+    parkingId: 1,
+    owner: "",
     status: "Open",
     slots: []
 };
@@ -58,7 +58,7 @@ const PublicOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd }
         chosenParking ?
             setParkingOffer({
                 ...parkingOffer,
-                parking: chosenParking.id,
+                parkingId: chosenParking.id,
             }) :
             setParkingOffer(initializedFields);
     }, [chosenParking])
