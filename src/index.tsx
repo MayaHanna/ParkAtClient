@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
-import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
+import { defineCustomElements } from "@ionic/pwa-elements/loader";
 import configureStore from "./data/configureStore";
 import { Provider } from "react-redux";
 import firebase from "firebase/app";
@@ -12,19 +12,24 @@ var firebaseConfig = {
   apiKey: "AIzaSyB66qJEzFreQiFxnwEp8DFwxozrGle8gEQ",
   authDomain: "parkat-cccbb.firebaseapp.com",
   projectId: "parkat-cccbb",
-  appId: "parkat-cccbb"
+  appId: "parkat-cccbb",
+  storageBucket: "parkat-cccbb.appspot.com",
+  messagingSenderId: "268517831405",
+  measurementId: "G-DWE9DJG2DF",
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const firebaseInstance = firebase.initializeApp(firebaseConfig);
+const storage = firebaseInstance.storage();
 
 ReactDOM.render(
   <Provider store={configureStore}>
     <App />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
+export { firebaseInstance, storage };
 // Call the element loader after the platform has been bootstrapped
 defineCustomElements(window);
 
