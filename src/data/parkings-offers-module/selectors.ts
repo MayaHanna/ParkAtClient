@@ -5,8 +5,9 @@ import {FullParkingOffer, ParkingOffersMapParams} from "./types";
 
 export const getProps = (state: RootState, props: any) => props;
 
-export const parkingsOffersSelector = (state: RootState) =>
-  state.ParkingsOffers.parkingsOffers;
+export const parkingsOffersSelector = (state: RootState) =>{
+    return state.ParkingsOffers.parkingsOffers;
+}
 
 
 export const fullParkingsOffersSelector = createSelector(

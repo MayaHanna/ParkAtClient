@@ -65,17 +65,17 @@ const Home: React.FC = () => {
 
   return (
     <IonPage id="home-page">
-      {showSearchModal && 
-      <> 
-        <IonBackdrop className="backdrop" visible={true} onIonBackdropTap={e=> setShowSearchModal(false)}/>
-        <SearchModal search={onSearch}></SearchModal>
-      </>
+      {showSearchModal &&
+        <>
+          <IonBackdrop className="backdrop" visible={true} onIonBackdropTap={e => setShowSearchModal(false)} />
+          <SearchModal search={onSearch}></SearchModal>
+        </>
       }
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="end">
             <a href="/profile">
-              <IonAvatar  className={"profile-avatar"}>
+              <IonAvatar className={"profile-avatar"}>
                 <img src={user.userPicture} ></img>
               </IonAvatar>
             </a>
@@ -94,12 +94,12 @@ const Home: React.FC = () => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-        <button className="searchBar" onClick={e=> setShowSearchModal(true)}>
+        <button className="searchBar" onClick={e => setShowSearchModal(true)}>
           חפש חניה
           <IonIcon className="searchIcon" icon={searchOutline} />
         </button>
         {showMap &&
-        <MapWrapper filterParams={mapFilterParams ?? mapFilterParams}></MapWrapper>}
+          <MapWrapper filterParams={mapFilterParams ?? mapFilterParams}></MapWrapper>}
       </IonContent>
       <IonFab className="fabButton" vertical="bottom" horizontal="end" slot="fixed">
         <IonFabButton color="secondary">

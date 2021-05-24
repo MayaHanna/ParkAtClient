@@ -6,7 +6,9 @@ import { setParkingsOffers} from "./actions";
 
 function* getParkingsOffers(action: ParkingOfferAction) {
   try {
-    const parkingsOffers = yield call(fetchParkingsOffers);
+    const fetchedParkingsOffers = yield call(fetchParkingsOffers);
+    const parkingsOffers = fetchedParkingsOffers.map((offer: { dataValues: any; }) => offer.dataValues);
+
     yield put(setParkingsOffers(parkingsOffers));
   } catch (e) {
     console.log(e);

@@ -123,7 +123,7 @@ const ParkingOffer: React.FC = () => {
               <IonCol><IonText color="primary">מחיר</IonText></IonCol>
               <IonCol><IonText color="primary">{parkingOffer.price}&#8362;</IonText></IonCol>
             </IonRow>
-            {parkingOffer.status == "Open" &&
+            {parkingOffer.status == "Open" && parkingOffer.parking.isPrivate &&
             <IonRow className={"paypal-row"}>
                 <Paypal price={parkingOffer.price} merchantId={merchantId} parkingOfferId={parkingOffer.id}/>
             </IonRow>
