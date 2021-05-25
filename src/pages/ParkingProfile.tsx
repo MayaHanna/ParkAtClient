@@ -22,11 +22,12 @@ import { parkingsWithIdSelector } from "../data/parkings-module/selectors";
 import { Comment, Parking } from "../data/parkings-module/types";
 import ParkingCommentListItem from "../components/ParkingCommentListItem";
 import { add } from "ionicons/icons";
-import { useState } from "react";
+import React, { useState } from "react";
 import { userSelector } from "../data/user-module/selectors";
 import { boolean } from "boolean";
 import { addCommentToParking } from "../data/parkings-module/actions";
 import { firebaseInstance, storage } from "../index";
+import "./ParkingProfile.css";
 
 const ParkingProfile: React.FC = () => {
   const currentUser = useSelector(userSelector);
@@ -133,9 +134,9 @@ const ParkingProfile: React.FC = () => {
               </>
             )}
             {isAddImageClicked && (
-              <IonModal isOpen={isAddImageClicked}>
+              <IonModal isOpen={isAddImageClicked} cssClass={"file-modal"}>
                 <input type="file" onChange={handleImageChange}></input>
-                <IonButton onClick={handleImageUpload}>העלה</IonButton>
+                <IonButton onClick={handleImageUpload} color={"secondary"}>העלה</IonButton>
               </IonModal>
             )}
           </IonList>
@@ -155,12 +156,10 @@ const ParkingProfile: React.FC = () => {
             <IonCard className="menu">
               <IonButtons className="menuButtons">
                 <IonButton onClick={() => setIsAddCommentClicked(true)}>
-                  {" "}
-                  הוסף תגובה (5 נקודות){" "}
+                  הוסף תגובה (5 נקודות)
                 </IonButton>
                 <IonButton onClick={() => setIsAddImageClicked(true)}>
-                  {" "}
-                  הוסף תמונה{" "}
+                  הוסף תמונה
                 </IonButton>
               </IonButtons>
             </IonCard>
@@ -171,27 +170,6 @@ const ParkingProfile: React.FC = () => {
           </IonFabList>
         </IonFab>
       )}
-      {
-        <IonFab
-          className="fabButton"
-          vertical="bottom"
-          horizontal="end"
-          slot="fixed"
-        >
-          <IonFabButton color="secondary">
-            <IonIcon icon={add} />
-          </IonFabButton>
-          <IonFabList side="top" className="fabList">
-            <IonCard className="menu">
-              <IonButtons className="menuButtons"></IonButtons>
-            </IonCard>
-
-            {/* <IonFabButton> */}
-            {/* <IonButton> הוסף הצעת חניה </IonButton> */}
-            {/* </IonFabButton> */}
-          </IonFabList>
-        </IonFab>
-      }
     </IonPage>
   );
 };

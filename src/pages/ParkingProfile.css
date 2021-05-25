@@ -1,0 +1,10 @@
+.file-modal {
+    width: 50%;
+    height: 10%;
+    margin: auto;
+    background: white;
+}
+
+.file-modal .ion-page {
+    background: white;
+}
