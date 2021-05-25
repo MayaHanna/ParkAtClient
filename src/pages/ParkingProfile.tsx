@@ -25,7 +25,7 @@ import { add } from "ionicons/icons";
 import React, { useState } from "react";
 import { userSelector } from "../data/user-module/selectors";
 import { boolean } from "boolean";
-import { addCommentToParking } from "../data/parkings-module/actions";
+import {addCommentToParking, addImageToParking} from "../data/parkings-module/actions";
 import { firebaseInstance, storage } from "../index";
 import "./ParkingProfile.css";
 
@@ -34,7 +34,6 @@ const ParkingProfile: React.FC = () => {
   const [isAddCommentClicked, setIsAddCommentClicked] = useState(false);
   const [isAddImageClicked, setIsAddImageClicked] = useState(false);
   const [image, setImage] = useState<any>("");
-  const [url, setUrl] = useState("");
   const [progress, setProgress] = useState(0);
   const params = useParams<{ id: string }>();
   const parking: Parking | undefined = useSelector((state: RootState) =>
@@ -92,7 +91,13 @@ const ParkingProfile: React.FC = () => {
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
-            setUrl(url);
+            if (parking) {
+              dispatch(addImageToParking({
+                imageUrl: url,
+                parkingId: parking.id
+              }));
+              setIsAddImageClicked(false);
+            }
           });
       }
     );
@@ -159,7 +164,7 @@ const ParkingProfile: React.FC = () => {
                   הוסף תגובה (5 נקודות)
                 </IonButton>
                 <IonButton onClick={() => setIsAddImageClicked(true)}>
-                  הוסף תמונה
+                  הוסף תמונה (5 נקודות)
                 </IonButton>
               </IonButtons>
             </IonCard>

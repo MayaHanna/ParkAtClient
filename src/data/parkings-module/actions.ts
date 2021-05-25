@@ -1,4 +1,4 @@
-import {GET_PARKINGS, SET_PARKINGS, ADD_PARKING, ADD_COMMENT_TO_PARKING} from "./actions.types";
+import {GET_PARKINGS, SET_PARKINGS, ADD_PARKING, ADD_COMMENT_TO_PARKING, ADD_IMAGE_TO_PARKING} from "./actions.types";
 import {Comment, Parking, ParkingActionCreator} from "./types";
 
 export const setParkings: ParkingActionCreator<Parking[]> = (payload) => {
@@ -24,6 +24,13 @@ export const getParkings = () => {
 export const addCommentToParking: ParkingActionCreator<{comment: Comment, parkingId: number}> = (payload) => {
   return {
     type: ADD_COMMENT_TO_PARKING,
+    payload: payload
+  }
+};
+
+export const addImageToParking: ParkingActionCreator<{imageUrl: string, parkingId: number}> = (payload) => {
+  return {
+    type: ADD_IMAGE_TO_PARKING,
     payload: payload
   }
 };

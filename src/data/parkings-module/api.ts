@@ -21,3 +21,8 @@ export const postCommentToParking = (parkingId: number, comment: Comment) => {
     return axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/parkings/comment`, { parkingId, comment },
         { withCredentials: true })
 };
+
+export const postImageToParking = (parkingId: number, imageUrl: string) => {
+    return axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/parkings/image`, { parkingId, imageUrl },
+        { withCredentials: true })
+};
