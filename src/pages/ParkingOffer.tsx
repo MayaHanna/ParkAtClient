@@ -34,7 +34,8 @@ const ParkingOffer: React.FC = () => {
   const location = useLocation();
   const search = location.search;
 
-  const canAddComment = search.split("=")[1];
+  const canAddComment = search.split("&")[0].split("=")[1];
+  const canAddImage = search.split("&")[1].split("=")[1];
 
   const [merchantId, setMerchantId] = useState("");
 
@@ -57,7 +58,7 @@ const ParkingOffer: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <ParkingDetails parking={parkingOffer?.parking} isRouting={true} isCanAddComment={boolean(canAddComment)}/>
+        <ParkingDetails parking={parkingOffer?.parking} isRouting={true} isCanAddComment={boolean(canAddComment)} isCanAddImage={boolean(canAddImage)}/>
         <div color="primary" className={"parking-offer-details"}>
           <IonGrid className={"parking-grid"}>
             <IonRow>
