@@ -14,14 +14,15 @@ interface ParkingDetailsProps {
   parking: Parking;
   isRouting: boolean;
   isCanAddComment?: boolean;
+  isCanAddImage?: boolean;
 }
 
-const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting, isCanAddComment }) => {
+const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting, isCanAddComment, isCanAddImage }) => {
   let cardProps = {};
   if (isRouting) {
     cardProps = {
         ...cardProps,
-      routerLink: `/parking/${parking.id}?canAddComment=${isCanAddComment || false}`
+      routerLink: `/parking/${parking.id}?canAddComment=${isCanAddComment || false}&canAddImage=${isCanAddImage || false}`
     }
   }
 

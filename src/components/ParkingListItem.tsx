@@ -9,9 +9,11 @@ import { ReactComponent as BigParking } from "../resources/truck.svg";
 import { ReactComponent as SmallParking } from "../resources/car.svg";
 
 interface MessageListItemProps {
-  parking: Parking,
-  onClick: Function,
-  isRouting: boolean
+  parking: Parking;
+  onClick: Function;
+  isRouting: boolean;
+  isCanAddComment?: boolean;
+  isCanAddImage?: boolean;
 }
 
 interface ItemProps {
@@ -19,7 +21,7 @@ interface ItemProps {
     routerLink?: string;
 }
 
-const ParkingListItem: React.FC<MessageListItemProps> = ({ parking, onClick, isRouting }) => {
+const ParkingListItem: React.FC<MessageListItemProps> = ({ parking, onClick, isRouting, isCanAddComment, isCanAddImage }) => {
   const dotClassName = `dot dot-Free`;
   // const dotClassName = `dot dot-${parking.status}`;
 
@@ -30,13 +32,12 @@ const ParkingListItem: React.FC<MessageListItemProps> = ({ parking, onClick, isR
     if (isRouting) {
         itemProps = {
             ...itemProps,
-            routerLink: `/parking/${parking.id}`
+            routerLink: `/parking/${parking.id}?canAddComment=${isCanAddComment || false}&canAddImage=${isCanAddImage || false}`
         }
     }
   return (
     <IonItem button {...itemProps}>
       <div slot="start" className={"icon-wrapper"}>
-        <div className={dotClassName} />
         {parking.size === "Big" && <BigParking className={"parking-size"} />}
         {parking.size === "Small" && <SmallParking className={"parking-size"} />}
       </div>

@@ -11,7 +11,7 @@ import {
   IonIcon,
   IonList,
   IonModal,
-  IonPage,
+  IonPage, IonSlide, IonSlides, IonText,
   IonToolbar,
 } from "@ionic/react";
 import ParkingDetails from "../components/parkingDetails";
@@ -43,7 +43,8 @@ const ParkingProfile: React.FC = () => {
   const location = useLocation();
   const search = location.search;
 
-  const canAddComment = search.split("=")[1];
+  const canAddComment = search.split("&")[0]?.split("=")[1];
+  const canAddImage = search.split("&")[1]?.split("=")[1];
 
   const initialNewComment: Comment = {
     content: "",
@@ -93,7 +94,11 @@ const ParkingProfile: React.FC = () => {
           .then((url) => {
             if (parking) {
               dispatch(addImageToParking({
-                imageUrl: url,
+                image: {
+                  imagePath: url,
+                  publisher: currentUser.userMailAddress || "",
+                  publisherName: currentUser.userDisplayName || "",
+                },
                 parkingId: parking.id
               }));
               setIsAddImageClicked(false);
@@ -101,6 +106,11 @@ const ParkingProfile: React.FC = () => {
           });
       }
     );
+  };
+
+  const slideOpts = {
+    initialSlide: 1,
+    speed: 400
   };
 
   return (
@@ -115,6 +125,18 @@ const ParkingProfile: React.FC = () => {
       {parking && (
         <IonContent fullscreen>
           <ParkingDetails parking={parking} isRouting={false} />
+          <IonSlides pager={true} options={slideOpts}>
+            {
+              parking?.imagesPaths.map(image => (
+                  <IonSlide>
+                    <div className={"image-wrapper"}>
+                      <img src={image.imagePath} alt={"parking-image"} className={"parking-image"}/>
+                      <IonText color="primary" className={"image-publisher"} > {image.publisher === parking?.owner ? "בעל החניה" : image.publisherName} </IonText>
+                    </div>
+                  </IonSlide>
+                  ))
+            }
+          </IonSlides>
           <IonList>
             {parking?.comments.map((comment) => (
               <ParkingCommentListItem
@@ -147,7 +169,7 @@ const ParkingProfile: React.FC = () => {
           </IonList>
         </IonContent>
       )}
-      {boolean(canAddComment) && (
+      {(boolean(canAddComment) || boolean(canAddImage)) && (
         <IonFab
           className="fabButton"
           vertical="bottom"
@@ -160,18 +182,18 @@ const ParkingProfile: React.FC = () => {
           <IonFabList side="top" className="fabList">
             <IonCard className="menu">
               <IonButtons className="menuButtons">
-                <IonButton onClick={() => setIsAddCommentClicked(true)}>
+                {
+                  boolean(canAddComment) && <IonButton onClick={() => setIsAddCommentClicked(true)}>
                   הוסף תגובה (5 נקודות)
                 </IonButton>
-                <IonButton onClick={() => setIsAddImageClicked(true)}>
-                  הוסף תמונה (5 נקודות)
-                </IonButton>
+                }
+                {
+                  boolean(canAddImage) &&<IonButton onClick={() => setIsAddImageClicked(true)}>
+                    הוסף תמונה (5 נקודות)
+                  </IonButton>
+                }
               </IonButtons>
             </IonCard>
-
-            {/* <IonFabButton> */}
-            {/* <IonButton> הוסף הצעת חניה </IonButton> */}
-            {/* </IonFabButton> */}
           </IonFabList>
         </IonFab>
       )}

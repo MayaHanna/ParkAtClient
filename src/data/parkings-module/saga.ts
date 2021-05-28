@@ -31,7 +31,7 @@ function* addCommentToParking(action: ParkingAction) {
 
 function* addImageToParking(action: ParkingAction) {
   try {
-    yield call(postImageToParking, action.payload.parkingId, action.payload.imageUrl);
+    yield call(postImageToParking, action.payload.parkingId, action.payload.image);
     const parkings = yield call(fetchParkings);
     yield put(setParkings(parkings));
     yield put(addPointsToMerchant({

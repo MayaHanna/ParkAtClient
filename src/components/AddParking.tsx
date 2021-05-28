@@ -50,6 +50,7 @@ const initializedFields: Parking = {
     // suittableFor: "motorcycle",
     owner: "",
     comments: [],
+    imagesPaths: [],
     location: {lat: 0, lng: 0}
 }
 
