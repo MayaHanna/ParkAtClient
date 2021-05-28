@@ -11,7 +11,10 @@ import {
   IonIcon,
   IonList,
   IonModal,
-  IonPage, IonSlide, IonSlides, IonText,
+  IonPage,
+  IonSlide,
+  IonSlides,
+  IonText,
   IonToolbar,
 } from "@ionic/react";
 import ParkingDetails from "../components/parkingDetails";
@@ -25,7 +28,10 @@ import { add } from "ionicons/icons";
 import React, { useState } from "react";
 import { userSelector } from "../data/user-module/selectors";
 import { boolean } from "boolean";
-import {addCommentToParking, addImageToParking} from "../data/parkings-module/actions";
+import {
+  addCommentToParking,
+  addImageToParking,
+} from "../data/parkings-module/actions";
 import { firebaseInstance, storage } from "../index";
 import "./ParkingProfile.css";
 
@@ -74,7 +80,13 @@ const ParkingProfile: React.FC = () => {
     }
   };
   const handleImageUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    const uploadTask = storage
+      .ref(
+        `images/${parking ? parking.id.toString() : "_"}-${Date.now()}/${
+          image.name
+        }`
+      )
+      .put(image);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -89,6 +101,7 @@ const ParkingProfile: React.FC = () => {
       () => {
         storage
           .ref("images")
+          .child(parking ? parking.id.toString() : "_" + "-" + Date.now())
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
@@ -163,7 +176,9 @@ const ParkingProfile: React.FC = () => {
             {isAddImageClicked && (
               <IonModal isOpen={isAddImageClicked} cssClass={"file-modal"}>
                 <input type="file" onChange={handleImageChange}></input>
-                <IonButton onClick={handleImageUpload} color={"secondary"}>העלה</IonButton>
+                <IonButton onClick={handleImageUpload} color={"secondary"}>
+                  העלה
+                </IonButton>
               </IonModal>
             )}
           </IonList>
