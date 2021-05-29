@@ -34,8 +34,8 @@ const ParkingOffer: React.FC = () => {
   const location = useLocation();
   const search = location.search;
 
-  const canAddComment = search.split("&")[0].split("=")[1];
-  const canAddImage = search.split("&")[1].split("=")[1];
+  const canAddComment = search ? search.split("&")[0].split("=")[1] : false;
+  const canAddImage = search ? search.split("&")[1].split("=")[1] : false;
 
   const [merchantId, setMerchantId] = useState("");
 
