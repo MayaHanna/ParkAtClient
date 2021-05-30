@@ -1,0 +1,24 @@
+.file-modal {
+    width: 50%;
+    height: 10%;
+    margin: auto;
+    background: white;
+}
+
+.file-modal .ion-page {
+    background: white;
+}
+
+.image-wrapper {
+    width: 94vw;
+    margin: 0 auto;
+    max-height: 50vh;
+}
+
+.image-publisher {
+    padding: 0 2vw;
+    position: absolute;
+    background: rgba(0,0,0, 0.4);
+    right: 0;
+    margin-right: 3vw;
+}

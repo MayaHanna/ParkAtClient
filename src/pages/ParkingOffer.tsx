@@ -58,7 +58,8 @@ const ParkingOffer: React.FC = () => {
     }
   }, [parkingOffer]); 
 
-  const canAddComment = search.split("=")[1];
+  const canAddComment = search ? search.split("&")[0].split("=")[1] : false;
+  const canAddImage = search ? search.split("&")[1].split("=")[1] : false;
 
   const acceptOffer = () => {
 
@@ -94,7 +95,7 @@ const ParkingOffer: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <ParkingDetails parking={parkingOffer?.parking} isRouting={true} isCanAddComment={!!canAddComment}/>
+        <ParkingDetails parking={parkingOffer?.parking} isRouting={true} isCanAddComment={!!(canAddComment)} isCanAddImage={!!(canAddImage)}/>
         <div color="primary" className={"parking-offer-details"}>
           <IonGrid className={"parking-grid"}>
             <IonRow>

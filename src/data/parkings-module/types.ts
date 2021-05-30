@@ -13,6 +13,12 @@ export interface Comment {
   publisherName: string;
 }
 
+export interface ImagePath {
+  imagePath: string;
+  publisher: string;
+  publisherName: string;
+}
+
 export interface Parking {
   id: number;
   address: string;
@@ -24,7 +30,8 @@ export interface Parking {
   // status: Parking_Status;
   owner: string;
   location: Coords;
-  comments: Comment[]
+  comments: Comment[];
+  imagesPaths: ImagePath[];
 }
 export interface ParkingsState {
   parkings: Parking[];

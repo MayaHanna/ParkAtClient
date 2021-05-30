@@ -50,6 +50,7 @@ const initializedFields: Parking = {
     // suittableFor: "motorcycle",
     owner: "",
     comments: [],
+    imagesPaths: [],
     location: {lat: 0, lng: 0}
 }
 
@@ -73,9 +74,15 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
     }, [loggedInUser]);
     
     const addParkingSpot = () => {
-        setLocation();
-
-        addParking(parking)
+        findLocationByAddress(parking.address).then(location=>{
+            setParking({
+                ...parking,
+                location: location
+            });
+            addParking({
+                ...parking,
+                location: location
+            })
             .then(res => {
                 console.log(" החניה נוספה בהצלחה");
                 dispatch(addParkingToRudux(parking));
@@ -83,16 +90,7 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
                 chooseParking(res.data);
             })
             .catch(err => console.log(err))
-    }
-
-    
-    const setLocation = () => {
-        findLocationByAddress(parking.address).then(location=>
-            setParking({
-                ...parking,
-                location: location
-            })
-        )
+        })
     }
     
 

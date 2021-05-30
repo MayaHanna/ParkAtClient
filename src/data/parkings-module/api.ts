@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import {ImagePath} from "./types";
 
 export const fetchParkings = async () => {
     const response: AxiosResponse = await axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/parkings`);
@@ -19,5 +20,10 @@ export const addParking = (formData: any) => {
 
 export const postCommentToParking = (parkingId: number, comment: Comment) => {
     return axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/parkings/comment`, { parkingId, comment },
+        { withCredentials: true })
+};
+
+export const postImageToParking = (parkingId: number, image: ImagePath) => {
+    return axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/parkings/image`, { parkingId, image },
         { withCredentials: true })
 };

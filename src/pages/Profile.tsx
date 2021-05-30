@@ -137,7 +137,7 @@ const Profile: React.FC = () => {
           <div color="primary" className={"profile-section"}>
             <IonText color="primary" className={"profile-section-title"}>החניות שלי</IonText>
             {userParkings && userParkings?.map(p =>
-                  <ParkingListItem key={p.id} parking={p} onClick={() => {}} isRouting={true}/>
+                  <ParkingListItem key={p.id} parking={p} onClick={() => {}} isRouting={true} isCanAddImage={true}/>
                   )}
           </div>
 
@@ -148,7 +148,7 @@ const Profile: React.FC = () => {
 
           <div color="primary"  className={"profile-section"}>
             <IonText color="primary" className={"profile-section-title"}>היסטוריה - חניות</IonText>
-            {parkingHistory && parkingHistory?.map(p=> <ParkingOfferListItem key={p.id} parkingOffer={p} isCanAddComment={true}/>)}
+            {parkingHistory && parkingHistory?.map(p=> <ParkingOfferListItem key={p.id} parkingOffer={p} isCanAddComment={true} isCanAddImage={true}/>)}
           </div>
 
           {userMerchant &&
