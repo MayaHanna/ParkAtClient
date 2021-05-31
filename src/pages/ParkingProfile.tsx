@@ -106,14 +106,16 @@ const ParkingProfile: React.FC = () => {
           .getDownloadURL()
           .then((url) => {
             if (parking) {
-              dispatch(addImageToParking({
-                image: {
-                  imagePath: url,
-                  publisher: currentUser.userMailAddress || "",
-                  publisherName: currentUser.userDisplayName || "",
-                },
-                parkingId: parking.id
-              }));
+              dispatch(
+                addImageToParking({
+                  image: {
+                    imagePath: url,
+                    publisher: currentUser.userMailAddress || "",
+                    publisherName: currentUser.userDisplayName || "",
+                  },
+                  parkingId: parking.id,
+                })
+              );
               setIsAddImageClicked(false);
             }
           });
@@ -123,7 +125,7 @@ const ParkingProfile: React.FC = () => {
 
   const slideOpts = {
     initialSlide: 1,
-    speed: 400
+    speed: 400,
   };
 
   return (
@@ -139,16 +141,23 @@ const ParkingProfile: React.FC = () => {
         <IonContent fullscreen>
           <ParkingDetails parking={parking} isRouting={false} />
           <IonSlides pager={true} options={slideOpts}>
-            {
-              parking?.imagesPaths.map(image => (
-                  <IonSlide>
-                    <div className={"image-wrapper"}>
-                      <img src={image.imagePath} alt={"parking-image"} className={"parking-image"}/>
-                      <IonText color="primary" className={"image-publisher"} > {image.publisher === parking?.owner ? "בעל החניה" : image.publisherName} </IonText>
-                    </div>
-                  </IonSlide>
-                  ))
-            }
+            {parking?.imagesPaths.map((image) => (
+              <IonSlide>
+                <div className={"image-wrapper"}>
+                  <img
+                    src={image.imagePath}
+                    alt={"parking-image"}
+                    className={"parking-image"}
+                  />
+                  <IonText color="primary" className={"image-publisher"}>
+                    {" "}
+                    {image.publisher === parking?.owner
+                      ? "בעל החניה"
+                      : image.publisherName}{" "}
+                  </IonText>
+                </div>
+              </IonSlide>
+            ))}
           </IonSlides>
           <IonList>
             {parking?.comments.map((comment) => (
@@ -197,16 +206,16 @@ const ParkingProfile: React.FC = () => {
           <IonFabList side="top" className="fabList">
             <IonCard className="menu">
               <IonButtons className="menuButtons">
-                {
-                  boolean(canAddComment) && <IonButton onClick={() => setIsAddCommentClicked(true)}>
-                  הוסף תגובה (5 נקודות)
-                </IonButton>
-                }
-                {
-                  boolean(canAddImage) &&<IonButton onClick={() => setIsAddImageClicked(true)}>
+                {boolean(canAddComment) && (
+                  <IonButton onClick={() => setIsAddCommentClicked(true)}>
+                    הוסף תגובה (5 נקודות)
+                  </IonButton>
+                )}
+                {boolean(canAddImage) && (
+                  <IonButton onClick={() => setIsAddImageClicked(true)}>
                     הוסף תמונה (5 נקודות)
                   </IonButton>
-                }
+                )}
               </IonButtons>
             </IonCard>
           </IonFabList>

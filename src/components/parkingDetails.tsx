@@ -62,9 +62,9 @@ const ParkingDetails: React.FC<ParkingDetailsProps> = ({ parking, isRouting, isC
         </div>
         <div className={"comment-wrapper"}>
           {
-            parking?.comments.length > 0 && <IonText color="primary" className={"average-rating"}>5 / {calculateParkingRatingAvg()}</IonText>
+            parking?.comments?.length > 0 && <IonText color="primary" className={"average-rating"}>5 / {calculateParkingRatingAvg()}</IonText>
           }
-          <IonText color="primary" className={"comment-count"}>{parking?.comments.length} תגובות </IonText>
+          <IonText color="primary" className={"comment-count"}>{parking?.comments?.length} תגובות </IonText>
         </div>
       </div>
     </IonCard>

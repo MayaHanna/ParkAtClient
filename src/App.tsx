@@ -7,7 +7,6 @@ import Login from './pages/Login';
 import AddParkingOffer from './pages/AddParkingOffer';
 import ReportParking from './pages/ReportParking';
 import ParkingOffer from './pages/ParkingOffer';
-import AddPrivateOffer from './pages/AddPrivateOffer';
 import firebase from "firebase/app";
 import "firebase/auth";
 import "./App.css"
