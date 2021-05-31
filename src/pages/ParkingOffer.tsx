@@ -200,8 +200,8 @@ const ParkingOffer: React.FC = () => {
               <form className="slotFormWrapper">
                 {parkingOffer.slots.map((slot, slotIndex) => (
                   <SlotItem
-                    endDate={slot.end}
-                    startDate={slot.start}
+                    endDate={new Date(slot.end)}
+                    startDate={new Date(slot.start)}
                     incomingUser={slot.incomingUser}
                     onClick={(isTaken: Boolean) =>
                       handleSlot(slot, slotIndex, isTaken)
