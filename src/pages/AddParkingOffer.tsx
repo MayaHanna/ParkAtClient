@@ -40,6 +40,7 @@ import { userSelector } from "../data/user-module/selectors";
 import { merchantSelector } from "../data/merchants-module/selectors";
 
 const initializedFields: ParkingOffer = {
+<<<<<<< HEAD
   id: 1,
   start: new Date(),
   end: new Date(),
@@ -49,6 +50,17 @@ const initializedFields: ParkingOffer = {
   owner: "",
   status: "Open",
   slots: [],
+=======
+    id: 1,
+    start: new Date(),
+    end: new Date(),
+    isPermanent: false,
+    price: 0,
+    parkingId: 1,
+    owner: "",
+    status: "Open",
+    slots: []
+>>>>>>> e2816f66137523ede6483159f0d4a6af8d1c58b1
 };
 
 function AddParkingOffer() {
@@ -66,6 +78,7 @@ function AddParkingOffer() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+<<<<<<< HEAD
   useEffect(() => {
     chosenParking
       ? setParkingOffer({
@@ -102,6 +115,12 @@ function AddParkingOffer() {
       [e.target.name]: new Date(e.detail.value),
     });
   };
+=======
+    const onClickAddParking = () => {
+        setIsChoosingFromList(false);
+        setisCreatingNewParking(true);
+    }
+>>>>>>> e2816f66137523ede6483159f0d4a6af8d1c58b1
 
   const onClickAddParking = () => {
     setIsChoosingFromList(false);
@@ -113,12 +132,25 @@ function AddParkingOffer() {
     setIsChoosingFromList(true);
   };
 
+<<<<<<< HEAD
   const handleChooseParking = (parkingSpot: Parking) => {
     setChosenParking({
       ...chosenParking,
       ...parkingSpot,
     });
   };
+=======
+    const addPaarkingOffer = (parkingOffer: ParkingOffer) => {
+        addParkingOffer(parkingOffer.owner? parkingOffer : {...parkingOffer, owner: merchant.userEmailAddress})
+            .then(res => {
+                console.log("הצעת החניה נוספה בהצלחה");
+                dispatch(addParkingOfferToRudux(parkingOffer));
+                history.push("/home");
+                setChosenParking(undefined);
+            })
+            .catch(err => console.log(err))
+    }
+>>>>>>> e2816f66137523ede6483159f0d4a6af8d1c58b1
 
   const addPaarkingOffer = () => {
     console.log(parkingOffer);
@@ -136,6 +168,7 @@ function AddParkingOffer() {
       .catch((err) => console.log(err));
   };
 
+<<<<<<< HEAD
   const displayChooseParkingMenu = () => (
     <>
       <h2 className="secondaryTitle">בחר חניה</h2>
@@ -253,6 +286,17 @@ function AddParkingOffer() {
       </form>
     </>
   );
+=======
+    return (
+        < IonPage id="view-message-page" >
+            <IonHeader translucent>
+                <IonToolbar>
+                    <IonButtons slot="end">
+                        <IonBackButton text="מסך בית" defaultHref="/home"></IonBackButton>
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
+>>>>>>> e2816f66137523ede6483159f0d4a6af8d1c58b1
 
   return (
     <IonPage id="view-message-page">

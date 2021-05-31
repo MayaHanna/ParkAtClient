@@ -16,7 +16,7 @@ import {
 } from "@ionic/react";
 import "./ParkingOffer.css";
 import { useLocation, useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fullParkingsOffersWithIdSelector } from "../data/parkings-offers-module/selectors";
 import { RootState } from "../data/configureStore";
 import { FullParkingOffer } from "../data/parkings-offers-module/types";
