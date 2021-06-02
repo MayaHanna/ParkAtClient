@@ -63,9 +63,9 @@ function AddPrivateOffer() {
   useEffect(() => {
     chosenParking
       ? setParkingOffer({
-          ...parkingOffer,
-          parkingId: chosenParking.id,
-        })
+        ...parkingOffer,
+        parkingId: chosenParking.id,
+      })
       : setParkingOffer(initializedFields);
   }, [chosenParking]);
 
@@ -108,7 +108,10 @@ function AddPrivateOffer() {
     addParkingOffer(parkingOffer)
       .then((res) => {
         console.log("הצעת החניה נוספה בהצלחה");
-        dispatch(addParkingOfferToRudux(parkingOffer));
+        dispatch(addParkingOfferToRudux({
+          ...parkingOffer,
+          id: res.data.id
+        }));
         history.push("/home");
         setChosenParking(undefined);
       })

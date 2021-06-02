@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import {ImagePath} from "./types";
 
 export const fetchParkings = async () => {
-    const response: AxiosResponse = await axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/parkings`);
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/parkings`);
     return await response.data;
 }
 export const getParkingsByOwner = async (ownerId: string) => {

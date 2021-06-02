@@ -77,7 +77,7 @@ const MapWrapper: React.FC<MapWrapperProps> = ({ filterParams }) => {
     <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
       {parkingOffers.map((po, k) => (
         <Marker
-          position={po.parking.location}
+          position={po?.parking?.location}
           onClick={(e) =>
             history.push(
               `/parkingOffer/${
@@ -86,7 +86,7 @@ const MapWrapper: React.FC<MapWrapperProps> = ({ filterParams }) => {
             )
           }
           icon={
-            po.parking.isPrivate ? greenLocationIconUrl : blueLocationIconUrl
+            (po?.parking?.isPrivate) ? greenLocationIconUrl : blueLocationIconUrl
           }
         />
       ))}

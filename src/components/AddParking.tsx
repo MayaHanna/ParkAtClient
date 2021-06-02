@@ -76,19 +76,25 @@ const AddParking: React.FC<AddParkingProps> = ({ chooseParking, isPublic }) => {
 
   const addParkingSpot = () => {
     findLocationByAddress(parking.address).then((location) => {
-      setParking({
-        ...parking,
-        location: location,
-      });
+
       addParking({
         ...parking,
         location: location,
       })
-        .then((res) => {
+        .then((res: any) => {
           console.log(" החניה נוספה בהצלחה");
-          dispatch(addParkingToRudux(parking));
-          console.log(res);
-          chooseParking(res.data);
+          const newParking = {
+            ...parking,
+            location: {
+              lat: res.data.lat,
+              lng: res.data.lng,
+            },
+            id: res.data.id
+          };
+
+          setParking(newParking);
+          dispatch(addParkingToRudux(newParking));
+          chooseParking(newParking);
         })
         .catch((err) => console.log(err));
     });

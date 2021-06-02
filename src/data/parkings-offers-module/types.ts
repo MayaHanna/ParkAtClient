@@ -14,7 +14,7 @@ interface ParkingOfferBaseline {
   owner: string;
   status: Parking_Offer_Status;
   client?: string;
-  slots: Slot[];
+  slots: Slot[] | undefined;
 }
 
 export type ParkingOffer = ParkingOfferBaseline & {

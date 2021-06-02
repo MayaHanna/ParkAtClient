@@ -130,7 +130,11 @@ function AddParkingOffer() {
     )
       .then((res) => {
         console.log("הצעת החניה נוספה בהצלחה");
-        dispatch(addParkingOfferToRudux(newParkingOffer!));
+        dispatch(addParkingOfferToRudux({
+          ...parkingOffer,
+          slots: newParkingOffer?.slots,
+          id: res.data.id
+        }));
         history.push("/home");
         setChosenParking(undefined);
       })

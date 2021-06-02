@@ -13,6 +13,7 @@ import {
   IonBackButton,
   IonButtons,
   IonButton,
+  IonDatetime
 } from "@ionic/react";
 import "./ParkingOffer.css";
 import { useLocation, useParams } from "react-router";
@@ -79,13 +80,14 @@ const ParkingOffer: React.FC = () => {
   const handleSlot = (slot: Slot, slotIndex: number, isTaken: Boolean) => {
     const newParkingOffer: FullParkingOffer = {
       ...parkingOffer,
-      slots: [...parkingOffer.slots],
+      slots: parkingOffer?.slots && [...parkingOffer.slots],
     };
 
-    newParkingOffer.slots[slotIndex] = {
-      ...newParkingOffer.slots[slotIndex],
-      incomingUser: isTaken ? user.userMailAddress : undefined,
-    };
+    newParkingOffer.slots &&
+      (newParkingOffer.slots[slotIndex] = {
+        ...newParkingOffer.slots[slotIndex],
+        incomingUser: isTaken ? user.userMailAddress : undefined,
+      });
 
     setParkingOfferToUpdate(newParkingOffer);
   };
@@ -198,7 +200,7 @@ const ParkingOffer: React.FC = () => {
                 לחץ כדי לתפוס את החניה בשעות הנוחות לך !
               </IonText>
               <form className="slotFormWrapper">
-                {parkingOffer.slots.map((slot, slotIndex) => (
+                {parkingOffer?.slots && parkingOffer.slots.map((slot, slotIndex) => (
                   <SlotItem
                     endDate={new Date(slot.end)}
                     startDate={new Date(slot.start)}
