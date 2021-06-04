@@ -20,7 +20,7 @@ import {
     IonRadio,
     IonRadioGroup,
     IonButton,
-    IonList
+    IonList, IonText
 } from '@ionic/react';
 import { useParams } from 'react-router';
 import './privateOfferForm.css';
@@ -32,6 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../data/configureStore";
 import { addParkingOffer as addParkingOfferToRudux } from "../data/parkings-offers-module/actions";
 import { useHistory } from "react-router";
+import {merchantSelector} from "../data/merchants-module/selectors";
 
 const initializedFields: ParkingOffer = {
     id: 1,
@@ -52,6 +53,7 @@ interface ParkingDetailsProps {
 
 const PrivateOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd }) => {
     const [parkingOffer, setParkingOffer] = useState<ParkingOffer>(initializedFields);
+    const currentMerchant = useSelector(merchantSelector);
 
     useEffect(() => {
         chosenParking ?
@@ -88,10 +90,8 @@ const PrivateOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd 
             <ParkingDetails parking={chosenParking} isRouting={false} isCanAddComment={false} />
             <form className="formWrapper">
                 <IonItem>
-                    <IonItem>
-                        <IonLabel className="labelText">מחיר</IonLabel>
-                        <IonInput className="innerText" name="price" value={parkingOffer.price} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
-                    </IonItem>
+                    <IonLabel className="labelText">מחיר</IonLabel>
+                    <IonInput className="innerText priceInput" type={"number"} name="price" value={parkingOffer.price} onIonChange={e => handleFieldChangeByEvent(e)} />
                 </IonItem>
                 <IonItem>
                     <IonLabel className="labelText">בחר תאריך התחלה</IonLabel>
@@ -102,7 +102,7 @@ const PrivateOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd 
                         value={parkingOffer.start.toString()}
                         max="2030-12-09"
                         onIonChange={e => handleDateChange(e)}
-                    ></IonDatetime>
+                    />
                 </IonItem>
                 <IonItem>
                     <IonLabel className="labelText">בחר תאריך סיום</IonLabel>
@@ -113,23 +113,11 @@ const PrivateOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd 
                         value={parkingOffer.end.toString()}
                         max="2030-12-09"
                         onIonChange={e => handleDateChange(e)}
-                    ></IonDatetime>
-                </IonItem>
-
-                <IonItem>
-                    <IonLabel className="labelText" >אפשרות להצעה קבועה </IonLabel>
-                    <IonButtons className="itemButtonWrapper">
-                        <IonItem
-                            className={parkingOffer.isPermanent ? "choosenButton" : ""}
-                            onClick={() => handleFieldChange("isPermanent", true)}>כן</IonItem>
-                        <IonItem
-                            className={!parkingOffer.isPermanent ? "choosenButton" : ""}
-                            onClick={() => handleFieldChange("isPermanent", false)}>לא </IonItem>
-                    </IonButtons>
+                    />
                 </IonItem>
                 <IonItem>
                     <IonLabel className="labelText">חשבון paypal לזיכוי</IonLabel>
-                    <IonInput className="innerText" name="merchantId" value={parkingOffer.owner} onIonChange={e => handleFieldChangeByEvent(e)}></IonInput>
+                    <IonText color="primary">{currentMerchant.merchantId}</IonText>
                 </IonItem>
 
                 <IonButtons>

@@ -21,6 +21,7 @@ export const Paypal = ({price, merchantId, parkingOfferId}: PayPalProps) => {
     const user = useSelector(userSelector);
 
     return (
+        merchantId ?
         <PayPalButton
             options={{
                 clientId: "sb",
@@ -47,6 +48,6 @@ export const Paypal = ({price, merchantId, parkingOfferId}: PayPalProps) => {
             onApprove={() => {
                 console.log("approve")
             }}
-        />
+        /> : <div />
     )
 };
