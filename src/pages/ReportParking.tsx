@@ -112,7 +112,7 @@ function ReportParking() {
                             < h1 className="title"> לא נמצאו חניות ציבוריות במערכת </h1 >
                         }
                         <IonList>
-                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} isRouting={true}/>)}
+                            {parkingsList.map(p => <ParkingListItem key={p.id} parking={p} onClick={handleChooseParking} isRouting={false}/>)}
                         </IonList>
                     </>
                 )
