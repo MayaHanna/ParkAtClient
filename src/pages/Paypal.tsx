@@ -7,6 +7,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router";
 import {userSelector} from "../data/user-module/selectors";
+import {IonItem, IonText} from "@ionic/react";
 
 export interface PayPalProps {
     price: number;
@@ -48,6 +49,6 @@ export const Paypal = ({price, merchantId, parkingOfferId}: PayPalProps) => {
             onApprove={() => {
                 console.log("approve")
             }}
-        /> : <div />
+        /> : <IonText color="primary">{"זמנית לא ניתן להשכיר את החניה, נסו שוב מאוחר יותר"}</IonText>
     )
 };
