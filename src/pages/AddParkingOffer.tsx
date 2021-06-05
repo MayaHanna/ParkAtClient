@@ -122,7 +122,9 @@ function AddParkingOffer() {
 
   const addPaarkingOffer = (newParkingOffer?: ParkingOffer) => {
     console.log(parkingOffer);
-    if (!newParkingOffer) newParkingOffer = parkingOffer;
+    if (!newParkingOffer) {
+      newParkingOffer = parkingOffer;
+    }
     addParkingOffer(
       newParkingOffer.owner
         ? newParkingOffer
@@ -131,10 +133,10 @@ function AddParkingOffer() {
       .then((res) => {
         console.log("הצעת החניה נוספה בהצלחה");
         dispatch(addParkingOfferToRudux({
-          ...parkingOffer,
+          ...newParkingOffer,
           slots: newParkingOffer?.slots,
           id: res.data.id
-        }));
+        } as ParkingOffer));
         history.push("/home");
         setChosenParking(undefined);
       })

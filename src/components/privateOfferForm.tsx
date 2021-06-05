@@ -116,8 +116,8 @@ const PrivateOfferForm: React.FC<ParkingDetailsProps> = ({ chosenParking, onAdd 
                     />
                 </IonItem>
                 <IonItem>
-                    <IonLabel className="labelText">חשבון paypal לזיכוי</IonLabel>
-                    <IonText color="primary">{currentMerchant.merchantId}</IonText>
+                    <IonLabel className="labelText">חשבון PayPal לזיכוי</IonLabel>
+                    <IonText color="primary">{currentMerchant.merchantId || "לא הוגדר חשבון"}</IonText>
                 </IonItem>
 
                 <IonButtons>
