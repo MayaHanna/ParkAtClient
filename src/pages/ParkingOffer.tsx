@@ -70,7 +70,7 @@ const ParkingOffer: React.FC = () => {
       .then((res) => {
         console.log("הצעת החניה עודכנה בהצלחה");
         dispatch(
-          UpdateParkingOfferInRudux({ slots: parkingOfferToUpdate.slots })
+          UpdateParkingOfferInRudux(parkingOfferToUpdate)
         );
         history.push("/home");
       })
@@ -83,6 +83,7 @@ const ParkingOffer: React.FC = () => {
       slots: parkingOffer?.slots && [...parkingOffer.slots],
     };
 
+    debugger;
     newParkingOffer.slots &&
       (newParkingOffer.slots[slotIndex] = {
         ...newParkingOffer.slots[slotIndex],
@@ -200,7 +201,7 @@ const ParkingOffer: React.FC = () => {
                 לחץ כדי לתפוס את החניה בשעות הנוחות לך !
               </IonText>
               <form className="slotFormWrapper">
-                {parkingOffer?.slots && parkingOffer.slots.map((slot, slotIndex) => (
+                {parkingOfferToUpdate?.slots && parkingOfferToUpdate.slots.map((slot, slotIndex) => (
                   <SlotItem
                     endDate={new Date(slot.end)}
                     startDate={new Date(slot.start)}

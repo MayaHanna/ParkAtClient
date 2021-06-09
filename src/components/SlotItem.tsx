@@ -15,6 +15,8 @@ import {
     IonButton,
 } from '@ionic/react';
 import './SlotItem.css';
+import { userSelector } from "../data/user-module/selectors";
+import { useSelector, useDispatch } from "react-redux";
 
 interface ParkingDetailsProps {
     // time: String,
@@ -27,6 +29,7 @@ interface ParkingDetailsProps {
 const SlotItem: React.FC<ParkingDetailsProps> = ({ endDate, startDate, incomingUser, onClick }) => {
     const [isTaken, setIsTaken] = useState(incomingUser ? true : false);
     const [displayTime, setDisplayTime] = useState("");
+    const user = useSelector(userSelector);
 
     useEffect(() => {
         setDisplayTime(`${endDate.getHours()}:${getMinutesToDisplay(endDate)} - 
@@ -36,15 +39,17 @@ const SlotItem: React.FC<ParkingDetailsProps> = ({ endDate, startDate, incomingU
 
     const getMinutesToDisplay = (date: Date) => {
         let minutes = date.getMinutes();
-        return minutes < 10  ? `0${minutes}` : minutes
+        return minutes < 10 ? `0${minutes}` : minutes
     }
 
     return (
         <>
             <IonItem className={"slot"} onClick={() => {
-                const newIsTaken = !isTaken;
-                setIsTaken(newIsTaken);
-                onClick(newIsTaken);
+                if ((isTaken && incomingUser == user.userMailAddress) || !isTaken) {
+                    const newIsTaken = !isTaken;
+                    setIsTaken(newIsTaken);
+                    onClick(newIsTaken);
+                }
             }}>
                 <IonText color="primary">{displayTime}</IonText>
                 {
