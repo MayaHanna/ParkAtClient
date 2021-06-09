@@ -80,12 +80,9 @@ const ParkingProfile: React.FC = () => {
     }
   };
   const handleImageUpload = () => {
+    let timestamp = Date.now().toString();
     const uploadTask = storage
-      .ref(
-        `images/${parking ? parking.id.toString() : "_"}-${Date.now()}/${
-          image.name
-        }`
-      )
+      .ref(`images/${parking?.id.toString()}/${timestamp}`)
       .put(image);
     uploadTask.on(
       "state_changed",
@@ -101,8 +98,8 @@ const ParkingProfile: React.FC = () => {
       () => {
         storage
           .ref("images")
-          .child(parking ? parking.id.toString() : "_" + "-" + Date.now())
-          .child(image.name)
+          .child(parking?.id.toString()!)
+          .child(timestamp)
           .getDownloadURL()
           .then((url) => {
             if (parking) {
@@ -118,7 +115,8 @@ const ParkingProfile: React.FC = () => {
               );
               setIsAddImageClicked(false);
             }
-          });
+          })
+          .catch((error) => console.error(error));
       }
     );
   };

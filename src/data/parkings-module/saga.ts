@@ -35,7 +35,7 @@ function* addImageToParking(action: ParkingAction) {
     const parkings = yield call(fetchParkings);
     yield put(setParkings(parkings));
     yield put(addPointsToMerchant({
-      userMail: action.payload.comment.publisher,
+      userMail: action.payload.image.publisher,
       pointsToAdd: 5
     }))
   } catch (e) {
