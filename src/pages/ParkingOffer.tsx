@@ -83,7 +83,6 @@ const ParkingOffer: React.FC = () => {
       slots: parkingOffer?.slots && [...parkingOffer.slots],
     };
 
-    debugger;
     newParkingOffer.slots &&
       (newParkingOffer.slots[slotIndex] = {
         ...newParkingOffer.slots[slotIndex],
