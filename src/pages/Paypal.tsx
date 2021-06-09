@@ -35,7 +35,7 @@ export const Paypal = ({price, merchantId, parkingOfferId}: PayPalProps) => {
             amount={price}
             onSuccess={(details: any, data: any) => {
                 console.log("success");
-                editParkingOffer(parkingOfferId, {status: "Closed"})
+                editParkingOffer(parkingOfferId, {status: "Closed", client: user.userMailAddress})
                     .then(res => {
                         console.log("הצעת החניה נתפסה בהצלחה");
                         dispatch(editParkingOfferAction({id: parkingOfferId, status: "Closed", client: user.userMailAddress}));
